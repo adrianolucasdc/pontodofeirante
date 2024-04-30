@@ -1,4 +1,6 @@
-import Categoria from "./components/categoria";
+import Categoria from "./components/categoria/categoria";
+import Publicidade from "./components/publicidade/publicidade";
+import Produtos from "./components/produtos/produtos";
 
 import './index.css'
 
@@ -16,14 +18,21 @@ export default function App() {
             <IoMdSearch color='#2C4059' size={30} className=' pl-2' />
             <input placeholder='Vestidos, blusas, calças' className=' pl-2 text-sm text-primaryColor placeholder-primaryColor w-full h-full rounded-2xl' />
           </div>
-
           <button className=''>
             <IoFilterCircleOutline color='#2C4059' size={44} />
           </button>
-
         </div>
       </header>
-      <Categoria/>
+
+      <Categoria />
+
+      <div className=" flex items-center justify-center mt-7">
+        <Publicidade />
+      </div>
+
+      <div className=" flex items-center justify-center mt-7">
+        <Produtos/>
+      </div>
     </div>
   )
 }

@@ -9,9 +9,20 @@ export default {
       colors: {
         backgroundColor: "#F8F8F7",
         primaryColor: "#2C4059",
-        lightColor: "#FFFFFF"
+        thirdColor: "#EA5454",
+        lightColor: "#FFFFFF",
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none",
+        },
+      };
+
+      addUtilities(newUtilities);
+    },
+  ],
 }
