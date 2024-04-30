@@ -1,6 +1,7 @@
 import Categoria from "./components/categoria/categoria";
 import Publicidade from "./components/publicidade/publicidade";
 import Produtos from "./components/produtos/produtos";
+import Menu_principal from "./components/menu_principal/menu_principal";
 
 import './index.css'
 
@@ -30,8 +31,13 @@ export default function App() {
         <Publicidade />
       </div>
 
-      <div className=" flex items-center justify-center mt-7">
+      <div className=" flex flex-col items-center justify-around   mt-7">
         <Produtos/>
+        <Produtos/>
+      </div>
+
+      <div>
+        <Menu_principal/> 
       </div>
     </div>
   )

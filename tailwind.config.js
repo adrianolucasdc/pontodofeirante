@@ -11,6 +11,7 @@ export default {
         primaryColor: "#2C4059",
         thirdColor: "#EA5454",
         lightColor: "#FFFFFF",
+        lightColorGray: "#858585"
       }
     },
   },
