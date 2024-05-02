@@ -9,21 +9,23 @@ export default function Login() {
                 </Link>
             </div>
 
-            <div className=" w-full h-full flex  items-center justify-center ">
-                <form action=""  className=" flex flex-col items-center justify-center w-60 h-80 mx-6 px-5 rounded-xl border-2 border-primaryColor">
-                    <h1 className=" font-extrabold text-4xl text-primaryColor">Login</h1>
-                    <div className=" mt-14">
-                        <div className=" mb-3 flex flex-col items-center">
+            <div className=" w-full h-full flex  items-center justify-center">
+                <form action="" className=" flex flex-col items-center justify-center w-80 h-80 mx-6 px-5 rounded-xl border-2 border-primaryColor shadow-2xl">
+                    <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Entrar</h1>
+                    <div className=" flex flex-col items-center justify-around mt-6 h-full w-full mx-3">
+                        <div className=" flex flex-col items-center w-full">
                             <h1>E-mail</h1>
-                            <input type="email" className=" border-primaryColor border-2 rounded-md" />
+                            <input type="email" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                         </div>
 
-                        <div className=" mb-3 flex flex-col items-center">
+                        <div className=" flex flex-col items-center w-full">
                             <h1>Senha</h1>
-                            <input type="pa" className=" border-primaryColor border-2 rounded-md" />
+                            <input type="password" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                         </div>
 
-                        <button type="submit" className=" bg-secundaryColor w-full rounded-lg">Enviar</button>
+                        <div>
+                            <button type="submit" className=" bg-secundaryColor w-52 h-9 rounded-lg font-extrabold text-primaryColor text-2xl ">Enviar</button>
+                        </div>
                     </div>
 
                 </form>
