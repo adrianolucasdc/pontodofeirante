@@ -2,6 +2,8 @@ import { useState } from "react"
 
 import Dropdown_cidades from "@/components/forms/dropdown_cidades"
 import Dropdown_estados from "@/components/forms/dropdown_estados"
+import MaskCpf from "@/components/mascaras/maskCpf";
+
 
 
 export default function Cadastro_user() {
@@ -37,6 +39,11 @@ export default function Cadastro_user() {
                         <div className=" mb-3">
                             <h1>Número de telefone</h1>
                             <input id="num_phone" type="number" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                        </div>
+
+                        <div>
+                            <h1>CPF</h1>
+                            <MaskCpf/>
                         </div>
 
                         <div className=" mb-3 flex flex-row justify-between">
