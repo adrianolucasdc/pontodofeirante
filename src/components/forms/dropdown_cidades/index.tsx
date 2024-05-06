@@ -17,7 +17,7 @@ const Dropdown_cidades = ({state, onChange = () => {} }) => {
 
         <div className=" flex flex-col w-24">
             <label htmlFor="city" className=" text-primaryColor">Cidade:</label>
-            <select id="city" name="city" onChange={onChange} className=" border-2 border-primaryColor rounded-lg">
+            <select id="city" name="city" onChange={onChange} className=" border-2 border-primaryColor rounded-lg h-9">
                 <option value="">Selecione uma cidade</option>
                 {cities.map((city)=> {
                     const {id, nome} = city;
