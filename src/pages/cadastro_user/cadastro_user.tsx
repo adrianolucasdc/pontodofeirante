@@ -2,7 +2,8 @@ import { useState } from "react"
 
 import Dropdown_cidades from "@/components/forms/dropdown_cidades"
 import Dropdown_estados from "@/components/forms/dropdown_estados"
-import MaskCpf from "@/components/mascaras/maskCpf";
+import MaskCpf from "../../components/mascaras/MaskCpf"
+import MaskCep from "../../components/mascaras/MaskCep"
 
 
 
@@ -12,11 +13,14 @@ export default function Cadastro_user() {
 
     const handleInputChange = (e) => {
         e.preventDefault();
-        const {value, name} = e.target;
-        setFormValues({...formValues, [name]:value})
+        const { value, name } = e.target;
+        setFormValues({ ...formValues, [name]: value })
     }
 
-    console.log('formValues', formValues)
+    const [cpf, setCpf] = useState('');
+    const [cep, setCep] = useState('');
+    console.log(cep)
+
 
 
     return (
@@ -41,9 +45,20 @@ export default function Cadastro_user() {
                             <input id="num_phone" type="number" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                         </div>
 
-                        <div>
+                        <div className=" mb-3">
                             <h1>CPF</h1>
-                            <MaskCpf/>
+                            <MaskCpf
+                                value={cpf}
+                                onChange={(event) => setCpf(event.target.value)}
+                            />
+                        </div>
+
+                        <div className=" mb-3">
+                            <h1>CEP</h1>
+                            <MaskCep
+                                value={cep}
+                                onChange={(event) => setCep(event.target.value)}
+                            />
                         </div>
 
                         <div className=" mb-3 flex flex-row justify-between">
@@ -63,10 +78,10 @@ export default function Cadastro_user() {
                         </div>
 
                         <div className=" mb-3 flex flex-row justify-between">
-                            <Dropdown_estados onChange={handleInputChange}/>
-                            <Dropdown_cidades state={formValues.state} onChange={handleInputChange}/>
+                            <Dropdown_estados onChange={handleInputChange} />
+                            <Dropdown_cidades state={formValues.state} onChange={handleInputChange} />
 
-                            
+
                         </div>
 
                     </form>

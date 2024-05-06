@@ -3,7 +3,7 @@ import InputMask from 'react-input-mask';
 
 const onlyNumbers = (str) => str.replace(/[^0-9]/g, '')
 
-const mask_cpf = ({ value, onChange }) => {
+const mask_cep = ({ value, onChange }) => {
 
     function handleChange(event) {
         onChange({
@@ -19,8 +19,8 @@ const mask_cpf = ({ value, onChange }) => {
         <InputMask value={value} 
         onChange={handleChange} 
         className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" 
-        mask="999.999.999-99"/>
+        mask="99999-999"/>
     )
 }
 
-export default mask_cpf;
+export default mask_cep;
