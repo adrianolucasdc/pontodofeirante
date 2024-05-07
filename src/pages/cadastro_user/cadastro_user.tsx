@@ -3,7 +3,7 @@ import { useState } from "react"
 
 import Dropdown_cidades from "@/components/forms/dropdown_cidades"
 import Dropdown_estados from "@/components/forms/dropdown_estados"
-import MaskCpf from "../../components/mascaras/MaskCpf"
+import MaskCpf from "../../components/mascaras/maskCpf"
 import MaskCep from "../../components/mascaras/MaskCep"
 import Menu_principal from "@/components/menu_principal/menu_principal"
 import MaskPhone from "../../components/mascaras/MaskPhone"
