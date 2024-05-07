@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export default function Menu_principal() {
     return (
         <div>
-            <div className=" h-20 w-full border-t-2 fixed z-10 bottom-0 bg-lightColor">
+            <div className=" h-20 w-full border-t-2 fixed bottom-0 bg-lightColor">
                 <div className=" h-full flex flex-row justify-around items-center">
                     <Link to="/">
                         <div className=" w-14 h-full flex flex-col justify-center items-center">
