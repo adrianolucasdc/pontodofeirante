@@ -7,3 +7,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Loja {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  cnpj        String   @unique
+  email       String
+  telefone    String
+  banner      String  // img
+  logo        String  // img
+  localizacao LocalizacaoLoja[]
+  favoritos   Favorito[]
+}
+
+model Categoria {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  imagem  String  // img
+  produtos Produto[]
+}
+
+model Produto {
+  id           Int       @id @default(autoincrement())
+  loja         Loja      @relation(fields: [lojaId], references: [id])
+  lojaId       Int
+  categoria    Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId  Int
+  nome         String
+  imagem       String   // img
+  descricao    String
+  preco        Decimal @db.Decimal(10,2)
+  desconto     Int @default(0)
+  favoritos    Favorito[]
+}
+
+model Usuario {
+  cpf          String      @id @unique
+  nome         String
+  sobrenome    String
+  telefone     String
+  idade        Int
+  sexo         String
+  cidade       String
+  uf           String
+  email        String
+  numero       String
+  bairro       String
+  complemento  String
+  favoritos    Favorito[]
+}
+
+model Pedido {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [cpf])
+  usuarioId String
+  preco     Decimal @db.Decimal(10,2)
+}
+
+model LocalizacaoLoja {
+  id           Int      @id @default(autoincrement())
+  loja         Loja     @relation(fields: [lojaId], references: [id])
+  lojaId       Int
+  cep          String
+  logradouro   String
+  numero       String
+  bairro       String
+  complemento  String
+}
+
+model Favorito {
+  id          Int      @id @default(autoincrement())
+  usuario     Usuario  @relation(fields: [usuarioId], references: [cpf])
+  usuarioId   String
+  loja        Loja     @relation(fields: [lojaId], references: [id])
+  lojaId      Int
+  produto     Produto  @relation(fields: [produtoId], references: [id])
+  produtoId   Int
+
+  @@unique([usuarioId, lojaId, produtoId], name: "favoritos_unique")
+}
