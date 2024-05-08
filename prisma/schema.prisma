@@ -8,16 +8,18 @@ datasource db {
 }
 
 model Loja {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   nome        String
-  cnpj        String   @unique
+  cnpj        String          @unique
   email       String
   telefone    String
-  banner      String  // img
-  logo        String  // img
+  banner      String?         // img
+  logo        String?         // img
   localizacao LocalizacaoLoja[]
   favoritos   Favorito[]
+  produtos    Produto[]       
 }
+
 
 model Categoria {
   id      Int      @id @default(autoincrement())
@@ -33,10 +35,10 @@ model Produto {
   categoria    Categoria @relation(fields: [categoriaId], references: [id])
   categoriaId  Int
   nome         String
-  imagem       String   // img
+  imagem       String?   // img
   descricao    String
-  preco        Decimal @db.Decimal(10,2)
-  desconto     Int @default(0)
+  preco        Float
+  desconto     Float?
   favoritos    Favorito[]
 }
 
@@ -54,13 +56,6 @@ model Usuario {
   bairro       String
   complemento  String
   favoritos    Favorito[]
-}
-
-model Pedido {
-  id        Int      @id @default(autoincrement())
-  usuario   Usuario  @relation(fields: [usuarioId], references: [cpf])
-  usuarioId String
-  preco     Decimal @db.Decimal(10,2)
 }
 
 model LocalizacaoLoja {
