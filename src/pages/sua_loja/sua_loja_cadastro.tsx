@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState } from "react";
-import { IMaskInput } from 'react-imask';
+import { IMaskInput } from "react-imask";
 
 import Menu_principal from "@/components/menu_principal/menu_principal"
 
@@ -36,6 +36,34 @@ export default function Sua_loja_cadastro() {
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Nome da empresa</h1>
                                 <input id="nome_empresa" type="text" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                            </div>
+                            <div className=" mb-3">
+                                <h1 className=" text-primaryColor">Razão social</h1>
+                                <input id="razao_social" type="text" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                            </div>
+                            <div className=" mb-3">
+                                <h1 className=" text-primaryColor">Email da loja</h1>
+                                <input id="email_loja" type="email" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                            </div>
+                            <div className=" mb-3">
+                                <h1 className=" text-primaryColor">Número de telefone </h1>
+                                <IMaskInput
+                                className="border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                value={numPhone}
+                                onChange={handleChange}
+                                mask="(00) 00000-0000">
+                                </IMaskInput>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h1>Informações de localização</h1>
+                            <div className=" mb-3">
+                                <h1 className=" text-primaryColor">CEP</h1>
+                                <IMaskInput
+                                className="border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                mask="00000-0000">
+                                </IMaskInput>
                             </div>
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Razão social</h1>
