@@ -1,8 +1,23 @@
 import { Link } from "react-router-dom"
+import { useState } from "react";
+import { IMaskInput } from 'react-imask';
 
 import Menu_principal from "@/components/menu_principal/menu_principal"
 
 export default function Sua_loja_cadastro() {
+
+    const [numPhone, setNumPhone] = useState("")
+    
+    const onlyNumbers = numPhone.replace(/[^0-9]/g, '')
+    console.log(onlyNumbers)
+
+    const handleChange = (evento: React.ChangeEvent<HTMLInputElement>) => {
+        const valuePhone = evento.target.value;
+        setNumPhone(valuePhone)
+    }
+
+        
+
     return (
         <div className=" h-full flex flex-col">
 
@@ -32,7 +47,12 @@ export default function Sua_loja_cadastro() {
                             </div>
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Número de telefone </h1>
-                                <input id="email_loja" type="email" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                                <IMaskInput
+                                className="border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                value={numPhone}
+                                onChange={handleChange}
+                                mask="(00) 00000-0000">
+                                </IMaskInput>
                             </div>
                         </div>
                     </form>
