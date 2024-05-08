@@ -1,32 +1,9 @@
+import Menu_principal from "@/components/menu_principal/menu_principal"
 import { Link } from "react-router-dom"
-import * as zod from 'zod'
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 
-import Menu_principal from "../../components/menu_principal/menu_principal"
-
-const loginFormValidationSchame = zod.object({
-    email: zod.string().email('Digite um email válido'),
-    password: zod.string().nonempty('DIgite a sua senha')
-})
-
-
-type NewLoginFormData = zod.infer<typeof loginFormValidationSchame>
 
 export default function Login() {
 
-    const loginForm = useForm<NewLoginFormData>({
-        resolver: zodResolver(loginFormValidationSchame)
-    })
-
-    const { register, handleSubmit, formState, reset } = loginForm
-
-    const { errors } = formState
-
-    const handleLoginSubmit = (data: NewLoginFormData ) => {
-        console.log(data)
-        reset()
-    }
 
     return (
         <div className=" h-screen flex flex-col left ">
@@ -40,14 +17,13 @@ export default function Login() {
                 <div className=" flex flex-col items-center justify-center w-80 h-96 mx-6 px-5 rounded-xl border-2 border-primaryColor shadow-2xl">
                     <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Entrar</h1>
                     <div className=" flex flex-col items-center justify-around  h-full w-full mx-3">
-                        <form onSubmit={handleSubmit(handleLoginSubmit)} className=" h-52 flex flex-col justify-around">
+                        <form  className=" h-52 flex flex-col justify-around">
                             <div className=" flex flex-col items-center w-full">
                                 <label>E-mail</label>
                                 <input
                                     type="email"
                                     className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                     placeholder="Digite seu email"
-                                    {...register('email')}
                                 />
                                 
                             </div>
@@ -58,7 +34,6 @@ export default function Login() {
                                     type="password"
                                     className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                     placeholder="Digite sua senha"
-                                    {...register('password')}
                                 />
                             </div>
 
@@ -83,7 +58,7 @@ export default function Login() {
                 </div>
             </div>
 
-            <Menu_principal />
+            <Menu_principal/>
         </div>
     )
 }
