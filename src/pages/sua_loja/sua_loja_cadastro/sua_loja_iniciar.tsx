@@ -16,7 +16,7 @@ export default function Sua_loja() {
                         <img src={Draw_feira} alt="" />
                     </div>
 
-                    <Link to='/termosecondicoes' className=" bg-secundaryColor w-52 h-9 rounded-lg font-extrabold text-primaryColor text-2xl flex items-center justify-center shadow-xl">
+                    <Link to='/sua_loja_cadastro' className=" bg-secundaryColor w-52 h-9 rounded-lg font-extrabold text-primaryColor text-2xl flex items-center justify-center shadow-xl">
                         Aceitar
                     </Link>
                     

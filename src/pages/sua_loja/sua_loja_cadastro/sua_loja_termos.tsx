@@ -30,10 +30,9 @@ export default function Sua_loja() {
                         <p>
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum non, quam eligendi nostrum quae, velit voluptate officiis incidunt eaque unde aperiam beatae ad voluptatum tempore soluta sed nam dignissimos quo.
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non voluptate cupiditate temporibus? Architecto ullam, accusantium adipisci qui soluta, laudantium quod distinctio repudiandae perferendis incidunt, sint earum accusamus est inventore fugit.
-                        </p>          
+                        </p>
                     </div>
-                    <div>
-                    </div>
+                    
 
                 </div>
             </div>
