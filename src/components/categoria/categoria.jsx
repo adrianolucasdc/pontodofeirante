@@ -40,11 +40,6 @@ export default function Categoria() {
                     <img src={categoria_feminina} className=" h-9 "/>
                     <h1>Feminino</h1>
                 </div>
-                
-                
-                
-                
-                
             </div>
         </div>
     )

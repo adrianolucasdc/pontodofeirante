@@ -5,7 +5,7 @@ import Favoritos from '../pages/favoritos/favoritos';
 import Perfil from '../pages/perfil/perfil';
 import Sacola from '../pages/sacola/sacola';
 import Sua_loja_iniciar from '../pages/sua_loja/sua_loja_cadastro/sua_loja_iniciar';
-import Sua_loja_cadastro from '../pages/sua_loja/sua_loja_cadastro';
+import Sua_loja_cadastro from '../pages/sua_loja/sua_loja_cadastro/sua_loja_cadastro'
 import Sua_loja_termos from '../pages/sua_loja/sua_loja_cadastro/sua_loja_termos';
 import Login from '../pages/login/login';
 import Cadastro_user from '../pages/cadastro_user/cadastro_user';

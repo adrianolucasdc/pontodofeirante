@@ -1,5 +1,5 @@
-import Menu_principal from "../../../components/menu_principal/menu_principal"
 import { Link } from "react-router-dom"
+import Menu_principal from "../../../components/menu_principal/menu_principal"
 
 
 export default function Sua_loja() {
@@ -36,7 +36,7 @@ export default function Sua_loja() {
 
                 </div>
             </div>
-            <Menu_principal />
+            <Menu_principal/>
         </div>
     )
 }

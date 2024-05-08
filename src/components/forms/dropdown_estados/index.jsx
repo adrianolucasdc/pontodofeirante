@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { fetchEstados } from "@/helpers/ibge";
+import { fetchEstados } from "../../../helpers/ibge"
 
 const Dropdown_estados = ({onChange = () => {} }) => {
 
