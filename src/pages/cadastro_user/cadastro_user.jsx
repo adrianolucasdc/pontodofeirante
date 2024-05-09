@@ -1,13 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-
+import { IMaskInput } from "react-imask";
 import Dropdown_cidades from "../../components/forms/dropdown_cidades"
 import Dropdown_estados from "../../components/forms/dropdown_estados"
-import MaskCpf from "../../components/mascaras/maskCpf"
-import MaskCep from "../../components/mascaras/MaskCep"
 import Menu_principal from "../../components/menu_principal/menu_principal"
-import MaskPhone from "../../components/mascaras/MaskPhone"
 
 
 
@@ -21,10 +18,24 @@ export default function Cadastro_user() {
         setFormValues({ ...formValues, [name]: value })
     }
 
-    const [cpf, setCpf] = useState('');
-    const [cep, setCep] = useState('');
-    const [phone, setPhone] = useState('');
-    console.log(phone)
+    const [nomeUser, setNomeUser] = useState('');
+    const [emailUser, setEmailUser] = useState('');
+    const [passwordUser, setPasswordUser] = useState('');
+    const [confirmPasswordUser, setConfirmPasswordUser] = useState('');
+    const [phoneUser, setPhoneUser] = useState('');
+    const [cpfUser, setCpfUser] = useState('');
+    const [cepUser, setCepUser] = useState('');
+    const [dtNascimentoUser, setDtNascimentoUser] = useState('');
+    const [sexoUser, setSexoUser] = useState('');
+    const [estadoUser, setEstadoUser] = useState('');
+    const [cidadeUser, setCidadeUser] = useState('');
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (nomeUser !== '' && emailUser !== '' && passwordUser !== '' && confirmPasswordUser !== '' && phoneUser !== '' && cpfUser !== '' && cepUser !== '' && dtNascimentoUser !== '' && sexoUser !== '') {
+            alert("Enviou os dados")
+        }
+    }
 
 
 
@@ -41,61 +52,101 @@ export default function Cadastro_user() {
                     <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Cadastre seu usuário</h1>
 
                     <div className=" flex flex-col  mt-6 h-full w-full mx-3">
-                        <form action="">
+                        <form onSubmit={handleSubmit}>
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Nome completo</h1>
-                                <input id="nome" type="text" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                                <input
+                                    id="nomeUser"
+                                    value={nomeUser}
+                                    onChange={(e) => setNomeUser(e.target.value)}
+                                    type="text"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor" >E-mail</h1>
-                                <input id="email" type="email" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                                <input
+                                    id="emailUser"
+                                    value={emailUser}
+                                    onChange={(e) => setEmailUser(e.target.value)}
+                                    type="email"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Senha</h1>
-                                <input id="senha" type="password" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                                <input
+                                    id="passwordUser"
+                                    value={passwordUser}
+                                    onChange={(e) => setPasswordUser(e.target.value)}
+                                    type="password"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Confirme sua senha</h1>
-                                <input id="conf_senha" type="password" className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                                <input
+                                    id="confirmPasswordUser"
+                                    value={confirmPasswordUser}
+                                    onChange={(e) => setConfirmPasswordUser(e.target.value)}
+                                    type="password"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">Número de telefone</h1>
-                                <MaskPhone
-                                    value={phone}
-                                    onChange={(event) => setPhone(event.target.value)}
+                                <IMaskInput
+                                    id="phoneUser"
+                                    value={phoneUser}
+                                    onChange={(e) => setPhoneUser(e.target.value)}
+                                    mask="(00) 00000-0000"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                 />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">CPF</h1>
-                                <MaskCpf
-                                    value={cpf}
-                                    onChange={(event) => setCpf(event.target.value)}
+                                <IMaskInput
+                                    id="cpfUser"
+                                    value={cpfUser}
+                                    onChange={(e) => setCpfUser(e.target.value)}
+                                    mask="000.000.000-00"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                 />
                             </div>
 
                             <div className=" mb-3">
                                 <h1 className=" text-primaryColor">CEP</h1>
-                                <MaskCep
-                                    value={cep}
-                                    onChange={(event) => setCep(event.target.value)}
+                                <IMaskInput
+                                    id="cepUser"
+                                    value={cepUser}
+                                    onChange={(e) => setCepUser(e.target.value)}
+                                    mask="00000-000"
+                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                 />
                             </div>
 
                             <div className=" mb-3 flex flex-row justify-between">
                                 <div>
                                     <h1 className=" text-primaryColor">Data de nascimento</h1>
-                                    <input id="dt_nascimento" type="date" className=" border-primaryColor border-2 rounded-md w-32 h-9 pl-2">
+                                    <input
+                                        id="dtNascimentoUser"
+                                        value={dtNascimentoUser}
+                                        onChange={(e) => setDtNascimentoUser(e.target.value)}
+                                        type="date"
+                                        className=" border-primaryColor border-2 rounded-md w-32 h-9 pl-2">
                                     </input>
                                 </div>
 
                                 <div>
                                     <h1 className=" text-primaryColor">Sexo</h1>
-                                    <select className=" h-9 border-primaryColor border-2 rounded-md" name="sexo" id="sexo">
+                                    <select
+                                        className=" h-9 border-primaryColor border-2 rounded-md"
+                                        name="sexo"
+                                        id="sexo"
+                                        value={sexoUser}
+                                        onChange={(e) => setSexoUser(e.target.value)}>
+                                        
                                         <option value="masculino">Masculino</option>
                                         <option value="feminino">Feminino</option>
                                     </select>
@@ -105,7 +156,6 @@ export default function Cadastro_user() {
                             <div className=" mb-3 flex flex-row justify-between">
                                 <Dropdown_estados onChange={handleInputChange} />
                                 <Dropdown_cidades state={formValues.state} onChange={handleInputChange} />
-
 
                             </div>
 
