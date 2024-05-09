@@ -160,7 +160,7 @@ export default function Cadastro_user() {
                             </div>
 
                             <div className=" flex w-full items-center justify-center my-5">
-                                <button className=" h-9 w-36 bg-secundaryColor rounded-xl" type="submit">
+                                <button className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor" type="submit">
                                     Enviar
                                 </button>
                             </div>
