@@ -1,8 +1,10 @@
+import React from 'react'
+import Menu_principal from "../../components/menu_principal/menu_principal";
+
 export default function Sacola() {
     return(
         <div>
-            <h1>Sacola</h1>
-            <h1>teste</h1>
+            <Menu_principal />
         </div>
     )
 }
