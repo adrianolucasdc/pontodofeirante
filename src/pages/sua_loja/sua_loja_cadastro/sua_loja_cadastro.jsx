@@ -14,11 +14,14 @@ export default function Sua_loja_cadastro() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
+    
+
     function handleSubmit(e) {
         e.preventDefault();
         if (nome_empresa !== '' && razao_social !== '' && email !== '' && numPhone !== '' && cnpj !== '' && password !== '' && confirmPassword !== '') {
             alert("cadastro realizado")
         }
+
     }
 
 
@@ -103,6 +106,16 @@ export default function Sua_loja_cadastro() {
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     type="password"
                                     className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
+                            </div>
+                            <div className=" mb-3">
+                                <input
+                                    id="check_termos_e_condicoes"
+                                    name="checkBoxValue"
+                                    type="checkbox"
+                                    className=" border-primaryColor border-2 rounded-md " 
+                                />
+                                <label className=" pl-2">Eu aceito os <Link className=" text-secundaryColor underline font-bold" to="/termosecondicoes">Termos e condições</Link></label>
+
                             </div>
                         </div>
 

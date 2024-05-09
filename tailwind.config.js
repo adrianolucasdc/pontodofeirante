@@ -12,7 +12,8 @@ export default {
         secundaryColor: "#FEB400",
         thirdColor: "#EA5454",
         lightColor: "#FFFFFF",
-        lightColorGray: "#858585"
+        lightColorGray: "#858585",
+        lineColor: "#D9D9D9"
       }
     },
   },
