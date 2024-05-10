@@ -65,24 +65,24 @@ model LocalizacaoLoja {
 model EnderecoUsuario {
   id           Int      @id @default(autoincrement())
   usuario      Usuario  @relation(fields: [id], references: [id])
+  cep          BigInt
   cidade       String
   uf           String
-  email        String
-  numero       String
-  bairro       String
-  complemento  String
+  rua          String 
+  numero       String 
+  bairro       String 
 }
 
 model Usuario {
   id           Int      @id @default(autoincrement())
   nome         String
-  senha        String
+  email        String   @unique
+  senha        String   
   telefone     BigInt   @unique
-  cpf          BigInt      @unique
+  cpf          BigInt   @unique
   dataNasc     DateTime
   sexo         String
-  email        String   @unique
-  endereco     EnderecoUsuario[]
+  endereco     EnderecoUsuario[] 
   favoritos    Favorito[]
 }
 
