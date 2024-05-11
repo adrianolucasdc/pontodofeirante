@@ -13,7 +13,8 @@ export default {
         thirdColor: "#EA5454",
         lightColor: "#FFFFFF",
         lightColorGray: "#858585",
-        lineColor: "#D9D9D9"
+        lineColor: "#D9D9D9",
+        linkColor: "#0000ff"
       }
     },
   },

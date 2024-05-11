@@ -62,17 +62,6 @@ model LocalizacaoLoja {
   complemento  String
 }
 
-model EnderecoUsuario {
-  id           Int      @id @default(autoincrement())
-  usuario      Usuario  @relation(fields: [id], references: [id])
-  cep          BigInt
-  cidade       String
-  uf           String
-  rua          String 
-  numero       String 
-  bairro       String 
-}
-
 model Usuario {
   id           Int      @id @default(autoincrement())
   nome         String
@@ -85,7 +74,16 @@ model Usuario {
   endereco     EnderecoUsuario[] 
   favoritos    Favorito[]
 }
-
+model EnderecoUsuario {
+  id           Int      @id @default(autoincrement())
+  usuario      Usuario  @relation(fields: [id], references: [id])
+  cep          BigInt
+  cidade       String
+  uf           String
+  rua          String 
+  numero       String 
+  bairro       String 
+}
 model Favorito {
   id          Int      @id @default(autoincrement())
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
