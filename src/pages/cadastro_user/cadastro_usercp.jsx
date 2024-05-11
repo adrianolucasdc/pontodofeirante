@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, validateYupSchema} from 'formik';
 import * as Yup from "yup";
 import { IMaskInput } from "react-imask";
-import { fetchCidades } from "../../helpers/ibge";
-import { fetchEstados } from "../../helpers/ibge";
+
+
 
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
-import Dropdown_cidades from "../../components/forms/dropdown_cidades";
-import Dropdown_estados from "../../components/forms/dropdown_estados";
+import criarUsuario from '../../components/create_objects/CreateObject';
+import ReactInputMask from 'react-input-mask';
 
 
 
+function mascCelular (valor) {
+    return valor
+    .replace(/\D/g, '')
+    .replace(/(\d{3})(\d)/, '$1.$2') 
+    .replace(/(\d{3})(\d)/, '$1.$2') 
+    .replace(/(\d{3})(\d{1,2})/, '$1-$2') 
+    .replace(/(-\d{2})\d+?$/, '$1'); 
+}
 const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo obrigatório!"),
-    email: Yup.string().email("* Digite um email válido!").required("* Campo obrigatório!"),
-    termos: Yup.boolean().required("* É necessário aceitar os termos!"),
-    senha: Yup.string().required("* Campo obrigatório!"),
-    telefone: Yup.string().required("* Campo obrigatório!"),
+    email: Yup.string().email("* Insira um email válido!").required("* Campo obrigatório!"),
+    termos: Yup.boolean().isTrue("* É necessário aceitar os termos de condições!"),
+    senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres"),
+    telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     cpf: Yup.string().required("* Campo obrigatório!"),
-    dataNasc: Yup.date().required("* Campo obrigatório!"),
+    dataNasc: Yup.string().required("* Campo obrigatório!"),
     sexo: Yup.string().required("* Campo obrigatório!"),
     uf: Yup.string().required("* Campo obrigatório!"),
     cidade: Yup.string().required("* Campo obrigatório!"),
@@ -28,8 +36,9 @@ const validationSchema = Yup.object().shape({
     rua:Yup.string().required("* Campo obrigatório!"),
     cep: Yup.string().required("* Campo obrigatório!"),
     numero: Yup.string().required("* Campo obrigatório!"), 
+    confirmSenha: Yup.string().oneOf([Yup.ref("senha"), null], "* As senhas devem corresponder!")
+    .required("* Confirmação de senha é obrigatório!"), 
 })
-
 
 
 export default function Cadastro_usercp() {
@@ -51,43 +60,61 @@ export default function Cadastro_usercp() {
                         onSubmit={values => console.log(values)}
                         validationSchema={validationSchema}
                         >
+                        {/* criarUsuario(values.nome, values.email, values.senha, values.telefone, values.cpf,
+                            values.cep, values.dataNasc, values.sexo,values.uf, values.cidade, values.rua,
+                            values.numero, values.bairro) */}
                             {({handleSubmit}) => (
                                 <Form onSubmit={handleSubmit}>
-                                    {campoPreencher("Nome Completo:","Digite seu nome...","nome","text")}
-                                    {campoPreencher("E-mail: ","Digite seu e-mail...","email","email")}
-                                    {campoPreencher("Senha: ", "Digite sua senha...", "senha", "password")}
+                                    {campoPreencher("Nome Completo:","Insira seu nome...","nome","text")}
+                                    {campoPreencher("E-mail: ","Insira seu e-mail...","email","email")}
+                                    {campoPreencher("Senha: ", "Insira sua senha...", "senha", "password")}
                                     {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha", "password")}
                                     <div className=" mb-3">
-                                        <h1 className=" text-primaryColor">Número de telefone: </h1>
-                                        <IMaskInput
-                                        name="telefone"
-                                        mask="(00) 00000-0000"
-                                        placeholder='Digite seu telefone...'
-                                        className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
-                                        />
+                                        <h1 className=" text-primaryColor">Número de celular: </h1>
+                                        <Field name="telefone" type="text">
+                                        {
+                                            ({field}) => (
+                                            <IMaskInput {...field}
+                                            name="telefone"
+                                            mask="(00) 00000-0000"
+                                            placeholder='Insira seu celular...'
+                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            />
+                                        )}
+                                        </Field>
+
+                                        <ErrorMessage name='telefone' component="div" className='error text-red-600 text-sm ml-3'/>
                                     </div>
                                     <div className=" mb-3">
-                                        <h1 className=" text-primaryColor">Digite seu CPF:</h1>
-                                        <IMaskInput
-                                        name="cpf"
-                                        mask="000.000.000-00"
-                                        placeholder='Digite seu CPF...'
-                                        className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
-                                        />
+                                        <h1 className=" text-primaryColor">Insira seu CPF:</h1>
+                                        <Field name="cpf">{({field}) => (
+                                            <IMaskInput {...field}
+                                            name="cpf"
+                                            mask="000.000.000-00"
+                                            placeholder='Insira seu CPF...'
+                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            />
+                                        )}</Field>
+                                        <ErrorMessage name='cpf' component="div" className='error text-red-600 text-sm ml-3'/>
                                     </div>
                                     
-                                    <div className='flex justify-around items-center mb-3'>
-                                        <div>
+                                    <div className='flex justify-between mb-3'>
+                                        <div className='w-[80%]'>
                                             <span>Data de Nascimento: </span>
                                             <Field type="date" name="dataNasc" className="pl-2 w-11/12 h-9 border-primaryColor border-2 rounded-md"/>
+                                            <ErrorMessage name='dataNasc' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
-                                        <div>
+                                        <div className='overflow-hidden w-[47%]'>
                                             <span className='block'>Sexo: </span>
                                             <Field as="select" name="sexo" className=" h-9 border-primaryColor border-2 rounded-md">
                                                 <option value="">Selecione</option>
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Feminino">Feminino</option>
                                             </Field>
+                                            
+                                            <ErrorMessage name='sexo' component="div" className='error text-red-600 text-sm ml-3'/>
+                                            
+                                            
                                         </div>
                                     </div>
 
@@ -95,44 +122,32 @@ export default function Cadastro_usercp() {
                                         <span className='font-extrabold text-lg'>Endereço</span>
                                     </div>
 
-                                    <div className='mb-3 flex justify-between items-center'>
-                                        <div className='w-[47%]'>
-                                            <span className='block'>Estado:</span>
-                                            <Field as="select" name="uf" className="w-full h-9 border-primaryColor border-2 rounded-md overflow-hidden">
-                                                <option value="">Selecione um estado...</option>
-                                            </Field>
-                                        </div>
-                                        <div className='w-[47%]'>
-                                            <span className='block'>Cidade:</span>
-                                            <Field as="select" name="cidade" className="w-full h-9 border-primaryColor border-2 rounded-md overflow-hidden">
-                                                <option value="">Selecione um cidade...</option>
-                                            </Field>
-                                        </div>
-                                    </div>
-
-                                    {campoPreencher("Bairro: ","Digite seu bairro...","bairro","text")}
-                                    {campoPreencher("Rua: ", "Digite sua rua...","rua")}
-
-                                    <div className="flex justify-between mb-4">
+                                    <div className="flex justify-between">
                                         <div>
-                                            <h1 className=" text-primaryColor">Digite seu CEP:</h1>
-                                            <IMaskInput
-                                            name="cep"
-                                            mask="00000-000"
-                                            placeholder='Digite seu CPF...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
-                                            />
+                                            <h1 className=" text-primaryColor">Insira seu CEP:</h1>
+                                            <Field name="cep">{({field}) => (
+                                                <IMaskInput {...field}
+                                                name="cep"
+                                                mask="00000-000"
+                                                placeholder='Insira seu CEP...'
+                                                className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                                />
+                                            )}</Field>
+                                            <ErrorMessage name='cep' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
                                         <div className='w-36 overflow-hidden ml-4'>
-                                            {campoPreencher("Número: ", "Digite o número...","numero")}
+                                            {campoPreencher("Número: ", "Insira o número...","numero")}
                                         </div>
                                     </div>
-                                    
-                                
 
+                                    {campoPreencher("Estado: ","Insira seu estado...", "uf", "text")}
+                                    {campoPreencher("Cidade: ", "Insira sua cidade...","cidade","text")}
+                                    {campoPreencher("Bairro: ","Insira seu bairro...","bairro","text")}
+                                    {campoPreencher("Rua: ", "Insira sua rua...","rua")}
 
-                                
-                                    <div className='mb-4'>
+                                    <div className="h-3 "></div>
+
+                                    <div className='mb-2'>
                                         <label>
                                             <Field type='checkbox' name="termos" className="mx-2"/>
                                             Aceito os
@@ -155,5 +170,6 @@ export default function Cadastro_usercp() {
             </div>
             <Menu_principal />
         </div>
+        
     )
 }
