@@ -10,7 +10,7 @@ import { IMaskInput } from "react-imask";
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
 import criarUsuario from '../../components/create_objects/CreateObject';
-import { PrismaClient } from '@prisma/client';
+
 
 
 
@@ -61,12 +61,11 @@ export default function Cadastro_user() {
                             // criarUsuario(values.nome, values.email, values.senha, values.telefone, values.cpf,
                             // values.cep, values.dataNasc, values.sexo,values.uf, values.cidade, values.rua,
                             // values.numero, values.bairro)
-                        console.log(values.email)
                         setSubmitted(true)
                         setTimeout(()=>{
                             setSubmitted(false)
                         }, 3000)}}
-                        // validationSchema={validationSchema}
+                        validationSchema={validationSchema}
                         >
                         
                             {({handleSubmit}) => (
