@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
     .matches(/[$*&@#()@!-]/,"* A senha deve conter pelo menos um caracter especial (ex: -, #, *, &)")
     .max(16, "* A senha deve conter no máximo 16 caracteres"),
     telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
-    cpf: Yup.string().required("* Campo obrigatório!"),
+    cpf: Yup.string().required("* Campo obrigatório!").min(14, "* Insira um cpf válido!"),
     dataNasc: Yup.date()
     .min(new Date(2000,0,1), "* Para fazer o cadastro é necessário ter mais de 10 anos!")
     .required("* Campo obrigatório!"),
@@ -37,7 +37,7 @@ const validationSchema = Yup.object().shape({
     cidade: Yup.string().required("* Campo obrigatório!"),
     bairro: Yup.string().required("* Campo obrigatório!"),
     rua:Yup.string().required("* Campo obrigatório!"),
-    cep: Yup.string().required("* Campo obrigatório!"),
+    cep: Yup.string().required("* Campo obrigatório!").min(9, "* Insira um cep válido!"),
     numero: Yup.string().required("* Campo obrigatório!"), 
     confirmSenha: Yup.string().oneOf([Yup.ref("senha"), null], "* As senhas devem corresponder!")
     .required("* Confirmação de senha é obrigatório!"), 
