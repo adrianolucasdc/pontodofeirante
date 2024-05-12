@@ -1,0 +1,79 @@
+{
+  "hash": "545ce8b5",
+  "configHash": "874cd684",
+  "lockfileHash": "e3b0c442",
+  "browserHash": "7a3293d0",
+  "optimized": {
+    "@prisma/client": {
+      "src": "../../node_modules/@prisma/client/index-browser.js",
+      "file": "@prisma_client.js",
+      "fileHash": "0bc45857",
+      "needsInterop": true
+    },
+    "formik": {
+      "src": "../../node_modules/formik/dist/formik.esm.js",
+      "file": "formik.js",
+      "fileHash": "8aa3e66c",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "24fecca4",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "05cacdd9",
+      "needsInterop": true
+    },
+    "react-icons/io": {
+      "src": "../../node_modules/react-icons/io/index.mjs",
+      "file": "react-icons_io.js",
+      "fileHash": "13a99aa7",
+      "needsInterop": false
+    },
+    "react-icons/io5": {
+      "src": "../../node_modules/react-icons/io5/index.mjs",
+      "file": "react-icons_io5.js",
+      "fileHash": "a4d31f3a",
+      "needsInterop": false
+    },
+    "react-imask": {
+      "src": "../../node_modules/react-imask/esm/index.js",
+      "file": "react-imask.js",
+      "fileHash": "2c2f43f0",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "162aae48",
+      "needsInterop": false
+    },
+    "yup": {
+      "src": "../../node_modules/yup/index.esm.js",
+      "file": "yup.js",
+      "fileHash": "6f87ac5e",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-DYIYK56Z": {
+      "file": "chunk-DYIYK56Z.js"
+    },
+    "chunk-IHSJ26OV": {
+      "file": "chunk-IHSJ26OV.js"
+    },
+    "chunk-4HPDLAN7": {
+      "file": "chunk-4HPDLAN7.js"
+    },
+    "chunk-QY3QVPNU": {
+      "file": "chunk-QY3QVPNU.js"
+    },
+    "chunk-LQ2VYIYD": {
+      "file": "chunk-LQ2VYIYD.js"
+    }
+  }
+}
