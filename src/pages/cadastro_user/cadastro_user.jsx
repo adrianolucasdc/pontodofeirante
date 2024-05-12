@@ -20,7 +20,12 @@ const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo obrigatório!"),
     email: Yup.string().email("* Insira um email válido!").required("* Campo obrigatório!"),
     termos: Yup.boolean().isTrue("* É necessário aceitar os termos de condições!"),
-    senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres"),
+    senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres")
+    .matches(/[a-z]/,"* A senha deve conter pelo menos uma letra minúscula")
+    .matches(/[A-Z]/,"* A senha deve conter pelo menos uma letra maiúscula")
+    .matches(/[0-9]/,"* A senha deve conter pelo menos um número")
+    .matches(/[$*&@#()@!-]/,"* A senha deve conter pelo menos um caracter especial (ex: -, #, *, &)")
+    .max(16, "* A senha deve conter no máximo 16 caracteres"),
     telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     cpf: Yup.string().required("* Campo obrigatório!"),
     dataNasc: Yup.date()
