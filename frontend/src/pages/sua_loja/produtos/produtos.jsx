@@ -3,15 +3,25 @@ import BtnMenuIcon from '../../../assets/btnMenu_sua_loja_icon.svg'
 
 import Lista_produtos from '../../../components/lista_produtos/lista_produtos'
 import Menu_principal from "../../../components/menu_principal/menu_principal"
+import Menu_sua_loja from '../../../components/menu_sua_loja/sua_loja';
 
 import { IoMdSearch } from "react-icons/io";
+import { useState } from 'react';
 
 
 export default function Produtos() {
+
+    function toggleModal() {
+        setShowMenuLoja(!showMenuLoja)
+    }
+
+    const [showMenuLoja, setShowMenuLoja] = useState(false);
+
+
     return (
-        <div className="  mt-7 flex flex-col">
-            <div className=' flex flex-col mx-6'>
-                <button>
+        <div className="   flex flex-col">
+            <div className=' mt-7 flex flex-col mx-6'>
+                <button onClick={() => toggleModal()}>
                     <img src={BtnMenuIcon} alt="" />
                 </button>
                 <div className=' mt-5'>
@@ -19,7 +29,9 @@ export default function Produtos() {
                         <h1 className=' font-extrabold text-primaryColor'>
                             Produtos <input disabled type="number" className=' bg-transparent max-w-14' />
                         </h1>
-                        <button className=' bg-primaryColor text-backgroundColor text-md rounded-xl w-32 h-8 flex items-center justify-center'>
+                        <button
+                            className=' bg-primaryColor text-backgroundColor text-md rounded-xl w-32 h-8 flex items-center justify-center'
+                        >
                             <span className="material-symbols-outlined ">
                                 add
                             </span>
@@ -46,10 +58,16 @@ export default function Produtos() {
                         <h1 className=' flex items-center justify-center bg-white w-1/3 h-full font-extrabold text-primaryColor'>Referência</h1>
                         <h1 className=' flex items-center justify-center bg-white w-1/3 h-full font-extrabold text-primaryColor rounded-tr-xl'>Qtd.</h1>
                     </div>
-                    <Lista_produtos/>
+                    <Lista_produtos />
                 </div>
             </div>
             <Menu_principal />
+
+            {showMenuLoja && (
+                <Menu_sua_loja 
+                    close={ () => setShowMenuLoja(!showMenuLoja)}
+                />
+            )}
         </div>
     )
 }

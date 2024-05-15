@@ -15,7 +15,7 @@ export default function Lista_produtos() {
                     <input className=" text-primaryColor text-center w-16" id="quantidade_produto" type="number" disabled value="122" />
                 </div>
                 <div className=" flex items-center text-thirdColor pr-1">
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                         edit_square
                     </span>
                 </div>
