@@ -7,11 +7,9 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
     try{
         await criarUsuario(req.body.nome, req.body.email, req.body.senha, req.body.telefone, req.body.cpf, req.body.cep, req.body.dataNasc,
             req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro)
-        res.redirect("/api/login_usuario")
     }
     catch(e){
         console.log(e)
-        res.redirect("/api/cadastro_usuario")
     }
 })
 
