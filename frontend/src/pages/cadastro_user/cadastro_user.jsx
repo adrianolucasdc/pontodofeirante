@@ -25,12 +25,11 @@ const validationSchema = Yup.object().shape({
     .matches(/[a-z]/,"* A senha deve conter pelo menos uma letra minúscula")
     .matches(/[A-Z]/,"* A senha deve conter pelo menos uma letra maiúscula")
     .matches(/[0-9]/,"* A senha deve conter pelo menos um número")
-    .matches(/[$*&@#()@!-]/,"* A senha deve conter pelo menos um caracter especial (ex: -, #, *, &)")
+    .matches(/[$*&@#()%@!-]/,"* A senha deve conter pelo menos um caracter especial (ex: -, #, *, &)")
     .max(16, "* A senha deve conter no máximo 16 caracteres"),
     telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     cpf: Yup.string().required("* Campo obrigatório!").min(14, "* Insira um cpf válido!"),
     dataNasc: Yup.date()
-    .min(new Date(2000,0,1), "* Para fazer o cadastro é necessário ter mais de 10 anos!")
     .required("* Campo obrigatório!"),
     sexo: Yup.string().required("* Campo obrigatório!"),
     uf: Yup.string().required("* Campo obrigatório!"),
