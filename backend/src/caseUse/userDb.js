@@ -6,15 +6,16 @@ const bcrypt = require("bcrypt");
 
 async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, sexo, 
     estado, cidade, rua, numero, bairro, termos){
-        const passwordHash = await bcrypt.hash(senha, 8);
         const telefoneSemMascara = String(telefone).replace(/\D/g,"");
         const cpfSemMascara = String(cpf).replace(/\D/g, "");
         const cepSemMascara = String(cep).replace(/\D/g, "");
+        const password = senha
 
         const numeroTelefone = parseInt(telefoneSemMascara);
-        const numeroCpf = parseInt(cpfSemMascara, 10);
         const numeroCep = parseInt(cepSemMascara, 10);
-        const cpfHash = await bcrypt.hash(numeroCpf, 8);
+        const salt = await bcrypt.genSalt(12);
+        const cpfHash = await bcrypt.hash(cpfSemMascara, salt);
+        const passwordHash = await bcrypt.hash(password, salt);
 
         const create_user = await prisma.usuario.create({
             data:{
@@ -44,8 +45,15 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
     }
 
 async function autenticarUsuario(email, senha){
-    const user = await prisma.usuario.findUnique(email);
-    const passwordAutenticated = await bcrypt.compare(user.senha, senha);
+
+}
+
+async function existe(input){
+    const exist = await prisma.usuario.findUnique({
+        where :{
+            email: input,
+        } 
+    });
 }
 
 module.exports = {criarUsuario};

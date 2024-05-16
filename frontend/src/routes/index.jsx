@@ -11,7 +11,7 @@ import Login from '../pages/login/login';
 import Cadastro_user from '../pages/cadastro_user/cadastro_user';
 import Produtos from '../pages/sua_loja/produtos/produtos';
 import TermosUser from '../pages/cadastro_user/termos_de_user';
-import Dashboard from '../pages/sua_loja/dashboard/dashboard';
+import Dashboard from '../pages/sua_loja/Dashboard/dashboard';
 import Controle from '../pages/sua_loja/controle/controle';
 import Minha_loja from '../pages/sua_loja/minha_loja/minha_loja';
 import Historico_pedidos from '../pages/sua_loja/historico_pedidos/historico_pedidos';

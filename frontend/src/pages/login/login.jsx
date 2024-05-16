@@ -12,11 +12,6 @@ const validationSchema = Yup.object().shape({
 
 
 export default function Login() {
-
-    async function autenticar(){
-        
-    }
-
     return (
         <div className=" h-screen flex flex-col left ">
             <div className=" ml-6 mt-7">

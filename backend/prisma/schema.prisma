@@ -69,7 +69,7 @@ model Usuario {
   email        String   @unique
   senha        String   
   telefone     BigInt   @unique
-  cpf          BigInt   @unique
+  cpf          String   @unique
   dataNasc     DateTime
   sexo         String
   termos       Boolean
