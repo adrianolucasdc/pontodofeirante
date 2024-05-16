@@ -82,13 +82,27 @@ export default function Cadastro_user() {
 
     async function handleForm(values){
         try{
-            const response = await fetch("http://localhost:3000/api/cadastro_usuario", {
+            const response = await fetch("http://localhost:4000/api/cadastro_usuario", {
                 method : "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body : JSON.stringify(values)
             });
+
+            setTimeout(() => {
+                return null;
+            }, 4000);
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            }
+            else {
+                console.log('Erro na resposta do servidor');
+            }
         }catch (err){
             console.log(err);
         }
@@ -96,6 +110,11 @@ export default function Cadastro_user() {
     
 
     const [submitted, setSubmitted] = useState(false);
+
+    const date = new Date();
+    const currentYear = date.getFullYear();
+    const maxYear = currentYear - 14 +"-12-31";
+    const minYear = currentYear - 130 +"-01-01";
 
     return (
         <div className="">
@@ -110,7 +129,7 @@ export default function Cadastro_user() {
                     <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Cadastre seu usuário</h1>
                     <div className="flex flex-col  mt-6 h-full w-full mx-3">
                         <Formik 
-                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "", sexo: "", 
+                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "2000-01-01", sexo: "", 
                         cep: "", uf: "", cidade : "", rua : "", numero: "", bairro: "", termos: false }}
                         onSubmit={values => {
                             handleForm(values);
@@ -167,7 +186,7 @@ export default function Cadastro_user() {
                                     <div className='flex justify-between mb-3'>
                                         <div className='w-[80%]'>
                                             <span>Data de Nascimento: </span>
-                                            <Field type="date" name="dataNasc" className="pl-2 w-11/12 h-9 border-primaryColor border-2 rounded-md"/>
+                                            <Field type="date" name="dataNasc" max={maxYear} min={minYear} className="pl-2 w-11/12 h-9 border-primaryColor border-2 rounded-md"/>
                                             <ErrorMessage name='dataNasc' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
                                         <div className='overflow-hidden w-[47%]'>
