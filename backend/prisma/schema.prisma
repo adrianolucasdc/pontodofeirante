@@ -22,6 +22,7 @@ model Loja {
   banner      String?         // img
   logo        String?         // img
   senha       String
+  termos      Boolean
   localizacao LocalizacaoLoja[]
   favoritos   Favorito[]
   produtos    Produto[]       
@@ -71,6 +72,7 @@ model Usuario {
   cpf          BigInt   @unique
   dataNasc     DateTime
   sexo         String
+  termos       Boolean
   endereco     EnderecoUsuario[] 
   favoritos    Favorito[]
 }

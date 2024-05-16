@@ -4,7 +4,7 @@ const cuid = require("cuid");
 
 
 async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, sexo, 
-    estado, cidade, rua, numero, bairro){
+    estado, cidade, rua, numero, bairro, termos){
         const telefoneSemMascara = String(telefone).replace(/\D/g,"");
         const cpfSemMascara = String(cpf).replace(/\D/g, "");
         const cepSemMascara = String(cep).replace(/\D/g, "");
@@ -23,6 +23,7 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
                 cpf : numeroCpf,
                 dataNasc : dataNasc+"T12:00:00Z",
                 sexo : sexo,
+                termos: termos,
                 endereco : {
                     create : {
                         cep : numeroCep,

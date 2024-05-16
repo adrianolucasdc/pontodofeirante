@@ -82,7 +82,7 @@ export default function Cadastro_user() {
 
     async function handleForm(values){
         try{
-            const response = await fetch("http://localhost:4000/api/cadastro_usuario", {
+            const response = await fetch("http://localhost:3000/api/cadastro_usuario", {
                 method : "POST",
                 headers: {
                     "Content-Type": "application/json"
