@@ -1,13 +1,11 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
+
 const { criarUsuario } = require("../models/userDb");
 const routes = express.Router();
 
 
 routes.post("/api/cadastro_usuario", async (req, res)=>{
     try{
-        const passwordHash = await bcrypt.hash(req.body.senha, 8);
-        const cfpHash = await bcrypt.hash(req.body.cpf, 8);
         await criarUsuario(req.body.nome, req.body.email, passwordHash, req.body.telefone, cfpHash, req.body.cep, req.body.dataNasc,
             req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro, req.body.termos);
         
