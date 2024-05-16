@@ -7,6 +7,7 @@ import Menu_sua_loja from '../../../components/menu_sua_loja/sua_loja';
 
 import { IoMdSearch } from "react-icons/io";
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 export default function Produtos() {
@@ -29,7 +30,7 @@ export default function Produtos() {
                         <h1 className=' font-extrabold text-primaryColor'>
                             Produtos <input disabled type="number" className=' bg-transparent max-w-14' />
                         </h1>
-                        <button
+                        <Link to='/addproduto'
                             className=' bg-primaryColor text-backgroundColor text-md rounded-xl w-32 h-8 flex items-center justify-center'
                         >
                             <span className="material-symbols-outlined ">
@@ -38,7 +39,7 @@ export default function Produtos() {
                             <h1 className=' font-bold'>
                                 PRODUTOS
                             </h1>
-                        </button>
+                        </Link>
                     </div>
                 </div>
                 <div className=" flex flex-row items-center bg-lightColor shadow-xl w-full h-11 rounded-2xl mt-5">
