@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Loja {
-  id          Int             @id @default(autoincrement())
+  id           String      @id 
   nome        String
   cnpj        Int          @unique
   email       String          @unique
@@ -29,18 +29,18 @@ model Loja {
 
 
 model Categoria {
-  id      Int      @id @default(autoincrement())
+  id           String      @id 
   nome    String
   imagem  String  // img
   produtos Produto[]
 }
 
 model Produto {
-  id           Int       @id @default(autoincrement())
+  id           String      @id 
   loja         Loja      @relation(fields: [lojaId], references: [id])
-  lojaId       Int
+  lojaId       String
   categoria    Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId  Int
+  categoriaId  String
   nome         String
   imagem       String?   // img
   descricao    String
@@ -52,9 +52,9 @@ model Produto {
 
 
 model LocalizacaoLoja {
-  id           Int      @id @default(autoincrement())
+  id           String      @id 
   loja         Loja     @relation(fields: [lojaId], references: [id])
-  lojaId       Int
+  lojaId       String
   cep          String
   logradouro   String
   numero       String
@@ -63,7 +63,7 @@ model LocalizacaoLoja {
 }
 
 model Usuario {
-  id           Int      @id @default(autoincrement())
+  id           String      @id 
   nome         String
   email        String   @unique
   senha        String   
@@ -75,7 +75,7 @@ model Usuario {
   favoritos    Favorito[]
 }
 model EnderecoUsuario {
-  id           Int      @id @default(autoincrement())
+  id           String      @id 
   usuario      Usuario  @relation(fields: [id], references: [id])
   cep          BigInt
   cidade       String
@@ -85,13 +85,13 @@ model EnderecoUsuario {
   bairro       String 
 }
 model Favorito {
-  id          Int      @id @default(autoincrement())
+  id           String      @id 
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
-  usuarioId   Int
+  usuarioId   String
   loja        Loja     @relation(fields: [lojaId], references: [id])
-  lojaId      Int
+  lojaId      String
   produto     Produto  @relation(fields: [produtoId], references: [id])
-  produtoId   Int
+  produtoId   String
 
   @@unique([usuarioId, lojaId, produtoId], name: "favoritos_unique")
 }

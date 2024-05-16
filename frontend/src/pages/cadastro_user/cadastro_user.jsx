@@ -9,7 +9,7 @@ import { IMaskInput } from "react-imask";
 
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
-import criarUsuario from '../../components/create_objects/CreateObject';
+
 
 
 
@@ -47,36 +47,50 @@ const validationSchema = Yup.object().shape({
 
 
 export default function Cadastro_user() {
-    const [showPass, setShowPass] = useState(false);
-    const [statusPass, setStatusPass] = useState("password")
-    const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
-    const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
+    // const [showPass, setShowPass] = useState(false);
+    // const [statusPass, setStatusPass] = useState("password")
+    // const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
+    // const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
 
-    function onClickButton(){
-        if (showPass) {
-            setShowPass(false);
-            setStatusPass("password")
-            setFileSvg("src/assets/eye-pass-show.svg")
-        }
-        else {
-            setShowPass(true);
-            setStatusPass("text")
-            setFileSvg("src/assets/eye-pass-unshow.svg")
-        }
-    }
+    // function onClickButton(){
+    //     if (showPass) {
+    //         setShowPass(false);
+    //         setStatusPass("password")
+    //         setFileSvg("src/assets/eye-pass-show.svg")
+    //     }
+    //     else {
+    //         setShowPass(true);
+    //         setStatusPass("text")
+    //         setFileSvg("src/assets/eye-pass-unshow.svg")
+    //     }
+    // }
 
-    const [showPass1, setShowPass1] = useState(false);
-    const [statusPass1, setStatusPass1] = useState("password")
-    function onClickButton1(){
-        if (showPass1) {
-            setShowPass1(false);
-            setStatusPass1("password")
-            setFileSvg1("src/assets/eye-pass-show.svg")
-        }
-        else {
-            setShowPass1(true);
-            setStatusPass1("text")
-            setFileSvg1("src/assets/eye-pass-unshow.svg")
+    // const [showPass1, setShowPass1] = useState(false);
+    // const [statusPass1, setStatusPass1] = useState("password")
+    // function onClickButton1(){
+    //     if (showPass1) {
+    //         setShowPass1(false);
+    //         setStatusPass1("password")
+    //         setFileSvg1("src/assets/eye-pass-show.svg")
+    //     }
+    //     else {
+    //         setShowPass1(true);
+    //         setStatusPass1("text")
+    //         setFileSvg1("src/assets/eye-pass-unshow.svg")
+    //     }
+    // }
+
+    async function handleForm(values){
+        try{
+            const response = await fetch("http://localhost:4000/api/cadastro_usuario", {
+                method : "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body : JSON.stringify(values)
+            });
+        }catch (err){
+            console.log(err);
         }
     }
     
@@ -99,13 +113,12 @@ export default function Cadastro_user() {
                         initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "", sexo: "", 
                         cep: "", uf: "", cidade : "", rua : "", numero: "", bairro: "", termos: false }}
                         onSubmit={values => {
-                            // criarUsuario(values.nome, values.email, values.senha, values.telefone, values.cpf,
-                            // values.cep, values.dataNasc, values.sexo,values.uf, values.cidade, values.rua,
-                            // values.numero, values.bairro)
-                        setSubmitted(true)
-                        setTimeout(()=>{
-                            setSubmitted(false)
-                        }, 3000)}}
+                            handleForm(values);
+                            setSubmitted(true);
+                            setTimeout(()=>{
+                                setSubmitted(false);
+                            }, 3000)}
+                        }
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit}) => (
@@ -113,12 +126,12 @@ export default function Cadastro_user() {
                                     {campoPreencher("Nome Completo:","Insira seu nome...","nome","text")}
                                     {campoPreencher("E-mail: ","Insira seu e-mail...","email","email")}
                                     <div className='relative'>
-                                        {campoPreencher("Senha: ", "Insira sua senha...", "senha", statusPass)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                        {campoPreencher("Senha: ", "Insira sua senha...", "senha", "password")}
+                                        {/* <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button> */}
                                     </div>
                                     <div className='relative'>
-                                        {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha", statusPass1)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
+                                        {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha","password")}
+                                        {/* <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button> */}
                                     </div>
                                     
                                     <div className=" mb-3">

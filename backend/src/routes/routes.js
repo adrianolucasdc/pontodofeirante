@@ -1,26 +1,32 @@
 const express = require("express");
-
+const { criarUsuario } = require("../models/userDb");
 const routes = express.Router();
 
-const users = [{
-    id:1,
-    name: "Adriano",
-    email: "adriano@gmail.com",
-    password: "1234"
-}];
 
-routes.post("/login", (req, res) => {
-    const {email, password} = req.body;
-
-    const user = users.find(user => user.email === email && user.password ===
-        password);
-
-    if (user){
-        return res.status(200).json(user);
+routes.post("/api/cadastro_usuario", async (req, res)=>{
+    try{
+        await criarUsuario(req.body.nome, req.body.email, req.body.senha, req.body.telefone, req.body.cpf, req.body.cep, req.body.dataNasc,
+            req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro)
+        res.redirect("/api/login_usuario")
     }
-    
-    return res.status(401).json({message : "Invalid credentials"});
-});
+    catch(e){
+        console.log(e)
+        res.redirect("/api/cadastro_usuario")
+    }
+})
+
+routes.get("/api/cadastro_loja", (req, res)=>{
+    res.send("cadastro_loja");
+})
+
+routes.get("/api/login_usuario", (req, res)=>{
+    res.send("login_usuario");
+})
+
+routes.get("/api/login_loja", (req, res)=>{
+    res.send("login_loja");
+})
+
 
 
 module.exports = routes;
