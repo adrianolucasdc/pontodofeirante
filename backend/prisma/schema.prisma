@@ -14,43 +14,33 @@ datasource db {
 }
 
 model Loja {
-  id           String      @id 
+  id          String      @id 
   nome        String
-  cnpj        Int          @unique
-  email       String          @unique
-  telefone    Int          @unique
+  razao       String
+  cnpj        String       @unique
+  senha       String
+  email       String       @unique
+  telefone    String       @unique
+  celular     String       @unique
   banner      String?         // img
   logo        String?         // img
-  senha       String
   termos      Boolean
+  produtos    Produto[]   
   localizacao LocalizacaoLoja[]
-  favoritos   Favorito[]
-  produtos    Produto[]       
-}
-
-
-model Categoria {
-  id           String      @id 
-  nome    String
-  imagem  String  // img
-  produtos Produto[]
 }
 
 model Produto {
   id           String      @id 
-  loja         Loja      @relation(fields: [lojaId], references: [id])
+  loja         Loja        @relation(fields: [lojaId], references: [id])
   lojaId       String
-  categoria    Categoria @relation(fields: [categoriaId], references: [id])
+  categoria    String
   categoriaId  String
   nome         String
   imagem       String?   // img
   descricao    String
   preco        Float
   desconto     Int?
-  favoritos    Favorito[]
 }
-
-
 
 model LocalizacaoLoja {
   id           String      @id 
@@ -73,9 +63,12 @@ model Usuario {
   dataNasc     DateTime
   sexo         String
   termos       Boolean
-  endereco     EnderecoUsuario[] 
-  favoritos    Favorito[]
+  endereco     EnderecoUsuario[]
+  favoritos    FavoritosUsuario[]
+  pedidos      PedidosUsuario[]
+  sacola       SacolaUsuario[]
 }
+
 model EnderecoUsuario {
   id           String      @id 
   usuario      Usuario  @relation(fields: [id], references: [id])
@@ -86,14 +79,22 @@ model EnderecoUsuario {
   numero       String 
   bairro       String 
 }
-model Favorito {
-  id           String      @id 
+
+
+model FavoritosUsuario {
+  id          String      @id 
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   usuarioId   String
-  loja        Loja     @relation(fields: [lojaId], references: [id])
-  lojaId      String
-  produto     Produto  @relation(fields: [produtoId], references: [id])
-  produtoId   String
+}
 
-  @@unique([usuarioId, lojaId, produtoId], name: "favoritos_unique")
+model PedidosUsuario {
+  id        String     @id
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   String
+}
+
+model SacolaUsuario {
+  id        String     @id
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   String
 }
