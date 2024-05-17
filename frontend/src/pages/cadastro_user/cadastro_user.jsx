@@ -209,7 +209,7 @@ export default function Cadastro_user() {
                                             <ErrorMessage name='dataNasc' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
                                         <div className='overflow-hidden w-[47%]'>
-                                            <h1 className='block font-bold'>Sexo: </h1>
+                                            <h1 className='block font-bold text-primaryColor'>Sexo: </h1>
                                             <Field as="select" name="sexo" className=" h-9 border-primaryColor border-2 rounded-md">
                                                 <option value="">Selecione</option>
                                                 <option value="Masculino">Masculino</option>
