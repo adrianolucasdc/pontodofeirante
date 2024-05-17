@@ -105,11 +105,12 @@ export default function Add_produto() {
                                 <h1 className=" text-primaryColor font-bold">Preço:</h1>
                                 <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-full h-9 pl-2"
                                 />
-                                <ErrorMessage name="preco" component="div" className="error" />
+                                <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3' />
                             </div>
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Categoria: </h1>
                                 <Select
+                                    name='categoria'
                                     components={animatedComponents}
                                     onChange={(item) => setCategoriaSelecionada(item)}
                                     className=" mb-3 border-2 border-primaryColor rounded-md"
@@ -123,14 +124,12 @@ export default function Add_produto() {
                                     isLoading={false}
                                     isRtl={false}
                                 />
-                                <Field name="categoria" >
-
-                                </Field>
-                                <ErrorMessage name="categoria" component="div" className="error" />
+                                <ErrorMessage name="categoria" component="div" className='error text-red-600 text-sm ml-3' />
                             </div>
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Cores: </h1>
                                 <Select
+                                    name="cores"
                                     components={animatedComponents}
                                     onChange={(item) => setCoresSelecionada(item)}
                                     options={coresPecas}
@@ -144,12 +143,12 @@ export default function Add_produto() {
                                     isLoading={false}
                                     isRtl={false}
                                 />
-                                <Field type="text" name="cores" className=" h-9 border-primaryColor border-2 rounded-md" />
-                                <ErrorMessage name="cores" component="div" className="error" />
+                                <ErrorMessage name="cores" component="div" className='error text-red-600 text-sm ml-3'/>
                             </div>
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Tamanhos: </h1>
                                 <Select
+                                    name="tamanho"
                                     components={animatedComponents}
                                     onChange={(item) => setTamanhosSelecionado(item)}
                                     options={tamanhos}
@@ -163,17 +162,7 @@ export default function Add_produto() {
                                     isLoading={false}
                                     isRtl={false}
                                 />
-                                <Field as="select" name="tamanho" className=" h-9 border-primaryColor border-2 rounded-md">
-                                    <option value="">Selecione</option>
-                                    <option value="P">P</option>
-                                    <option value="PP">PP</option>
-                                    <option value="M">M</option>
-                                    <option value="G">G</option>
-                                    <option value="GG">GG</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </Field>
-                                <ErrorMessage name="tamanho" component="div" className="error" />
+                                <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3'/>
                             </div>
 
                             <button
