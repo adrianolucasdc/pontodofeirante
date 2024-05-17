@@ -1,29 +1,64 @@
 import { Link } from "react-router-dom"
 import { useState } from "react";
 import { IMaskInput } from "react-imask";
+import { Formik, ErrorMessage, Form, Field} from "formik";
+
+import * as Yup from "yup";
 
 import Menu_principal from "../../../components/menu_principal/menu_principal"
+import campoPreencher from "../../../components/formularios/input";
+
+const validationSchema = Yup.object().shape({
+    nome: Yup.string().required("* Campo Obrigatório!"),
+    razao: Yup.string().required("* Campo Obrigatório!"),
+    email: Yup.string().required("* Campo Obrigatório!").email("* Insira um e-mail válido!"),
+    telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
+    zap: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
+    cnpj: Yup.string().required("* Campo Obrigatório!").min(18, "* Insira um CNPJ válido! "),
+    senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres")
+    .matches(/[A-Z]/,"* A senha deve conter pelo menos uma letra maiúscula")
+    .matches(/[a-z]/,"* A senha deve conter pelo menos uma letra minúscula")
+    .matches(/[0-9]/,"* A senha deve conter pelo menos um número")
+    .matches(/[$*&@#()%@!-]/,"* A senha deve conter pelo menos um caracter especial (ex: -, #, *, &)")
+    .max(16, "* A senha deve conter no máximo 16 caracteres"),
+    confirmSenha: Yup.string().oneOf([Yup.ref("senha"), null], "* As senhas devem corresponder!")
+    .required("* Confirmação de senha é obrigatório!"), 
+    termos: Yup.boolean().isTrue("* É necessário aceitar os termos de condições!"),
+})
 
 export default function Sua_loja_cadastro() {
+    const [showPass, setShowPass] = useState(false);
+    const [statusPass, setStatusPass] = useState("password")
+    const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
+    const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
 
-    const [nome_empresa, setNome_empresa] = useState('')
-    const [razao_social, setRazao_social] = useState('')
-    const [email, setEmail] = useState('')
-    const [numPhone, setNumPhone] = useState('')
-    const [cnpj, setCnpj] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-
-    
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        if (nome_empresa !== '' && razao_social !== '' && email !== '' && numPhone !== '' && cnpj !== '' && password !== '' && confirmPassword !== '') {
-            alert("cadastro realizado")
+    function onClickButton(){
+        if (showPass) {
+            setShowPass(false);
+            setStatusPass("password")
+            setFileSvg("src/assets/eye-pass-show.svg")
         }
-
+        else {
+            setShowPass(true);
+            setStatusPass("text")
+            setFileSvg("src/assets/eye-pass-unshow.svg")
+        }
     }
 
+    const [showPass1, setShowPass1] = useState(false);
+    const [statusPass1, setStatusPass1] = useState("password")
+    function onClickButton1(){
+        if (showPass1) {
+            setShowPass1(false);
+            setStatusPass1("password")
+            setFileSvg1("src/assets/eye-pass-show.svg")
+        }
+        else {
+            setShowPass1(true);
+            setStatusPass1("text")
+            setFileSvg1("src/assets/eye-pass-unshow.svg")
+        }
+    }
 
     return (
         <div className=" h-full flex flex-col">
@@ -36,97 +71,99 @@ export default function Sua_loja_cadastro() {
 
             <div className=" flex items-center justify-center ">
                 <div className=" w-full max-w-[330px] flex flex-col justify-center mt-5 mb-28 px-4 py-10 rounded-xl shadow-2xl">
-                    <h1 className=" text-3xl font-bold text-primaryColor">Cadastre sua loja</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <h1>Informações de contato</h1>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Nome da empresa</h1>
-                                <input
-                                    id="nome_empresa"
-                                    value={nome_empresa}
-                                    onChange={(e) => setNome_empresa(e.target.value)}
-                                    type="text"
-                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Razão social</h1>
-                                <input
-                                    id="razao_social"
-                                    value={razao_social}
-                                    onChange={(e) => setRazao_social(e.target.value)}
-                                    type="text"
-                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Email da loja</h1>
-                                <input
-                                    id="email_loja"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    type="email"
-                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Número de telefone </h1>
-                                <IMaskInput
-                                    className="border-primaryColor border-2 rounded-md w-full h-9 pl-2"
-                                    value={numPhone}
-                                    onChange={(e) => setNumPhone(e.target.value)}
-                                    mask="(00) 00000-0000">
-                                </IMaskInput>
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">CNPJ da loja</h1>
-                                <IMaskInput
-                                    className="border-primaryColor border-2 rounded-md w-full h-9 pl-2"
-                                    value={cnpj}
-                                    onChange={(e) => setCnpj(e.target.value)}
-                                    mask="00.000.000/0000-00"
-                                    id="cnpj_loja"
-                                    type="text">
+                    <div>
+                        <h1 className=" text-3xl font-bold text-primaryColor">Cadastre sua loja</h1>
+                    </div>
+                    <div className="mt-6">
+                        <Formik
+                        initialValues={{nome : "", razao: "", email:"", telefone: "", cnpj: "", senha:"",
+                        confirmSenha: "", zap: "", termos:false}}
+                        onSubmit={values => console.log(values)}
+                        validationSchema={validationSchema}
+                        >
+                            {({handleSubmit})=>(
+                                <Form onSubmit={handleSubmit}>
+                                    {campoPreencher("Nome Fantasia: ", "Insira o nome fantasia...", "nome","text")}
+                                    {campoPreencher("Razão Social: ", "Insira a razão social...", "razao","text")}
+                                    <div className="mb-3">
+                                        <h1 className=" text-primaryColor font-bold">CNPJ: </h1>
+                                        <Field name="cnpj" type="text">
+                                        {
+                                            ({field}) => (
+                                            <IMaskInput {...field}
+                                            name="cnpj"
+                                            mask="00.000.000/0000-00"
+                                            placeholder='Insira o CNPJ...'
+                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            />
+                                        )}
+                                        </Field>
+                                        <ErrorMessage name='cnpj' component="div" className='error text-red-600 text-sm ml-3'/>
+                                    </div>
 
-                                </IMaskInput>
-                                
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Senha</h1>
-                                <input
-                                    id="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    type="password"
-                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
-                            </div>
-                            <div className=" mb-3">
-                                <h1 className=" text-primaryColor">Confirme a senha</h1>
-                                <input
-                                    id="confirm_password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    type="password"
-                                    className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2" />
-                            </div>
-                            <div className=" mb-3">
-                                <input
-                                    id="check_termos_e_condicoes"
-                                    name="checkBoxValue"
-                                    type="checkbox"
-                                    className=" border-primaryColor border-2 rounded-md " 
-                                />
-                                <label className=" pl-2">Eu aceito os <Link className=" text-secundaryColor underline font-bold" to="/termosecondicoes">Termos e condições</Link></label>
+                                    <div className='relative'>
+                                        {campoPreencher("Senha: ", "Insira sua senha...", "senha", statusPass)}
+                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                    </div>
+                                    <div className='relative'>
+                                        {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha",statusPass1)}
+                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
+                                    </div>
+                                    
+                                    {campoPreencher("E-mail da Loja: ", "Insira o e-mail da loja...", "email","email")}
+                                    <div className="mb-3">
+                                        <h1 className=" text-primaryColor font-bold">Número de telefone: </h1>
+                                        <Field name="telefone" type="text">
+                                        {
+                                            ({field}) => (
+                                            <IMaskInput {...field}
+                                            name="telefone"
+                                            mask="(00) 00000-0000"
+                                            placeholder='Insira o telefone...'
+                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            
+                                            />
+                                        )}
+                                        </Field>
+                                        <ErrorMessage name='telefone' component="div" className='error text-red-600 text-sm ml-3'/>
+                                    </div>
+                                    <div className="mb-3">
+                                        <h1 className=" text-primaryColor font-bold">Número de celular (Whatsapp): </h1>
+                                        <Field name="zap" type="text">
+                                        {
+                                            ({field}) => (
+                                            <IMaskInput {...field}
+                                            name="zap"
+                                            mask="(00) 00000-0000"
+                                            placeholder='Insira o celular...'
+                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            />
+                                        )}
+                                        </Field>
+                                        <ErrorMessage name='zap' component="div" className='error text-red-600 text-sm ml-3'/>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div className="mb-4 mt-10">
+                                        <label>
+                                            <Field type='checkbox' name="termos" className="mx-2"/>
+                                                Aceito os
+                                                <Link to="/termos_user">
+                                                    <span className='ml-1 text-secundaryColor underline visited:text-blue-950'>Termos de Condições.</span>
+                                                </Link>
+                                            <ErrorMessage name='termos' component="div" className='error text-red-600 text-sm ml-3'/>
+                                        </label>
+                                    </div>                
+                                    
+                                    <div className='flex justify-center mb-4'>
+                                        <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
+                                    </div>
+                                </Form>
+                            )} 
 
-                            </div>
-                        </div>
-
-
-
-                        <div className=" w-full flex justify-center">
-                            <button type="submit" className=" bg-secundaryColor w-52 h-9 rounded-lg font-extrabold text-primaryColor text-2xl ">Cadastrar</button>
-                        </div>
-
-                    </form>
-
+                        </Formik>
+                    </div>
                 </div>
             </div>
             <Menu_principal />

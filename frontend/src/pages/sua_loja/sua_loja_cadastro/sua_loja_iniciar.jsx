@@ -17,7 +17,7 @@ export default function Sua_loja() {
                     </div>
 
                     <Link to='/sua_loja_cadastro' className=" bg-secundaryColor w-52 h-9 rounded-lg font-extrabold text-primaryColor text-2xl flex items-center justify-center shadow-xl">
-                        Aceitar
+                        Iniciar!
                     </Link>
                     
                 </div>

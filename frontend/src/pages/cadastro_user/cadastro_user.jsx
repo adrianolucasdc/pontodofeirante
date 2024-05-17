@@ -173,7 +173,7 @@ export default function Cadastro_user() {
                                     </div>
                                     
                                     <div className=" mb-3">
-                                        <h1 className=" text-primaryColor">Número de celular: </h1>
+                                        <h1 className=" text-primaryColor font-bold">Número de celular: </h1>
                                         <Field name="telefone" type="text">
                                         {
                                             ({field}) => (
@@ -190,7 +190,7 @@ export default function Cadastro_user() {
                                     </div>
                                     
                                     <div className=" mb-3">
-                                        <h1 className=" text-primaryColor">Insira seu CPF:</h1>
+                                        <h1 className=" text-primaryColor font-bold">Insira seu CPF:</h1>
                                         <Field name="cpf">{({field}) => (
                                             <IMaskInput {...field}
                                             name="cpf"
@@ -204,12 +204,12 @@ export default function Cadastro_user() {
                                     
                                     <div className='flex justify-between mb-3'>
                                         <div className='w-[80%]'>
-                                            <span>Data de Nascimento: </span>
+                                            <h1 className=' font-bold'>Data de Nascimento: </h1>
                                             <Field type="date" name="dataNasc" max={maxYear} min={minYear} className="pl-2 w-11/12 h-9 border-primaryColor border-2 rounded-md"/>
                                             <ErrorMessage name='dataNasc' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
                                         <div className='overflow-hidden w-[47%]'>
-                                            <span className='block'>Sexo: </span>
+                                            <h1 className='block font-bold'>Sexo: </h1>
                                             <Field as="select" name="sexo" className=" h-9 border-primaryColor border-2 rounded-md">
                                                 <option value="">Selecione</option>
                                                 <option value="Masculino">Masculino</option>
@@ -228,7 +228,7 @@ export default function Cadastro_user() {
 
                                     <div className="flex justify-between">
                                         <div>
-                                            <h1 className=" text-primaryColor">Insira seu CEP:</h1>
+                                            <h1 className=" text-primaryColor font-bold">Insira seu CEP:</h1>
                                             <Field name="cep">{({field}) => (
                                                 <IMaskInput {...field}
                                                 name="cep"
