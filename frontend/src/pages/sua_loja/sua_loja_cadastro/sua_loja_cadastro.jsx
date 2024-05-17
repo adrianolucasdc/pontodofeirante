@@ -60,6 +60,48 @@ export default function Sua_loja_cadastro() {
         }
     }
 
+    const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+
+    function onClickSubmitted (){
+        setSubmitted(false);
+        setSubmittedError(false);
+    }
+
+    async function handleForm(values){
+        try{
+            const response = await fetch("http://localhost:4000/api/cadastro_loja", {
+                method : "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body : JSON.stringify(values)
+            });
+
+            setTimeout(() => {
+                return null;
+            }, 4000);
+
+            if (response) {
+                const data = await response.json();
+                
+                if (data.existe){
+                    setSubmittedError({hasError : true, type: data.existe})
+                    setTimeout(() => {
+                        setSubmittedError({hasError : false, type: data.existe})
+                    }, 5000);
+                }
+                if (data.redirect) {
+                    window.location.href = data.redirect;}
+
+                }
+            else {
+                console.log('Erro na resposta do servidor');
+            }
+        }catch (err){
+            console.log(err);
+        }
+    }
+
     return (
         <div className=" h-full flex flex-col">
 
@@ -78,7 +120,7 @@ export default function Sua_loja_cadastro() {
                         <Formik
                         initialValues={{nome : "", razao: "", email:"", telefone: "", cnpj: "", senha:"",
                         confirmSenha: "", zap: "", termos:false}}
-                        onSubmit={values => console.log(values)}
+                        onSubmit={values => {handleForm(values);}}
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit})=>(
@@ -159,6 +201,14 @@ export default function Sua_loja_cadastro() {
                                     <div className='flex justify-center mb-4'>
                                         <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
                                     </div>
+                                    {submittedError.hasError &&
+                                    <div>
+                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
+                                            <span className='text-white text-center'>Já existe uma loja com esse <span className='font-bold'>{submittedError.type} !</span></span>
+                                            <span className='text-white text-center font-bold ml-0'>X</span>
+                                        </div>
+                                    </div>
+                                    }
                                 </Form>
                             )} 
 

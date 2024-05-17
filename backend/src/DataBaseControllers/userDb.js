@@ -57,24 +57,12 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
                 console.error('Erro ao criar usuário:', error);
             });
         }
-        
-        // const existEqualEmail = await prisma.usuario.findUnique({where:{email : email}})
-        // const existEqualTelefone = await prisma.usuario.findUnique({where:{telefone : telefoneSemMascara}})
-        // const existEqualCpf = await prisma.usuario.findUnique({where:{cpf : cpfHash}})
     }       
         
     
 
 async function autenticarUsuario(email, senha){
 
-}
-
-async function existe(input){
-    const exist = await prisma.usuario.findUnique({
-        where :{
-            email: input,
-        } 
-    });
 }
 
 module.exports = {criarUsuario};

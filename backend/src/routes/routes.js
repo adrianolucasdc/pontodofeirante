@@ -1,7 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const { criarUsuario } = require("../caseUse/userDb");
+const { criarUsuario } = require("../DataBaseControllers/userDb");
+const { criarLoja } = require("../DataBaseControllers/storeDb");
 const routes = express.Router();
 
 
@@ -22,20 +23,32 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
     }
 })
 
-
-
-routes.post("/api/login_auth")
-
-routes.get("/api/cadastro_loja", (req, res)=>{
-    res.send("cadastro_loja");
+routes.post("/api/login_auth", async (req, res)=>{
+    
 })
 
-routes.get("/api/login_usuario", (req, res)=>{
-    res.send("login_usuario");
+routes.post("/api/cadastro_loja", async (req, res)=>{
+    const body = req.body;
+    try{
+        const createStore = await criarLoja(body.nome, body.razao, body.cnpj, body.senha, body.email,
+            body.telefone, body.zap, body.termos);
+
+        if (createStore) {
+            res.status(500).json(createStore);
+        } 
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).send('Ocorreu um erro ao criar o loja');
+    }
 })
 
-routes.get("/api/login_loja", (req, res)=>{
-    res.send("login_loja");
+routes.post("/api/login_usuario", (req, res)=>{
+    
+})
+
+routes.post("/api/login_loja", (req, res)=>{
+    
 })
 
 
