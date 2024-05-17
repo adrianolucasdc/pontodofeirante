@@ -46,7 +46,7 @@ model Produto {
   imagem       String?   // img
   descricao    String
   preco        Float
-  desconto     Float?
+  desconto     Int?
   favoritos    Favorito[]
 }
 
@@ -68,7 +68,7 @@ model Usuario {
   nome         String
   email        String   @unique
   senha        String   
-  telefone     BigInt   @unique
+  telefone     String   @unique
   cpf          String   @unique
   dataNasc     DateTime
   sexo         String
@@ -79,7 +79,7 @@ model Usuario {
 model EnderecoUsuario {
   id           String      @id 
   usuario      Usuario  @relation(fields: [id], references: [id])
-  cep          BigInt
+  cep          String
   cidade       String
   uf           String
   rua          String 

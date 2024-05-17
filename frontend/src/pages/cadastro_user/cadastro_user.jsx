@@ -9,6 +9,7 @@ import { IMaskInput } from "react-imask";
 
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
+import ToastifySucess from '../../components/toast/toast';
 
 
 
@@ -46,39 +47,51 @@ const validationSchema = Yup.object().shape({
 
 
 export default function Cadastro_user() {
-    // const [showPass, setShowPass] = useState(false);
-    // const [statusPass, setStatusPass] = useState("password")
-    // const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
-    // const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
 
-    // function onClickButton(){
-    //     if (showPass) {
-    //         setShowPass(false);
-    //         setStatusPass("password")
-    //         setFileSvg("src/assets/eye-pass-show.svg")
-    //     }
-    //     else {
-    //         setShowPass(true);
-    //         setStatusPass("text")
-    //         setFileSvg("src/assets/eye-pass-unshow.svg")
-    //     }
-    // }
+    // botão mostrar senha
+    const [showPass, setShowPass] = useState(false);
+    const [statusPass, setStatusPass] = useState("password")
+    const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
+    const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
 
-    // const [showPass1, setShowPass1] = useState(false);
-    // const [statusPass1, setStatusPass1] = useState("password")
-    // function onClickButton1(){
-    //     if (showPass1) {
-    //         setShowPass1(false);
-    //         setStatusPass1("password")
-    //         setFileSvg1("src/assets/eye-pass-show.svg")
-    //     }
-    //     else {
-    //         setShowPass1(true);
-    //         setStatusPass1("text")
-    //         setFileSvg1("src/assets/eye-pass-unshow.svg")
-    //     }
-    // }
+    function onClickButton(){
+        if (showPass) {
+            setShowPass(false);
+            setStatusPass("password")
+            setFileSvg("src/assets/eye-pass-show.svg")
+        }
+        else {
+            setShowPass(true);
+            setStatusPass("text")
+            setFileSvg("src/assets/eye-pass-unshow.svg")
+        }
+    }
 
+    const [showPass1, setShowPass1] = useState(false);
+    const [statusPass1, setStatusPass1] = useState("password")
+    function onClickButton1(){
+        if (showPass1) {
+            setShowPass1(false);
+            setStatusPass1("password")
+            setFileSvg1("src/assets/eye-pass-show.svg")
+        }
+        else {
+            setShowPass1(true);
+            setStatusPass1("text")
+            setFileSvg1("src/assets/eye-pass-unshow.svg")
+        }
+    }
+
+    //mostrar mensagem na tela de cadastro com sucesso
+    const [submitted, setSubmitted] = useState(false);
+    const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+
+    function onClickSubmitted (){
+        setSubmitted(false);
+        setSubmittedError(false);
+    }
+
+    //adicionar elementos ao banco de dados
     async function handleForm(values){
         try{
             const response = await fetch("http://localhost:4000/api/cadastro_usuario", {
@@ -93,12 +106,25 @@ export default function Cadastro_user() {
                 return null;
             }, 4000);
 
-            if (response.ok) {
+            if (response) {
                 const data = await response.json();
-                if (data.redirect) {
-                    window.location.href = data.redirect;
+                
+                if (data.existe){
+                    setSubmittedError({hasError : true, type: data.existe})
+                    setTimeout(() => {
+                        setSubmittedError({hasError : false, type: data.existe})
+                    }, 5000);
                 }
-            }
+                if (!data.existe){
+                    setSubmitted(true)
+                    setTimeout(() => {
+                        setSubmitted(false)
+                    }, 3000);
+                }
+                if (data.redirect) {
+                    window.location.href = data.redirect;}
+
+                }
             else {
                 console.log('Erro na resposta do servidor');
             }
@@ -107,9 +133,9 @@ export default function Cadastro_user() {
         }
     }
     
+    
 
-    const [submitted, setSubmitted] = useState(false);
-
+    //calcular data para o calendário
     const date = new Date();
     const currentYear = date.getFullYear();
     const maxYear = currentYear - 14 +"-12-31";
@@ -128,15 +154,9 @@ export default function Cadastro_user() {
                     <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Cadastre seu usuário</h1>
                     <div className="flex flex-col  mt-6 h-full w-full mx-3">
                         <Formik 
-                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "2000-01-01", sexo: "", 
+                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "2000-10-10", sexo: "", 
                         cep: "", uf: "", cidade : "", rua : "", numero: "", bairro: "", termos: false }}
-                        onSubmit={values => {
-                            handleForm(values);
-                            setSubmitted(true);
-                            setTimeout(()=>{
-                                setSubmitted(false);
-                            }, 3000)}
-                        }
+                        onSubmit={values => {handleForm(values);}}
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit}) => (
@@ -144,12 +164,12 @@ export default function Cadastro_user() {
                                     {campoPreencher("Nome Completo:","Insira seu nome...","nome","text")}
                                     {campoPreencher("E-mail: ","Insira seu e-mail...","email","email")}
                                     <div className='relative'>
-                                        {campoPreencher("Senha: ", "Insira sua senha...", "senha", "password")}
-                                        {/* <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button> */}
+                                        {campoPreencher("Senha: ", "Insira sua senha...", "senha", statusPass)}
+                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
                                     </div>
                                     <div className='relative'>
-                                        {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha","password")}
-                                        {/* <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button> */}
+                                        {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha",statusPass1)}
+                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
                                     </div>
                                     
                                     <div className=" mb-3">
@@ -231,7 +251,7 @@ export default function Cadastro_user() {
 
                                     <div className="h-3 "></div>
 
-                                    <div className='mb-2'>
+                                    <div className='mb-4'>
                                         <label>
                                             <Field type='checkbox' name="termos" className="mx-2"/>
                                             Aceito os
@@ -246,10 +266,19 @@ export default function Cadastro_user() {
                                     </div>
                                     {submitted && 
                                     <div>
-                                        <div className="fixed  px-5 pt-1  w-[75%] h-[40px] bg-lime-200 rounded-md border-green-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
+                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-5 pt-[6px]  w-[75%] h-[40px] bg-lime-200 rounded-md border-green-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
                                             <span className='text-lime-600 text-center'>Usuário criado com sucesso!</span>
+                                            <span className='text-lime-600 text-center font-bold'>X</span>
                                         </div>
                                     </div>}
+                                    {submittedError.hasError &&
+                                    <div>
+                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
+                                            <span className='text-white text-center'>Já existe uma conta com esse <span className='font-bold'>{submittedError.type} !</span></span>
+                                            <span className='text-white text-center font-bold ml-0'>X</span>
+                                        </div>
+                                    </div>
+                                    }
                                 </Form>
 
                             )}
