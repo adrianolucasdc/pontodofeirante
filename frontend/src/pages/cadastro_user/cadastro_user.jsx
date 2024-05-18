@@ -258,9 +258,9 @@ export default function Cadastro_user() {
                                     }
                                     {submittedError.hasError &&
                                     <div>
-                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
+                                        <div className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
                                             <span className='text-white text-center'>Já existe uma conta com esse <span className='font-bold'>{submittedError.type} !</span></span>
-                                            <span className='text-white text-center font-bold ml-0'>X</span>
+                                            <span onClick={onClickSubmitted} className='text-white text-center font-bold ml-0'>X</span>
                                         </div>
                                     </div>
                                     }

@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 
-const { criarUsuario } = require("../DataBaseControllers/userDb");
+const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userDb");
 const { criarLoja } = require("../DataBaseControllers/storeDb");
 const routes = express.Router();
 
@@ -10,7 +10,7 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
     try{
         const createUser = await criarUsuario(req.body.nome, req.body.email, req.body.senha, req.body.telefone, req.body.cpf, req.body.cep, req.body.dataNasc,
             req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro, req.body.termos);
-        
+
         if (createUser){
             res.status(500).json(createUser);
         } else {
@@ -23,8 +23,22 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
     }
 })
 
-routes.post("/api/login_auth", async (req, res)=>{
-    
+routes.post("/api/user_login_auth", async (req, res)=>{
+    try{
+        const body = req.body;
+        const authUser = await autenticarUsuario(body.email, body.senha);
+
+        if (authUser){
+            res.status(500).json(authUser);
+        } else {
+            res.status(200).json({redirect: "http://localhost:3000/entrou"});
+        }
+
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Email ou Senha Inválidos")
+    }
 })
 
 routes.post("/api/cadastro_loja", async (req, res)=>{

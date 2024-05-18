@@ -63,6 +63,23 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
 
 async function autenticarUsuario(email, senha){
 
+    const user = await prisma.usuario.findUnique({
+        where: {
+            email: String(email),
+        }
+    });
+
+    if (user) {
+        const authHash = await bcrypt.compare(senha, user.senha);
+
+        if (authHash) {
+            null
+        } else {
+            return { erro : "Email ou senha incorretos!" }
+        }
+    } else{
+        return { erro : "Email ou senha incorretos!" }
+    }
 }
 
-module.exports = {criarUsuario};
+module.exports = {criarUsuario, autenticarUsuario};
