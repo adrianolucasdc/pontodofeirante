@@ -5,6 +5,8 @@ const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userD
 const { criarLoja } = require("../DataBaseControllers/storeDb");
 const routes = express.Router();
 
+const secret = process.env.secret
+
 //Cadastro Usuário
 routes.post("/api/cadastro_usuario", async (req, res)=>{
     try{
@@ -12,7 +14,7 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
             req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro, req.body.termos);
 
         if (createUser){
-            res.json(createUser);
+            res.status(202).json(createUser);
         } else {
             res.status(200).json({
                 msg:"Usuário Cadastrado com Sucesso!",
@@ -26,6 +28,24 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
     }
 })
 
+//Verificação de Token
+function verifyJWT(req,res, next){
+    const token = req.body.token;
+
+    jwt.verify(token, secret, (err, decoded) =>
+    {
+        if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
+        req.id = decoded.id;
+        next();
+    });
+}
+
+routes.get("/api/validate_token", verifyJWT, (req, res)=>{
+    console.log("proceed")
+    res.json({msg : "Autorizado!"})
+})
+
+
 //Login Usuário
 routes.post("/api/user_login_auth", async (req, res)=>{
     try{
@@ -38,7 +58,7 @@ routes.post("/api/user_login_auth", async (req, res)=>{
         const authUser = await autenticarUsuario(email, senha);
 
         if (authUser.erro){
-            res.json(authUser);
+            res.status(203).json(authUser);
         } else if (authUser.user) {
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
@@ -62,7 +82,7 @@ routes.post("/api/cadastro_loja", async (req, res)=>{
             body.telefone, body.zap, body.termos);
 
         if (createStore) {
-            res.json(createStore);
+            res.status(202).json(createStore);
         } 
         else {
             res.status(200).json({

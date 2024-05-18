@@ -25,8 +25,14 @@ export default class UserServices{
         return data;
     }
 
-    usuarioAutenticado (){
-        return localStorage.getItem("token") != undefined ? true : false
+    async usuarioAutenticado (){
+        const token = localStorage.getItem("token")
+
+        try {
+            const {data} = await this.axios.get("/api/validate_token", {token: token})
+        } catch {
+            return false;
+        }
     }
 
     async logout(){

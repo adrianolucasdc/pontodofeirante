@@ -81,7 +81,7 @@ async function autenticarUsuario(email, senha){
 
             const token = jwt.sign({
                 id: user.id
-            }, secret)
+            }, secret, {expiresIn: 604800})
 
             return {user: {name : user.nome, email: user.email, token}}
 
