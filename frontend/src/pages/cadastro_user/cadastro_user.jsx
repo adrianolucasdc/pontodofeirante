@@ -144,7 +144,7 @@ export default function Cadastro_user() {
                     <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Cadastre seu usuário</h1>
                     <div className="flex flex-col  mt-6 h-full w-full mx-3">
                         <Formik 
-                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "2000-10-10", sexo: "", 
+                        initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "", sexo: "", 
                         cep: "", uf: "", cidade : "", rua : "", numero: "", bairro: "", termos: false }}
                         onSubmit={values => {handleForm(values);}}
                         validationSchema={validationSchema}
@@ -205,10 +205,9 @@ export default function Cadastro_user() {
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Feminino">Feminino</option>
                                             </Field>
-                                            
-                                            <ErrorMessage name='sexo' component="div" className='error text-red-600 text-sm ml-3'/>
-                                            
-                                            
+                                            <div className='overflow-scroll w-ful h-5 text-nowrap no-scrollbar'>
+                                                <ErrorMessage name='sexo' component="div" className='error text-red-600 text-sm'/>
+                                            </div>     
                                         </div>
                                     </div>
 
@@ -217,7 +216,7 @@ export default function Cadastro_user() {
                                     </div>
 
                                     <div className="flex justify-between">
-                                        <div>
+                                        <div className='w-37'>
                                             <h1 className=" text-primaryColor font-bold">Insira seu CEP:</h1>
                                             <Field name="cep">{({field}) => (
                                                 <IMaskInput {...field}
@@ -229,7 +228,7 @@ export default function Cadastro_user() {
                                             )}</Field>
                                             <ErrorMessage name='cep' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
-                                        <div className='w-36 overflow-hidden ml-4'>
+                                        <div className='w-28 ml-4 text-nowrap'>
                                             {campoPreencher("Número: ", "Insira o número...","numero")}
                                         </div>
                                     </div>
@@ -242,14 +241,14 @@ export default function Cadastro_user() {
                                     <div className="h-3 "></div>
 
                                     <div className='mb-4'>
-                                        <label>
-                                            <Field type='checkbox' name="termos" className="mx-2"/>
+                                        <Field type='checkbox' name="termos" id="termos"className="mx-2"/>
+                                        <label htmlFor='termos'>
                                             Aceito os
                                             <Link to="/termos_user">
                                                 <span className='ml-1 text-linkColor underline visited:text-blue-950'>Termos de Condições</span>
                                             </Link>
-                                            <ErrorMessage name='termos' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </label>
+                                        <ErrorMessage name='termos' component="div" className='error text-red-600 text-sm ml-3'/>
                                     </div>
                                     <div className='flex justify-center mb-4'>
                                         <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>

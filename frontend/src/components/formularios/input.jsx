@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import {Field, Formik, Form, ErrorMessage} from "formik"
-import * as Yup from "yup";
+import React from 'react'
+import {Field, ErrorMessage} from "formik"
+
 
 
 export default function campoPreencher(titulo, subtitulo, value, type, borderColor) {
@@ -8,11 +8,13 @@ export default function campoPreencher(titulo, subtitulo, value, type, borderCol
     const borderClass = borderColor ? borderColor : 'border-primaryColor';
 
     return(
-        <div className=" mb-3">
+        <div className=" mb-3 flex flex-col">
             <span className=' text-primaryColor font-bold'>{titulo}</span>
             <Field type={type} name={value} className={` border-2 rounded-md w-full h-9 pl-2 ${borderClass}`}
             placeholder={subtitulo}/>
-            <ErrorMessage name={value} component="div" className='error text-red-600 text-sm ml-3'/>
+            <div className='overflow-scroll no-scrollbar'>
+                <ErrorMessage name={value} component="div" className='error text-red-600 text-sm ml-3'/>
+            </div>
         </div>
     )
 }
