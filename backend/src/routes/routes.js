@@ -12,11 +12,11 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
             req.body.sexo, req.body.uf, req.body.cidade, req.body.rua, req.body.numero, req.body.bairro, req.body.termos);
 
         if (createUser){
-            res.status(500).json(createUser);
+            res.json(createUser);
         } else {
             res.status(200).json({
                 msg:"Usuário Cadastrado com Sucesso!",
-                redirect: "http://localhost:3000/login"
+                redirect: "/login"
             });
         }
     }
@@ -38,12 +38,11 @@ routes.post("/api/user_login_auth", async (req, res)=>{
         const authUser = await autenticarUsuario(email, senha);
 
         if (authUser.erro){
-            res.status(500).json(authUser);
-        } else if (authUser.token) {
+            res.json(authUser);
+        } else if (authUser.user) {
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
-                redirect: "http://localhost:3000/entrou",
-                token: authUser.token,
+                redirect: "/home",
                 user: authUser.user
             });
         }
@@ -51,7 +50,7 @@ routes.post("/api/user_login_auth", async (req, res)=>{
 
     } catch (e) {
         console.log(e);
-        res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
+        res.json({msg: "Aconteceu um erro tente novamente mais tarde!"})
     }
 })
 
@@ -63,17 +62,17 @@ routes.post("/api/cadastro_loja", async (req, res)=>{
             body.telefone, body.zap, body.termos);
 
         if (createStore) {
-            res.status(500).json(createStore);
+            res.json(createStore);
         } 
         else {
             res.status(200).json({
                 msg:"Loja Cadastrada com Sucesso!",
-                redirect: "http://localhost:3000/login"});
+                redirect: "/login"});
         }
     }
     catch(e){
         console.log(e)
-        res.status(500).json({msg: 'Aconteceu um erro tente novamente mais tarde!'});
+        res.json({msg: 'Aconteceu um erro tente novamente mais tarde!'});
     }
 })
 

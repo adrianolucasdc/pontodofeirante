@@ -1,4 +1,6 @@
 import { Routes, Route} from 'react-router-dom'
+import ProtectedRoutes from './ProtectedRoutes';
+
 
 import Home from '../pages/home/home';
 import Favoritos from '../pages/favoritos/favoritos';

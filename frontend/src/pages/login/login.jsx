@@ -1,51 +1,57 @@
-import { Link } from "react-router-dom"
-import Menu_principal from "../../components/menu_principal/menu_principal"
+import { Link, useNavigate } from "react-router-dom"
 import { Formik , Form, Field, ErrorMessage} from "formik"
 import * as Yup from "yup"
-
-
 import { useState } from "react";
+
+
+import Menu_principal from "../../components/menu_principal/menu_principal";
+import UserServices from "../../Services/UserService";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email("* Insira um e-mail válido!").required("* Preencha o campos!"),
     senha: Yup.string().required("* Preencha o campos!")
 })
 
+const userServices = new UserServices();
+
+
+
+
 
 export default function Login() {
 
   
-
+    //Mensagem Erro ao Fazer Login
     const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
 
     function onClickSubmitted (){
         setSubmittedError(false);
     }
 
-    async function authUser(values){
-        const response = await fetch("http://localhost:4000/api/user_login_auth",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body : JSON.stringify(values)
-        });
 
-        if (response) {
-            const data = await response.json();
+    //Fazendo autenticação
+    const navigate = useNavigate();
 
-            if (data.erro) {
-                setSubmittedError({hasError: true, type: data.erro})
+    const handleSubmit = async (values) => {
+        try {
+            const response = await userServices.signIn(values)
+
+            if (response.erro) {
+                setSubmittedError({hasError: true, type: response.erro})
                 setTimeout(() => {
-                    setSubmittedError({hasError: false, type: ""})
+                    setSubmittedError({hasError: false, type: ""}) 
                 }, 10000);
+            } else if (response.user) {
+                navigate(response.redirect)
             }
-            if (data.redirect){
-                window.location.href = data.redirect;
-            }            
 
+
+            
+        } catch (error) {
+            console.log(error)
         }
     }
+    
 
     //botão mostrar senha
     const [showPass, setShowPass] = useState(false);
@@ -95,7 +101,7 @@ export default function Login() {
                         <Formik
                         initialValues={{email : "",senha: ""}}
                         onSubmit={values =>
-                        authUser(values)}
+                        handleSubmit(values)}
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit})=>(
