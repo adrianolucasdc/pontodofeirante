@@ -5,7 +5,7 @@ const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userD
 const { criarLoja } = require("../DataBaseControllers/storeDb");
 const routes = express.Router();
 
-
+//Cadastro Usuário
 routes.post("/api/cadastro_usuario", async (req, res)=>{
     try{
         const createUser = await criarUsuario(req.body.nome, req.body.email, req.body.senha, req.body.telefone, req.body.cpf, req.body.cep, req.body.dataNasc,
@@ -14,33 +14,47 @@ routes.post("/api/cadastro_usuario", async (req, res)=>{
         if (createUser){
             res.status(500).json(createUser);
         } else {
-            res.status(200).json({redirect: "http://localhost:3000/login"});
+            res.status(200).json({
+                msg:"Usuário Cadastrado com Sucesso!",
+                redirect: "http://localhost:3000/login"
+            });
         }
     }
     catch(e){
         console.log(e)
-        res.status(500).send('Ocorreu um erro ao criar o usuário');
+        res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
     }
 })
 
+//Login Usuário
 routes.post("/api/user_login_auth", async (req, res)=>{
     try{
-        const body = req.body;
-        const authUser = await autenticarUsuario(body.email, body.senha);
+        const {email, senha} = req.body;
 
-        if (authUser){
+        if (!email && !senha) {
+            return res.status(422).json({msg : "Email e senha são obrigatórios!"})
+        }
+
+        const authUser = await autenticarUsuario(email, senha);
+
+        if (authUser.erro){
             res.status(500).json(authUser);
-        } else {
-            res.status(200).json({redirect: "http://localhost:3000/entrou"});
+        } else if (authUser.token) {
+            res.status(200).json({
+                msg: "Usuário Logado com Sucesso!",
+                redirect: "http://localhost:3000/entrou",
+                token: authUser.token
+            });
         }
 
 
     } catch (e) {
         console.log(e);
-        res.status(500).send("Email ou Senha Inválidos")
+        res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
     }
 })
 
+//Cadastro Loja 
 routes.post("/api/cadastro_loja", async (req, res)=>{
     const body = req.body;
     try{
@@ -51,22 +65,17 @@ routes.post("/api/cadastro_loja", async (req, res)=>{
             res.status(500).json(createStore);
         } 
         else {
-            res.status(200).json({redirect: "http://localhost:3000/login"});
+            res.status(200).json({
+                msg:"Loja Cadastrada com Sucesso!",
+                redirect: "http://localhost:3000/login"});
         }
     }
     catch(e){
         console.log(e)
-        res.status(500).send('Ocorreu um erro ao criar o loja');
+        res.status(500).json({msg: 'Aconteceu um erro tente novamente mais tarde!'});
     }
 })
 
-routes.post("/api/login_usuario", (req, res)=>{
-    
-})
-
-routes.post("/api/login_loja", (req, res)=>{
-    
-})
 
 
 

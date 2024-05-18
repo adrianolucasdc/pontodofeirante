@@ -2,7 +2,8 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const cuid = require("cuid");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto');
+const crypto = require('crypto')
+const jwt = require("jsonwebtoken");
 
 
 async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, sexo, 
@@ -25,11 +26,14 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
         ])
 
             if (existEqualEmail){
-            return {existe: "email"}
+            return {existe: "email",
+                    msg: "Esse e-mail já está sendo utilizado!"}
         } else if (existEqualTelefone){
-            return {existe: "telefone"}
+            return {existe: "telefone",
+                    msg: "Esse telefone já está sendo utilizado!"}
         } else if (existEqualCpf){
-            return {existe: "cpf"}
+            return {existe: "cpf",
+                    msg: "Esse cpf já está sendo utilizado!"}
         } else {
             const create_user = await prisma.usuario.create({
                 data:{
@@ -73,7 +77,14 @@ async function autenticarUsuario(email, senha){
         const authHash = await bcrypt.compare(senha, user.senha);
 
         if (authHash) {
-            null
+            const secret = process.env.secret
+
+            const token = jwt.sign({
+                id: user.id
+            }, secret)
+
+            return {token}
+
         } else {
             return { erro : "Email ou senha incorretos!" }
         }
