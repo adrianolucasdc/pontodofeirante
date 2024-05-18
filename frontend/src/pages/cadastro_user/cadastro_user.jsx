@@ -9,9 +9,7 @@ import { IMaskInput } from "react-imask";
 
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
-import ToastifySucess from '../../components/toast/toast';
-
-
+import CadastroSucesso from '../../components/formularios/popup-sucess';
 
 
 
@@ -102,28 +100,20 @@ export default function Cadastro_user() {
                 body : JSON.stringify(values)
             });
 
-            setTimeout(() => {
-                return null;
-            }, 4000);
 
             if (response) {
                 const data = await response.json();
-                
                 if (data.existe){
                     setSubmittedError({hasError : true, type: data.existe})
                     setTimeout(() => {
                         setSubmittedError({hasError : false, type: data.existe})
-                    }, 5000);
-                }
-                if (!data.existe){
-                    setSubmitted(true)
-                    setTimeout(() => {
-                        setSubmitted(false)
-                    }, 3000);
+                    }, 15000);
                 }
                 if (data.redirect) {
-                    window.location.href = data.redirect;}
-
+                    setSubmitted(true)
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 5000);}
                 }
             else {
                 console.log('Erro na resposta do servidor');
@@ -264,13 +254,8 @@ export default function Cadastro_user() {
                                     <div className='flex justify-center mb-4'>
                                         <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
                                     </div>
-                                    {submitted && 
-                                    <div>
-                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-5 pt-[6px]  w-[75%] h-[40px] bg-lime-200 rounded-md border-green-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
-                                            <span className='text-lime-600 text-center'>Usuário criado com sucesso!</span>
-                                            <span className='text-lime-600 text-center font-bold'>X</span>
-                                        </div>
-                                    </div>}
+                                    {submitted && <CadastroSucesso />
+                                    }
                                     {submittedError.hasError &&
                                     <div>
                                         <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">

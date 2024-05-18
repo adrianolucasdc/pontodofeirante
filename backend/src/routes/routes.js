@@ -36,6 +36,9 @@ routes.post("/api/cadastro_loja", async (req, res)=>{
         if (createStore) {
             res.status(500).json(createStore);
         } 
+        else {
+            res.status(200).json({redirect: "http://localhost:3000/login"});
+        }
     }
     catch(e){
         console.log(e)

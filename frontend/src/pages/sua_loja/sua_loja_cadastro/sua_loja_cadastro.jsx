@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import Menu_principal from "../../../components/menu_principal/menu_principal"
 import campoPreencher from "../../../components/formularios/input";
+import CadastroSucesso from '../../../components/formularios/popup-sucess';
 
 const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo Obrigatório!"),
@@ -61,11 +62,13 @@ export default function Sua_loja_cadastro() {
     }
 
     const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+    const [submitted, setSubmitted] = useState(false);
 
     function onClickSubmitted (){
         setSubmitted(false);
         setSubmittedError(false);
     }
+
 
     async function handleForm(values){
         try{
@@ -77,10 +80,6 @@ export default function Sua_loja_cadastro() {
                 body : JSON.stringify(values)
             });
 
-            setTimeout(() => {
-                return null;
-            }, 4000);
-
             if (response) {
                 const data = await response.json();
                 
@@ -91,8 +90,10 @@ export default function Sua_loja_cadastro() {
                     }, 5000);
                 }
                 if (data.redirect) {
-                    window.location.href = data.redirect;}
-
+                    setSubmitted(true)
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 5000);}
                 }
             else {
                 console.log('Erro na resposta do servidor');
@@ -101,6 +102,8 @@ export default function Sua_loja_cadastro() {
             console.log(err);
         }
     }
+
+
 
     return (
         <div className=" h-full flex flex-col">
@@ -201,6 +204,8 @@ export default function Sua_loja_cadastro() {
                                     <div className='flex justify-center mb-4'>
                                         <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
                                     </div>
+                                    {submitted && <CadastroSucesso />
+                                    }
                                     {submittedError.hasError &&
                                     <div>
                                         <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
