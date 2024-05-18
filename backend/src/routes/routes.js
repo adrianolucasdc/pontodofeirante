@@ -43,7 +43,8 @@ routes.post("/api/user_login_auth", async (req, res)=>{
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
                 redirect: "http://localhost:3000/entrou",
-                token: authUser.token
+                token: authUser.token,
+                user: authUser.user
             });
         }
 

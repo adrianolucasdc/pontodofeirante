@@ -47,6 +47,24 @@ export default function Login() {
         }
     }
 
+    //botão mostrar senha
+    const [showPass, setShowPass] = useState(false);
+    const [statusPass, setStatusPass] = useState("password")
+    const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
+
+    function onClickButton(){
+        if (showPass) {
+            setShowPass(false);
+            setStatusPass("password")
+            setFileSvg("src/assets/eye-pass-show.svg")
+        }
+        else {
+            setShowPass(true);
+            setStatusPass("text")
+            setFileSvg("src/assets/eye-pass-unshow.svg")
+        }
+    }
+
 
     return (
         <div className=" h-screen flex flex-col left ">
@@ -93,9 +111,12 @@ export default function Login() {
                                         </div>
                                     </div>
                                     <div className="h9 "> 
-                                        <label htmlFor="senha">Senha:</label>
-                                        <Field type="password" name="senha" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
-                                        placeholder="Insira sua senha..."/>
+                                        <div className="relative">
+                                            <label htmlFor="senha">Senha:</label>
+                                            <Field type={statusPass} name="senha" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
+                                            placeholder="Insira sua senha..."/>
+                                            <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                        </div>
                                     </div>
                                     <div className=" text-red-600 text-sm h-10 pl-3">
                                         <ErrorMessage name="senha" component="div"/>

@@ -22,7 +22,7 @@ import Add_produto from '../pages/sua_loja/produtos/add_produto/add_produto';
 function RoutesApp() {
     return(
         <Routes>
-            <Route path='/' element={ <Home/> }/>
+            <Route path='/home' element={ <Home/> }/>
             <Route path='/favoritos' element={ <Favoritos/> }/>
             <Route path='/sacola' element={ <Sacola/> }/>
             <Route path='/sualoja' element={ <Sua_loja_iniciar/> }/>

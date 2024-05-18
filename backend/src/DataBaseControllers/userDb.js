@@ -83,7 +83,7 @@ async function autenticarUsuario(email, senha){
                 id: user.id
             }, secret)
 
-            return {token}
+            return {token, user: {name : user.nome, email: user.email}}
 
         } else {
             return { erro : "Email ou senha incorretos!" }
