@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import { IMaskInput } from "react-imask";
 import { Formik, ErrorMessage, Form, Field} from "formik";
@@ -8,6 +8,11 @@ import * as Yup from "yup";
 import Menu_principal from "../../../components/menu_principal/menu_principal"
 import campoPreencher from "../../../components/formularios/input";
 import CadastroSucesso from '../../../components/formularios/popup-sucess';
+import UserServices from "../../../Services/UserService";
+
+
+const userServices = new UserServices();
+
 
 const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo Obrigatório!"),
@@ -28,8 +33,12 @@ const validationSchema = Yup.object().shape({
 })
 
 export default function Sua_loja_cadastro() {
+
+    //mostrar senha
     const [showPass, setShowPass] = useState(false);
+    const [showPass1, setShowPass1] = useState(false);
     const [statusPass, setStatusPass] = useState("password")
+    const [statusPass1, setStatusPass1] = useState("password")
     const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
     const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
 
@@ -46,8 +55,6 @@ export default function Sua_loja_cadastro() {
         }
     }
 
-    const [showPass1, setShowPass1] = useState(false);
-    const [statusPass1, setStatusPass1] = useState("password")
     function onClickButton1(){
         if (showPass1) {
             setShowPass1(false);
@@ -61,6 +68,7 @@ export default function Sua_loja_cadastro() {
         }
     }
 
+    //mostrar erro
     const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
     const [submitted, setSubmitted] = useState(false);
 
@@ -69,37 +77,26 @@ export default function Sua_loja_cadastro() {
         setSubmittedError(false);
     }
 
-
-    async function handleForm(values){
-        try{
-            const response = await fetch("http://localhost:4000/api/cadastro_loja", {
-                method : "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body : JSON.stringify(values)
-            });
-
-            if (response) {
-                const data = await response.json();
+    //registrar loja
+    const handleSubmit = async (values) => {
+        try {
+            const response = await userServices.registerStore(values);
+            
+            if (response.existe) {
+                setSubmittedError({hasError: true, type: response.existe})
+                setTimeout(() => {
+                    setSubmittedError({hasError: false, type: ""}) 
+                }, 10000);
+            } else if (response.redirect) {
+                setSubmitted(true)
+                setTimeout(() => {
+                    navigate(response.redirect)
+                }, 5000);
                 
-                if (data.existe){
-                    setSubmittedError({hasError : true, type: data.existe})
-                    setTimeout(() => {
-                        setSubmittedError({hasError : false, type: data.existe})
-                    }, 5000);
-                }
-                if (data.redirect) {
-                    setSubmitted(true)
-                    setTimeout(() => {
-                        window.location.href = data.redirect;
-                    }, 5000);}
-                }
-            else {
-                console.log('Erro na resposta do servidor');
             }
-        }catch (err){
-            console.log(err);
+            
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -123,7 +120,7 @@ export default function Sua_loja_cadastro() {
                         <Formik
                         initialValues={{nome : "", razao: "", email:"", telefone: "", cnpj: "", senha:"",
                         confirmSenha: "", zap: "", termos:false}}
-                        onSubmit={values => {handleForm(values);}}
+                        onSubmit={values => {handleSubmit(values);}}
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit})=>(
@@ -208,9 +205,9 @@ export default function Sua_loja_cadastro() {
                                     }
                                     {submittedError.hasError &&
                                     <div>
-                                        <div onClick={onClickSubmitted} className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
+                                        <div  className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[8%] translate-x-[-50%] translate-y-[-50%]">
                                             <span className='text-white text-center'>Já existe uma loja com esse <span className='font-bold'>{submittedError.type} !</span></span>
-                                            <span className='text-white text-center font-bold ml-0'>X</span>
+                                            <span onClick={onClickSubmitted} className='text-white text-center font-bold ml-0'>X</span>
                                         </div>
                                     </div>
                                     }

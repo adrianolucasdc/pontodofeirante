@@ -34,7 +34,7 @@ export default function Login() {
 
     const handleSubmit = async (values) => {
         try {
-            const response = await userServices.signIn(values)
+            const response = await userServices.signInUser(values)
 
             if (response.erro) {
                 setSubmittedError({hasError: true, type: response.erro})
@@ -44,8 +44,6 @@ export default function Login() {
             } else if (response.user) {
                 navigate(response.redirect)
             }
-
-
             
         } catch (error) {
             console.log(error)

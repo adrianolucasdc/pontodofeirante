@@ -5,6 +5,6 @@ import RoutesApp from '.';
 const userService = new UserServices();
 
 export default async function ProtectedRoutes({children}) {
-    const usuarioAutenticado = await userService.usuarioAutenticado();
-    return usuarioAutenticado? children : <RoutesApp/>
+    const userAutheticated = await userService.userAutheticated();
+    return userAutheticated? children : <RoutesApp/>
 }

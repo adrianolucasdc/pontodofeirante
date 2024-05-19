@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from "yup";
 import { IMaskInput } from "react-imask";
@@ -10,6 +10,7 @@ import { IMaskInput } from "react-imask";
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import campoPreencher from "../../components/formularios/input";
 import CadastroSucesso from '../../components/formularios/popup-sucess';
+import UserServices from '../../Services/UserService';
 
 
 
@@ -41,13 +42,15 @@ const validationSchema = Yup.object().shape({
     .required("* Confirmação de senha é obrigatório!"), 
 })
 
-
+const userServices = new UserServices();
 
 
 export default function Cadastro_user() {
 
     // botão mostrar senha
     const [showPass, setShowPass] = useState(false);
+    const [showPass1, setShowPass1] = useState(false);
+    const [statusPass1, setStatusPass1] = useState("password")
     const [statusPass, setStatusPass] = useState("password")
     const [fileSvg, setFileSvg] = useState("src/assets/eye-pass-show.svg")
     const [fileSvg1, setFileSvg1] = useState("src/assets/eye-pass-show.svg")
@@ -64,9 +67,6 @@ export default function Cadastro_user() {
             setFileSvg("src/assets/eye-pass-unshow.svg")
         }
     }
-
-    const [showPass1, setShowPass1] = useState(false);
-    const [statusPass1, setStatusPass1] = useState("password")
     function onClickButton1(){
         if (showPass1) {
             setShowPass1(false);
@@ -89,37 +89,28 @@ export default function Cadastro_user() {
         setSubmittedError(false);
     }
 
-    //adicionar elementos ao banco de dados
-    async function handleForm(values){
-        try{
-            const response = await fetch("http://localhost:4000/api/cadastro_usuario", {
-                method : "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body : JSON.stringify(values)
-            });
+    //adicionar usuario ao banco de dados
+    const navigate = useNavigate();
+    const handleSubmit = async (values) => {
+        try {
+            const response = await userServices.registerUser(values);
 
 
-            if (response) {
-                const data = await response.json();
-                if (data.existe){
-                    setSubmittedError({hasError : true, type: data.existe})
-                    setTimeout(() => {
-                        setSubmittedError({hasError : false, type: data.existe})
-                    }, 15000);
-                }
-                if (data.redirect) {
-                    setSubmitted(true)
-                    setTimeout(() => {
-                        window.location.href = data.redirect;
-                    }, 5000);}
-                }
-            else {
-                console.log('Erro na resposta do servidor');
+            if (response.existe) {
+                setSubmittedError({hasError: true, type: response.existe})
+                setTimeout(() => {
+                    setSubmittedError({hasError: false, type: ""}) 
+                }, 10000);
+            } else if (response.redirect) {
+                setSubmitted(true)
+                setTimeout(() => {
+                    navigate(response.redirect)
+                }, 5000);
+                
             }
-        }catch (err){
-            console.log(err);
+            
+        } catch (error) {
+            console.log(error)
         }
     }
     
@@ -146,7 +137,7 @@ export default function Cadastro_user() {
                         <Formik 
                         initialValues={{nome : "", email : "", senha: "", confirmSenha: "", telefone: "", cpf : "", dataNasc : "", sexo: "", 
                         cep: "", uf: "", cidade : "", rua : "", numero: "", bairro: "", termos: false }}
-                        onSubmit={values => {handleForm(values);}}
+                        onSubmit={values => {handleSubmit(values);}}
                         validationSchema={validationSchema}
                         >
                             {({handleSubmit}) => (
