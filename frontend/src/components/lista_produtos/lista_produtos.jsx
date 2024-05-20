@@ -1,7 +1,9 @@
 import ProductImg from "../../assets/product_img.png"
 
-export default function Lista_produtos() {
+export default function Lista_produtos({ openEdit }) {
+
     return (
+
         <div>
             <div className=" flex flex-row justify-between">
                 <div className=" w-1/3 h-20 flex items-center justify-center">
@@ -15,11 +17,15 @@ export default function Lista_produtos() {
                     <input className=" text-primaryColor text-center w-16" id="quantidade_produto" type="number" disabled value="122" />
                 </div>
                 <div className=" flex items-center text-thirdColor pr-1">
-                    <span className="material-symbols-outlined">
-                        edit_square
-                    </span>
+
+                    <button onClick={openEdit}>
+                        <span className="material-symbols-outlined">
+                            edit_square
+                        </span>
+                    </button>
                 </div>
             </div>
+
         </div>
     )
 }

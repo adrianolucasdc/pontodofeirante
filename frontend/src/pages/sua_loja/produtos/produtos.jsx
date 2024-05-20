@@ -4,6 +4,8 @@ import BtnMenuIcon from '../../../assets/btnMenu_sua_loja_icon.svg'
 import Lista_produtos from '../../../components/lista_produtos/lista_produtos'
 import Menu_principal from "../../../components/menu_principal/menu_principal"
 import Menu_sua_loja from '../../../components/menu_sua_loja/sua_loja';
+import Edit_produto from '../../../components/edit_produto/edit_produto';
+
 
 import { IoMdSearch } from "react-icons/io";
 import { useState } from 'react';
@@ -17,6 +19,13 @@ export default function Produtos() {
     }
 
     const [showMenuLoja, setShowMenuLoja] = useState(false);
+
+    function toggleEdit() {
+        setEditProduto(!editProduto)
+    }
+
+
+    const [editProduto, setEditProduto] = useState(false);
 
 
     return (
@@ -59,16 +68,27 @@ export default function Produtos() {
                         <h1 className=' flex items-center justify-center bg-white w-1/3 h-full font-extrabold text-primaryColor'>Referência</h1>
                         <h1 className=' flex items-center justify-center bg-white w-1/3 h-full font-extrabold text-primaryColor rounded-tr-xl'>Qtd.</h1>
                     </div>
-                    <Lista_produtos />
+                    <Lista_produtos 
+                        openEdit={() => setEditProduto(!editProduto)}
+                    />
                 </div>
             </div>
             <Menu_principal />
 
             {showMenuLoja && (
-                <Menu_sua_loja 
-                    close={ () => setShowMenuLoja(!showMenuLoja)}
+                <Menu_sua_loja
+                    close={() => setShowMenuLoja(!showMenuLoja)}
                 />
             )}
+
+            {editProduto && (
+                <Edit_produto
+
+                    closeEdit={() => setEditProduto(!editProduto)}
+                />
+            )}
+
+
         </div>
     )
 }
