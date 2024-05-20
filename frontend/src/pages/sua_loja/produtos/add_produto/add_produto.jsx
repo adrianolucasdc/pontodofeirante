@@ -6,6 +6,8 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { Form, Field, Formik } from "formik";
 import * as Yup from 'yup'
 import { ErrorMessage } from "formik";
+import { FaUpload } from "react-icons/fa";
+
 import campoPreencher from '../../../../components/formularios/input';
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
@@ -15,7 +17,8 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
     categoria: Yup.string().required('Campo obrigatório!'),
     cores: Yup.string().required('Campo obrigatório!'),
     tamanho: Yup.number().required('Campo obrigatório!'),
-    desconto: Yup.number()
+    desconto: Yup.number(),
+    imgproduto: Yup.mixed().required('Campo obrigatório!')
 })
 
 const categoriaItems = [
@@ -75,8 +78,11 @@ export default function Add_produto() {
     const [coresSelecionada, setCoresSelecionada] = useState([]);
     const [tamanhosSelecionado, setTamanhosSelecionado] = useState([]);
 
-    const handleSelect = () => {
-        console.log(categoriaSelecionada, coresSelecionada, tamanhosSelecionado)
+    const [imgProduto, setImgProduto] = useState('');
+
+    const handleSelect = (e) => {
+        e.preventDefault();
+        console.log(categoriaSelecionada, coresSelecionada, tamanhosSelecionado, imgProduto)
     }
 
     return (
@@ -103,9 +109,9 @@ export default function Add_produto() {
                             {campoPreencher("Quantidade de produtos", "Insira a quantidade de produtos em estoque...", "qtdProduto", "number")}
                             <div>
                                 <h1 className=" text-primaryColor font-bold">Preço:</h1>
-                                <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                 />
-                                <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3' />
+                                <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3 ' />
                             </div>
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Categoria: </h1>
@@ -143,7 +149,7 @@ export default function Add_produto() {
                                     isLoading={false}
                                     isRtl={false}
                                 />
-                                <ErrorMessage name="cores" component="div" className='error text-red-600 text-sm ml-3'/>
+                                <ErrorMessage name="cores" component="div" className='error text-red-600 text-sm ml-3' />
                             </div>
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Tamanhos: </h1>
@@ -162,7 +168,17 @@ export default function Add_produto() {
                                     isLoading={false}
                                     isRtl={false}
                                 />
-                                <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3'/>
+                                <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3' />
+                            </div>
+
+                            <div className=''>
+                                <h1 className='font-bold text-primaryColor'>Foto Produto: </h1>
+
+                                <label htmlFor="imgproduto" className=' mb-3 border-2 border-primaryColor rounded-md flex flex-row items-center pl-5 h-[42px]'>
+                                    <FaUpload color="#11111" className=' mr-5' />
+                                    Escolha a foto do seu produto
+                                </label>
+                                <input type="file" name='imgproduto' id="imgproduto" accept="image/*" onChange={e => setImgProduto(e.target.files[0])} className=' hidden' />
                             </div>
 
                             <button

@@ -6,6 +6,7 @@ import Home from '../pages/home/home';
 import Favoritos from '../pages/favoritos/favoritos';
 import Perfil from '../pages/perfil/perfil';
 import Sacola from '../pages/sacola/sacola';
+import Sua_loja_login from '../pages/sua_loja/sua_loja_login/sua_loja_login'
 import Sua_loja_iniciar from '../pages/sua_loja/sua_loja_cadastro/sua_loja_iniciar';
 import Sua_loja_cadastro from '../pages/sua_loja/sua_loja_cadastro/sua_loja_cadastro'
 import Sua_loja_termos from '../pages/sua_loja/sua_loja_cadastro/sua_loja_termos';
@@ -40,6 +41,7 @@ function RoutesApp() {
             <Route path='/minhaloja' element={ <Minha_loja/> } />
             <Route path='/historicodepedidos' element={ <Historico_pedidos/> } />
             <Route path='/addproduto' element={ <Add_produto/> } />
+            <Route path='/sua_loja_login' element={ <Sua_loja_login/> }/>
 
         </Routes>
     )
