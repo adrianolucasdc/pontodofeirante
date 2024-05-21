@@ -10,7 +10,7 @@ export default function campoPreencher(titulo, subtitulo, value, type, borderCol
     return(
         <div className=" mb-3 flex flex-col">
             <span className=' text-primaryColor font-bold'>{titulo}</span>
-            <Field type={type} name={value} className={` border-2 rounded-md w-full h-[42px] pl-2 ${borderClass}`}
+            <Field type={type} name={value} className={` border-2 rounded-md w-40 h-[42px] pl-2 ${borderClass}`}
             placeholder={subtitulo}/>
             <div className='overflow-scroll no-scrollbar'>
                 <ErrorMessage name={value} component="div" className='error text-red-600 text-sm ml-3'/>

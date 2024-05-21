@@ -75,6 +75,9 @@ const animatedComponents = makeAnimated();
 
 export default function Add_produto() {
 
+    const [nomeProduto, setNomeProduto] = useState('');
+    const [preco, setPreco] = useState('');
+    const [qtdProduto, setQtdProduto] = useState('');
     const [categoriaSelecionada, setCategoriaSelecionada] = useState([]);
     const [coresSelecionada, setCoresSelecionada] = useState([]);
     const [tamanhosSelecionado, setTamanhosSelecionado] = useState([]);
@@ -83,7 +86,8 @@ export default function Add_produto() {
 
     const handleSelect = (e) => {
         e.preventDefault();
-        console.log(categoriaSelecionada, coresSelecionada, tamanhosSelecionado, imgProduto)
+        setNomeProduto(e.nomeProduto)
+        console.log(nomeProduto, categoriaSelecionada, coresSelecionada, tamanhosSelecionado, imgProduto)
     }
 
 
@@ -101,77 +105,62 @@ export default function Add_produto() {
                 <Formik
                     initialValues={{ nomeProduto: '', qtdProduto: '', preco: '', categoria: '', cores: '', tamanho: '' }}
                     onSubmit={values => {
-                        console.log(values);
+                        handleSelect(values)
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
                 >
                     {({ handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
                             {campoPreencher("Nome do Produto", "Insira o nome do produto...", "nomeProduto", "text")}
-                            <div>
-                                <h1 className=" text-primaryColor font-bold">Preço:</h1>
-                                <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
-                                />
-                                <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3 ' />
+                            <div className=' flex flex-row justify-between'>
+                                <div>
+                                    <h1 className=" text-primaryColor font-bold">Preço:</h1>
+                                    <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-40 h-[42px] pl-2"
+                                    />
+                                    <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3 ' />
+                                </div>
+                                {campoPreencher("Qtd. de produtos", "Insira a quantidade de produtos em estoque...", "qtdProduto", "number") }
+                            </div>
+                            <div className=' flex flex-row justify-between'>
+                                <div>
+                                    <h1 className='font-bold text-primaryColor'>Categoria: </h1>
+                                    <Field as="select" name="categoria" className=" h-9 border-primaryColor border-2 rounded-md">
+                                        <option value="">Selecione</option>
+                                        <option value="Masculino">Masculino</option>
+                                        <option value="Feminino">Feminino</option>
+                                        <option value="Moda_praia">Moda praia</option>
+                                        <option value="Descontos">Descontos</option>
+                                    </Field>
+                                    <ErrorMessage name="categoria" component="div" className='error text-red-600 text-sm ml-3' />
+                                </div>
+                                <div>
+                                    <h1 className='font-bold text-primaryColor'>Cores: </h1>
+                                    <Field as="select" name="cores" className=" h-9 border-primaryColor border-2 rounded-md">
+                                        <option value="">Selecione</option>
+                                        <option value="Azul">Azul</option>
+                                        <option value="Preto">Preto</option>
+                                        <option value="Branco">Branco</option>
+                                        <option value="Verde">Verde</option>
+                                    </Field>
+                                    <ErrorMessage name="cores" component="div" className='error text-red-600 text-sm ml-3' />
+                                </div>
+                                <div>
+                                    <h1 className='font-bold text-primaryColor'>Tamanhos: </h1>
+                                    <Field as="select" name="tamanho" className=" h-9 border-primaryColor border-2 rounded-md">
+                                        <option value="">Selecione</option>
+                                        <option value="pp">pp</option>
+                                        <option value="p">p</option>
+                                        <option value="m">m</option>
+                                        <option value="g">g</option>
+                                        <option value="gg">gg</option>
+                                        <option value="l">l</option>
+                                        <option value="xl">xl</option>
+                                    </Field>
+                                    <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3' />
+                                </div>
                             </div>
 
 
-
-                            <div>
-                                <h1 className='font-bold text-primaryColor'>Categoria: </h1>
-                                <Select
-                                    name='categoria'
-                                    components={animatedComponents}
-                                    onChange={(item) => setCategoriaSelecionada(item)}
-                                    className=" mb-3 border-2 border-primaryColor rounded-md"
-                                    placeholder="Selecione as categorias..."
-                                    options={categoriaItems}
-                                    isClearable={true}
-                                    isSearchable={true}
-                                    closeMenuOnScroll={true}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isRtl={false}
-                                />
-                                <ErrorMessage name="categoria" component="div" className='error text-red-600 text-sm ml-3' />
-                            </div>
-                            <div>
-                                <h1 className='font-bold text-primaryColor'>Cores: </h1>
-                                <Select
-                                    name="cores"
-                                    components={animatedComponents}
-                                    onChange={(item) => setCoresSelecionada(item)}
-                                    options={coresPecas}
-                                    className=" mb-3 border-2 border-primaryColor rounded-md"
-                                    placeholder="Selecione as cores disponíveis..."
-                                    isClearable={true}
-                                    isSearchable={true}
-                                    closeMenuOnScroll={true}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isRtl={false}
-                                />
-                                <ErrorMessage name="cores" component="div" className='error text-red-600 text-sm ml-3' />
-                            </div>
-                            <div>
-                                <h1 className='font-bold text-primaryColor'>Tamanhos: </h1>
-                                <Select
-                                    name="tamanho"
-                                    components={animatedComponents}
-                                    onChange={(item) => setTamanhosSelecionado(item)}
-                                    options={tamanhos}
-                                    className=" mb-3 border-2 border-primaryColor rounded-md"
-                                    placeholder="Selecione os tamanhos disponíveis..."
-                                    isClearable={true}
-                                    isSearchable={true}
-                                    closeMenuOnScroll={true}
-                                    isDisabled={false}
-                                    isLoading={false}
-                                    isRtl={false}
-                                />
-                                <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3' />
-                            </div>
-                            {campoPreencher("Quantidade de produtos", "Insira a quantidade de produtos em estoque...", "qtdProduto", "number")}
                             <div className=''>
                                 <h1 className='font-bold text-primaryColor'>Foto Produto: </h1>
 
@@ -182,7 +171,16 @@ export default function Add_produto() {
                                 <input type="file" name='imgproduto' id="imgproduto" accept="image/*" onChange={e => setImgProduto(e.target.files[0])} className=' hidden' />
                             </div>
 
-                            <div>
+                            <div className=' flex flex-row justify-between'>
+
+                                <button
+                                    className=" h-9 px-4 bg-secundaryColor rounded-full active:bg-primaryColor active:text-secundaryColor"
+                                    type="submit"
+                                    onClick={handleSelect}
+                                >
+                                    Cadastrar Produto
+                                </button>
+
                                 <button
                                     className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
                                     type="submit"
@@ -197,13 +195,7 @@ export default function Add_produto() {
 
                             <Cad_produtos_info />
 
-                            <button
-                                className=" h-9 px-4 bg-secundaryColor rounded-full active:bg-primaryColor active:text-secundaryColor"
-                                type="submit"
-                                onClick={handleSelect}
-                            >
-                                Cadastrar Produto
-                            </button>
+
                         </Form>
                     )}
                 </Formik>
