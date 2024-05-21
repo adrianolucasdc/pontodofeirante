@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import { ErrorMessage } from "formik";
 import { FaUpload } from "react-icons/fa";
 
+import Cad_produtos_info from '../../../../components/cad_produtos_info/cad_produtos_info';
 import campoPreencher from '../../../../components/formularios/input';
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
@@ -85,6 +86,7 @@ export default function Add_produto() {
         console.log(categoriaSelecionada, coresSelecionada, tamanhosSelecionado, imgProduto)
     }
 
+
     return (
         <div className=" h-full flex flex-col">
             <div className=" mx-6 mt-7">
@@ -106,13 +108,15 @@ export default function Add_produto() {
                     {({ handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
                             {campoPreencher("Nome do Produto", "Insira o nome do produto...", "nomeProduto", "text")}
-                            {campoPreencher("Quantidade de produtos", "Insira a quantidade de produtos em estoque...", "qtdProduto", "number")}
                             <div>
                                 <h1 className=" text-primaryColor font-bold">Preço:</h1>
                                 <Field type="number" name="preco" min="0" step="0.01" placeholder="Insira o preço do produto" className=" mb-3 border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                 />
                                 <ErrorMessage name="preco" component="div" className='error text-red-600 text-sm ml-3 ' />
                             </div>
+
+
+
                             <div>
                                 <h1 className='font-bold text-primaryColor'>Categoria: </h1>
                                 <Select
@@ -121,7 +125,6 @@ export default function Add_produto() {
                                     onChange={(item) => setCategoriaSelecionada(item)}
                                     className=" mb-3 border-2 border-primaryColor rounded-md"
                                     placeholder="Selecione as categorias..."
-                                    isMulti
                                     options={categoriaItems}
                                     isClearable={true}
                                     isSearchable={true}
@@ -141,7 +144,6 @@ export default function Add_produto() {
                                     options={coresPecas}
                                     className=" mb-3 border-2 border-primaryColor rounded-md"
                                     placeholder="Selecione as cores disponíveis..."
-                                    isMulti
                                     isClearable={true}
                                     isSearchable={true}
                                     closeMenuOnScroll={true}
@@ -160,7 +162,6 @@ export default function Add_produto() {
                                     options={tamanhos}
                                     className=" mb-3 border-2 border-primaryColor rounded-md"
                                     placeholder="Selecione os tamanhos disponíveis..."
-                                    isMulti
                                     isClearable={true}
                                     isSearchable={true}
                                     closeMenuOnScroll={true}
@@ -170,7 +171,7 @@ export default function Add_produto() {
                                 />
                                 <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm ml-3' />
                             </div>
-
+                            {campoPreencher("Quantidade de produtos", "Insira a quantidade de produtos em estoque...", "qtdProduto", "number")}
                             <div className=''>
                                 <h1 className='font-bold text-primaryColor'>Foto Produto: </h1>
 
@@ -181,8 +182,23 @@ export default function Add_produto() {
                                 <input type="file" name='imgproduto' id="imgproduto" accept="image/*" onChange={e => setImgProduto(e.target.files[0])} className=' hidden' />
                             </div>
 
+                            <div>
+                                <button
+                                    className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
+                                    type="submit"
+                                // onClick={addMore}
+                                >
+                                    <h1>Adicionar</h1>
+                                    <span className="material-symbols-outlined">
+                                        add
+                                    </span>
+                                </button>
+                            </div>
+
+                            <Cad_produtos_info />
+
                             <button
-                                className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor"
+                                className=" h-9 px-4 bg-secundaryColor rounded-full active:bg-primaryColor active:text-secundaryColor"
                                 type="submit"
                                 onClick={handleSelect}
                             >
@@ -190,7 +206,6 @@ export default function Add_produto() {
                             </button>
                         </Form>
                     )}
-
                 </Formik>
 
             </div>
