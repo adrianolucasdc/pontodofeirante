@@ -29,19 +29,6 @@ model Loja {
   localizacao LocalizacaoLoja[]
 }
 
-model Produto {
-  id           String      @id 
-  loja         Loja        @relation(fields: [lojaId], references: [id])
-  lojaId       String
-  categoria    String
-  categoriaId  String
-  nome         String
-  imagem       String?   // img
-  descricao    String
-  preco        Float
-  desconto     Int?
-}
-
 model LocalizacaoLoja {
   id           String      @id 
   loja         Loja     @relation(fields: [lojaId], references: [id])
@@ -52,6 +39,26 @@ model LocalizacaoLoja {
   bairro       String
   complemento  String
 }
+
+model Produto {
+  id           String      @id 
+  loja         Loja        @relation(fields: [lojaId], references: [id])
+  lojaId       String
+  categoria    Categoria[]
+  nomeProduto  String
+  imagem       String   // img
+  descricao    String
+  descontoTodos Int?
+}
+
+model Categoria{
+  id           String     @id
+  produto      Produto    @relation(fields: [produtoId], references: [id])
+  produtoId    String
+}
+
+//
+//preco        Float
 
 model Usuario {
   id           String      @id 
