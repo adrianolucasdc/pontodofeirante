@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import { ErrorMessage } from "formik";
 import { FaUpload } from "react-icons/fa";
 
-import Cad_produtos_info from '../../../../components/cad_produtos_info/cad_produtos_info';
+import Btn_cad_produtos_info from '../../../../components/btn_cad_produtos_info/btn_cad_produtos_info'
 import campoPreencher from '../../../../components/formularios/input';
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
@@ -22,9 +22,8 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
 })
 
 
-
 export default function Add_produto() {
-
+    
 
     return (
         <div className=" h-full flex flex-col">
@@ -120,18 +119,16 @@ export default function Add_produto() {
                                 Cadastrar Produto
                             </button>
 
-
-                            {/* <button
+                            <button
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
-                                type="submit"
+                                type="button"
+                                onClick={() => addNew()}
                             >
                                 <h1>Adicionar</h1>
                                 <span className="material-symbols-outlined">
                                     add
                                 </span>
-                            </button> */}
-
-                            <Cad_produtos_info />
+                            </button>
 
 
                         </Form>
