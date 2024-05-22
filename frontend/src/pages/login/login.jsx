@@ -8,7 +8,7 @@ import Menu_principal from "../../components/menu_principal/menu_principal";
 import UserServices from "../../Services/UserService";
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email("* Insira um e-mail válido!").required("* Preencha o campos!"),
+    email: Yup.string().email("* Insira um e-mail válido!").required("* Preencha o campos!").matches(/^[a-z.@]*$/, "* Insira um e-mail válido!"),
     senha: Yup.string().required("* Preencha o campos!")
 })
 

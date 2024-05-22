@@ -17,7 +17,8 @@ const userServices = new UserServices();
 const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo Obrigatório!"),
     razao: Yup.string().required("* Campo Obrigatório!"),
-    email: Yup.string().required("* Campo Obrigatório!").email("* Insira um e-mail válido!"),
+    email: Yup.string().required("* Campo Obrigatório!").email("* Insira um e-mail válido!")
+    .matches(/^[a-z.@]*$/, "* Insira um e-mail válido!"),
     telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     zap: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     cnpj: Yup.string().required("* Campo Obrigatório!").min(18, "* Insira um CNPJ válido! "),
