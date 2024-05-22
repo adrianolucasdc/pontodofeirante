@@ -5,7 +5,7 @@ export default function Menu_principal() {
         <div>
             <div className=" h-20 w-full border-t-2 fixed bottom-0 bg-lightColor">
                 <div className=" h-full flex flex-row justify-around items-center">
-                    <Link to="/home">
+                    <Link to="/">
                         <div className=" w-14 h-full flex flex-col justify-center items-center">
                         <svg className=" h-10" xmlns="http://www.w3.org/2000/svg" height="37" viewBox="0 -960 960 960" width="35" fill="#EA5454"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
                             <h1 className=" font-extrabold text-thirdColor">Home</h1>
