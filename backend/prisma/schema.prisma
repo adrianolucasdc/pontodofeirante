@@ -25,13 +25,13 @@ model Loja {
   banner      String?         // img
   logo        String?         // img
   termos      Boolean
-  produtos    Produto[]   
+  produtos    CategoriasProdutos[]   
   localizacao LocalizacaoLoja[]
 }
 
 model LocalizacaoLoja {
   id           String      @id 
-  loja         Loja     @relation(fields: [lojaId], references: [id])
+  loja         Loja        @relation(fields: [lojaId], references: [id])
   lojaId       String
   cep          String
   logradouro   String
@@ -40,25 +40,47 @@ model LocalizacaoLoja {
   complemento  String
 }
 
-model Produto {
-  id           String      @id 
+model CategoriasProdutos {
+  id String @id
   loja         Loja        @relation(fields: [lojaId], references: [id])
   lojaId       String
-  categoria    Categoria[]
-  nomeProduto  String
+  nomeCategoria String     @unique
+  produtos Produto[]
+}
+model Produto {
+  id           String               @id 
+  categoria    CategoriasProdutos   @relation(fields: [categId], references: [id]) 
+  categId      String
+  nomeProduto  String               @unique
   imagem       String   // img
   descricao    String
   descontoTodos Int?
+  cores        CorProduto[]
 }
 
-model Categoria{
-  id           String     @id
-  produto      Produto    @relation(fields: [produtoId], references: [id])
-  produtoId    String
+model CorProduto {
+  id          String      @id
+  produto     Produto     @relation(fields: [produtoId], references: [id])
+  produtoId   String
+  nomeCor     String      @unique
+  tamanhos    TamanhoProduto[]
 }
 
-//
-//preco        Float
+model TamanhoProduto{
+  id          String     @id
+  cor         CorProduto @relation(fields: [corId], references: [id])
+  corId       String
+  nomeTamanho String     @unique
+  detalhesProduto DetalhesProduto[]
+}
+
+model DetalhesProduto{
+  id          String    @id
+  tamanho     TamanhoProduto   @relation(fields: [tamanhoId],references: [id])
+  tamanhoId   String    @unique
+  preco       Float
+  qtd         Int
+}
 
 model Usuario {
   id           String      @id 
