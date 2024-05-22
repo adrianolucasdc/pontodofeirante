@@ -16,7 +16,7 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
         const password = senha
 
         
-        const cpfCriptografado = crypto.createHmac('sha256', 'chave-secreta').update(cpfSemMascara).digest('hex');
+        const cpfCriptografado = crypto.createHmac('sha256', process.env.SECRET).update(cpfSemMascara).digest('hex');
         const passwordHash = await bcrypt.hash(password, salt);
 
         const [existEqualEmail, existEqualTelefone, existEqualCpf] = await Promise.all([
