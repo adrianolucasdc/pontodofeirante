@@ -78,6 +78,7 @@ export default function Sua_loja_cadastro() {
     }
 
     //registrar loja
+    const navigate = useNavigate()
     const handleSubmit = async (values) => {
         try {
             const response = await userServices.registerStore(values);
@@ -136,7 +137,7 @@ export default function Sua_loja_cadastro() {
                                             name="cnpj"
                                             mask="00.000.000/0000-00"
                                             placeholder='Insira o CNPJ...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             />
                                         )}
                                         </Field>
@@ -145,11 +146,11 @@ export default function Sua_loja_cadastro() {
 
                                     <div className='relative'>
                                         {campoPreencher("Senha: ", "Insira sua senha...", "senha", statusPass)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                        <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
                                     </div>
                                     <div className='relative'>
                                         {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha",statusPass1)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
+                                        <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
                                     </div>
                                     
                                     {campoPreencher("E-mail da Loja: ", "Insira o e-mail da loja...", "email","email")}
@@ -162,7 +163,7 @@ export default function Sua_loja_cadastro() {
                                             name="telefone"
                                             mask="(00) 00000-0000"
                                             placeholder='Insira o telefone...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             
                                             />
                                         )}
@@ -178,7 +179,7 @@ export default function Sua_loja_cadastro() {
                                             name="zap"
                                             mask="(00) 00000-0000"
                                             placeholder='Insira o celular...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             />
                                         )}
                                         </Field>

@@ -15,9 +15,6 @@ const validationSchema = Yup.object().shape({
 const userServices = new UserServices();
 
 
-
-
-
 export default function Login() {
 
   
@@ -35,13 +32,12 @@ export default function Login() {
     const handleSubmit = async (values) => {
         try {
             const response = await userServices.signInUser(values)
-
             if (response.erro) {
                 setSubmittedError({hasError: true, type: response.erro})
                 setTimeout(() => {
                     setSubmittedError({hasError: false, type: ""}) 
                 }, 10000);
-            } else if (response.user) {
+            } else if (response.redirect) {
                 navigate(response.redirect)
             }
             
@@ -107,7 +103,7 @@ export default function Login() {
                                     <div className=" mb-3 flex justify-center flex-col">
                                         <div>
                                             <label htmlFor="email">E-mail:</label>
-                                            <Field type="email" name="email" id="email" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
+                                            <Field type="email" name="email" id="email" className={" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
                                             placeholder="Insira seu e-mail..." autoComplete="email"/>
                                         </div>
                                         <div className=" text-red-600 text-sm pl-3">
@@ -117,9 +113,9 @@ export default function Login() {
                                     <div className="h9 "> 
                                         <div className="relative">
                                             <label htmlFor="senha">Senha:</label>
-                                            <Field type={statusPass} name="senha" id="senha" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
+                                            <Field type={statusPass} name="senha" id="senha" className={" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
                                             placeholder="Insira sua senha..."/>
-                                            <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                            <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
                                         </div>
                                     </div>
                                     <div className=" text-red-600 text-sm h-10 pl-3">

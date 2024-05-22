@@ -80,10 +80,12 @@ async function autenticarUsuario(email, senha){
             const secret = process.env.secret
 
             const token = jwt.sign({
-                id: user.id
+                id: user.id,
+                name:user.nome,
+                email : user.email 
             }, secret, {expiresIn: 604800})
 
-            return {user: {name : user.nome, email: user.email, token}}
+            return {token}
 
         } else {
             return { erro : "Email ou senha incorretos!" }

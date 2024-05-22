@@ -146,11 +146,11 @@ export default function Cadastro_user() {
                                     {campoPreencher("E-mail: ","Insira seu e-mail...","email","email")}
                                     <div className='relative'>
                                         {campoPreencher("Senha: ", "Insira sua senha...", "senha", statusPass)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                        <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
                                     </div>
                                     <div className='relative'>
                                         {campoPreencher("Confirme sua senha: ", "Repita sua senha...", "confirmSenha",statusPass1)}
-                                        <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
+                                        <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton1} name='' ><img src={fileSvg1} alt="Mostrar Senha" /></button>
                                     </div>
                                     
                                     <div className=" mb-3">
@@ -162,7 +162,7 @@ export default function Cadastro_user() {
                                             name="telefone"
                                             mask="(00) 00000-0000"
                                             placeholder='Insira seu celular...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             />
                                         )}
                                         </Field>
@@ -177,7 +177,7 @@ export default function Cadastro_user() {
                                             name="cpf"
                                             mask="000.000.000-00"
                                             placeholder='Insira seu CPF...'
-                                            className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                            className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             />
                                         )}</Field>
                                         <ErrorMessage name='cpf' component="div" className='error text-red-600 text-sm ml-3'/>
@@ -186,12 +186,12 @@ export default function Cadastro_user() {
                                     <div className='flex justify-between mb-3'>
                                         <div className='w-[80%]'>
                                             <h1 className=' font-bold'>Data de Nascimento: </h1>
-                                            <Field type="date" name="dataNasc" max={maxYear} min={minYear} className="pl-2 w-11/12 h-9 border-primaryColor border-2 rounded-md"/>
+                                            <Field type="date" name="dataNasc" max={maxYear} min={minYear} className="pl-2 w-11/12 h-[42px] border-primaryColor border-2 rounded-md"/>
                                             <ErrorMessage name='dataNasc' component="div" className='error text-red-600 text-sm ml-3'/>
                                         </div>
                                         <div className='overflow-hidden w-[47%]'>
                                             <h1 className='block font-bold text-primaryColor'>Sexo: </h1>
-                                            <Field as="select" name="sexo" className=" h-9 border-primaryColor border-2 rounded-md">
+                                            <Field as="select" name="sexo" className=" h-[42px] border-primaryColor border-2 rounded-md">
                                                 <option value="">Selecione</option>
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Feminino">Feminino</option>
@@ -214,7 +214,7 @@ export default function Cadastro_user() {
                                                 name="cep"
                                                 mask="00000-000"
                                                 placeholder='Insira seu CEP...'
-                                                className=" border-primaryColor border-2 rounded-md w-full h-9 pl-2"
+                                                className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                                 />
                                             )}</Field>
                                             <ErrorMessage name='cep' component="div" className='error text-red-600 text-sm ml-3'/>
@@ -242,7 +242,7 @@ export default function Cadastro_user() {
                                         <ErrorMessage name='termos' component="div" className='error text-red-600 text-sm ml-3'/>
                                     </div>
                                     <div className='flex justify-center mb-4'>
-                                        <button id='submit' type='submit' className=" h-9 w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
+                                        <button id='submit' type='submit' className=" h-[42px] w-36 bg-secundaryColor rounded-xl active:bg-primaryColor active:text-secundaryColor">Enviar</button>
                                     </div>
                                     {submitted && <CadastroSucesso />
                                     }

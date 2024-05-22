@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const jwtd = require("jwt-decode")
 
 const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userDb");
-const { criarLoja } = require("../DataBaseControllers/storeDb");
+const { criarLoja, autenticarLoja } = require("../DataBaseControllers/storeDb");
 const routes = express.Router();
 
 const secret = process.env.secret
@@ -42,7 +42,7 @@ routes.post("/api/register_store", async (req, res)=>{
         else {
             res.status(200).json({
                 msg:"Loja Cadastrada com Sucesso!",
-                redirect: "/login"});
+                redirect: "/sua_loja_login"});
         }
     }
     catch(e){
@@ -64,12 +64,12 @@ routes.post("/api/user_login", async (req, res)=>{
 
         if (authUser.erro){
             res.status(203).json(authUser);
-        } else if (authUser.user) {
+        } else if (authUser.token) {
+            res.cookie("t0k3N_user", authUser.token, {maxAge:60480000 , httpOnly:true, sameSite: "strict" });
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
-                redirect: "/home",
-                user: authUser.user
-            });
+                redirect: "/",
+            })
         }
 
 
@@ -88,18 +88,17 @@ routes.post("/api/store_login", async (req, res)=>{
             return res.status(422).json({msg : "Email e senha são obrigatórios!"})
         }
 
-        const authUser = await autenticarUsuario(email, senha);
+        const authUser = await autenticarLoja(email, senha);
 
         if (authUser.erro){
             res.status(203).json(authUser);
-        } else if (authUser.user) {
+        } else if (authUser.token) {
+            res.cookie("t0k3N_store", authUser.token, {maxAge:60480000 , httpOnly:true, sameSite: "strict" });
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
-                redirect: "/home",
-                user: authUser.user
+                redirect: "/",
             });
         }
-
 
     } catch (e) {
         console.log(e);

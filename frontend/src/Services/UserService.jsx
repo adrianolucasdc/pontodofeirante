@@ -36,26 +36,19 @@ export default class UserServices{
     async signInUser(dados) {
         const {data} = await this.axios.post("/api/user_login", {
             email: dados.email, senha:dados.senha 
-        });
-
-        
-        if (!data.erro) {
-            const token = data.user.token
-            localStorage.setItem("name_user", data.user.name);
-            localStorage.setItem("email_user", data.user.email);
-
-            cookies.set("t0k3n_user", token);
-        }
+        }, {withCredentials:true });
 
         return data;
     }
 
     //login loja
-    // async signInStore(dados){
-    //     const {data} = await this.axios.post("/api/store_login", {
-    //         email: dados.email, senha:dados.senha 
-    //     });
+    async signInStore(dados){
+        const {data} = await this.axios.post("/api/store_login", {
+            email: dados.email, senha:dados.senha 
+        }, {withCredentials:true });
 
+        return data;
+    }
         
 
     //     if (!data.erro) {
@@ -76,7 +69,7 @@ export default class UserServices{
 
     //autenticar token usuario ou loja
     async userAutheticatedUser (){
-        const token = cookies.get("t0k3n_user")
+        const token = cookies.get("t0k3N_user")
 
         try {
             const {data} = await this.axios.get("/api/validate_token", {token: token})
@@ -102,9 +95,7 @@ export default class UserServices{
     }
 
     async logoutStore(){
-        localStorage.removeItem("name_store");
-        localStorage.removeItem("email_store");
-        cookies.remove("t0k3n_store")
+        
     }
 
 

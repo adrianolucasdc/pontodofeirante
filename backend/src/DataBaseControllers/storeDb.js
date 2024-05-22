@@ -2,6 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const cuid = require("cuid");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 
 
 async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
@@ -47,4 +48,33 @@ async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
     }
 }
 
-module.exports = {criarLoja};
+async function autenticarLoja(email, senha){
+
+    const store = await prisma.loja.findUnique({
+        where: {
+            email: String(email),
+        }
+    });
+
+    if (store) {
+        const authHash = await bcrypt.compare(senha, store.senha);
+
+        if (authHash) {
+            const secret = process.env.secret
+
+            const token = jwt.sign({
+                id: store.id,
+                name: store.nome,
+                email: store.em
+            }, secret, {expiresIn: 604800})
+
+            return {token}
+
+        } else {
+            return { erro : "Email ou senha incorretos!" }
+        }
+    } else{
+        return { erro : "Email ou senha incorretos!" }
+    }
+}
+module.exports = {criarLoja, autenticarLoja};

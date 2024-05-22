@@ -4,13 +4,17 @@ import * as Yup from "yup"
 import { useState } from "react";
 
 
+
 import Menu_principal from "../../../components/menu_principal/menu_principal"
+import UserServices from "../../../Services/UserService";
+
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email("* Insira um e-mail válido!").required("* Preencha o campos!"),
     senha: Yup.string().required("* Preencha o campos!")
 })
 
+const userServices = new UserServices();
 
 export default function Sua_loja_login() {
 
@@ -33,6 +37,31 @@ export default function Sua_loja_login() {
         }
     }
 
+    //Mensagem Erro ao Fazer Login
+    const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+
+    function onClickSubmitted (){
+        setSubmittedError(false);
+    }
+
+    //realizar login
+    const navigate = useNavigate();
+    const handleSubmit = async (values) => {
+        try {
+            const response = await userServices.signInStore(values)
+            if (response.erro) {
+                setSubmittedError({hasError: true, type: response.erro})
+                setTimeout(() => {
+                    setSubmittedError({hasError: false, type: ""}) 
+                }, 10000);
+            } else if (response.redirect) {
+                navigate(response.redirect)
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div className=" h-screen flex flex-col left ">
@@ -43,8 +72,17 @@ export default function Sua_loja_login() {
                  border-primaryColor shadow-2xl">
                 
                     <div>
-                        <h1 className=" font-extrabold text-4xl text-primaryColor my-6">Entrar na sua loja</h1>
+                        <h1 className=" text-center font-extrabold text-4xl text-primaryColor my-6">Sua Loja <br />Entrar </h1>
                     </div>
+
+                    {submittedError.hasError &&
+                        <div>
+                            <div className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[25%] translate-x-[-50%] translate-y-[-50%]">
+                                <span className='text-white text-center'><span className='font-bold'>{submittedError.type}</span></span>
+                                <span onClick={onClickSubmitted} className='text-white text-center font-bold ml-0'>X</span>
+                            </div>
+                        </div>
+                    }
                     
                     <div className="flex flex-col  h-full w-full mx-3">
                         <Formik
@@ -58,7 +96,7 @@ export default function Sua_loja_login() {
                                     <div className=" mb-3 flex justify-center flex-col">
                                         <div>
                                             <label htmlFor="email">E-mail:</label>
-                                            <Field type="email" name="email" id="email" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
+                                            <Field type="email" name="email" id="email" className={" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
                                             placeholder="Insira seu e-mail..." autoComplete="email"/>
                                         </div>
                                         <div className=" text-red-600 text-sm pl-3">
@@ -68,9 +106,9 @@ export default function Sua_loja_login() {
                                     <div className="h9 "> 
                                         <div className="relative">
                                             <label htmlFor="senha">Senha:</label>
-                                            <Field type={statusPass} name="senha" id="senha" className={" border-primaryColor border-2 rounded-md w-full h-9 pl-2"}
+                                            <Field type={statusPass} name="senha" id="senha" className={" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
                                             placeholder="Insira sua senha..."/>
-                                            <button className='absolute right-2 top-[32px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                            <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
                                         </div>
                                     </div>
                                     <div className=" text-red-600 text-sm h-10 pl-3">
