@@ -77,7 +77,7 @@ async function autenticarUsuario(email, senha){
         const authHash = await bcrypt.compare(senha, user.senha);
 
         if (authHash) {
-            const secret = process.env.secret
+            const secret = process.env.SECRET
 
             const token = jwt.sign({
                 id: user.id,
