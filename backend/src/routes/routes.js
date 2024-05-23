@@ -108,7 +108,7 @@ routes.post("/api/store_login", async (req, res)=>{
 
 //Verificação de Token
 function verifyJWT(req,res, next){
-    const token = req.body.token;
+    const token = req.cookie;
 
     jwt.verify(token, secret, (err, decoded) =>
     {
@@ -118,7 +118,7 @@ function verifyJWT(req,res, next){
     });
 }
 routes.get("/api/validate_token", verifyJWT, (req, res)=>{
-    res.json({msg : "Autorizado!"})
+    res.status(200).json({msg : "Autorizado!"})
 })
 
 

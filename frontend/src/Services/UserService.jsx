@@ -70,7 +70,8 @@ export default class UserServices{
     //autenticar token usuario ou loja
     async userAutheticatedUser (){
         const token = cookies.get("t0k3N_user")
-
+        console.log(token)
+        
         try {
             const {data} = await this.axios.get("/api/validate_token", {token: token})
         } catch {
@@ -79,7 +80,7 @@ export default class UserServices{
     }
 
     async userAutheticatedStore (){
-        const token = cookies.get("t0k3n_store")
+        const token = cookies.get("t0k3N_store")
 
         try {
             const {data} = await this.axios.get("/api/validate_token", {token: token})

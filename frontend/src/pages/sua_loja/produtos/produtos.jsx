@@ -32,7 +32,7 @@ export default function Produtos() {
         <div className="   flex flex-col">
             <div className=' mt-7 flex flex-col mx-6'>
                 <button onClick={() => toggleModal()}>
-                    <img src={BtnMenuIcon} alt="" />
+                    <img src={BtnMenuIcon} alt="menu da loja" />
                 </button>
                 <div className=' mt-5'>
                     <div className='w-full flex flex-row justify-between'>
