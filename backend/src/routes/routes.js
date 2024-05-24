@@ -65,10 +65,10 @@ routes.post("/api/user_login", async (req, res)=>{
         if (authUser.erro){
             res.status(203).json(authUser);
         } else if (authUser.token) {
-            res.cookie("t0k3N_user", authUser.token, {maxAge:60480000 , httpOnly:true, sameSite: "strict" });
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
                 redirect: "/",
+                token: authUser.token,
             })
         }
 
@@ -93,10 +93,10 @@ routes.post("/api/store_login", async (req, res)=>{
         if (authUser.erro){
             res.status(203).json(authUser);
         } else if (authUser.token) {
-            res.cookie("t0k3N_store", authUser.token, {maxAge:60480000 , httpOnly:true, sameSite: "strict" });
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
                 redirect: "/",
+                token: authUser.token
             });
         }
 
@@ -108,7 +108,7 @@ routes.post("/api/store_login", async (req, res)=>{
 
 //Verificação de Token
 function verifyJWT(req,res, next){
-    const token = req.cookie;
+    const token = req.body.token;
 
     jwt.verify(token, secret, (err, decoded) =>
     {
@@ -117,7 +117,7 @@ function verifyJWT(req,res, next){
         next();
     });
 }
-routes.get("/api/validate_token", verifyJWT, (req, res)=>{
+routes.post("/api/validate_token", verifyJWT, (req, res)=>{
     res.status(200).json({msg : "Autorizado!"})
 })
 
