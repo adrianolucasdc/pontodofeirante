@@ -6,6 +6,8 @@ import { useState } from "react";
 
 import Menu_principal from "../../components/menu_principal/menu_principal";
 import UserServices from "../../Services/UserService";
+import LoginSucess from "../../components/formularios/loginsucess";
+
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email("* Insira um e-mail válido!").required("* Preencha o campos!").matches(/^[a-z.@]*$/, "* Insira um e-mail válido!"),
@@ -20,6 +22,7 @@ export default function Login() {
   
     //Mensagem Erro ao Fazer Login
     const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+    const [submittedLogged, setSubmittedLogged] =useState(false);
 
     function onClickSubmitted (){
         setSubmittedError(false);
@@ -37,8 +40,17 @@ export default function Login() {
                 setTimeout(() => {
                     setSubmittedError({hasError: false, type: ""}) 
                 }, 10000);
-            } else if (response.redirect) {
-                navigate(response.redirect)
+            } 
+            if (response.msg) {
+                setSubmittedLogged(true)
+                setTimeout(() => {
+                    setSubmittedLogged(false)
+                }, 2500);
+            }
+            if (response.redirect) {
+                setTimeout(() => {
+                    navigate(response.redirect)
+                }, 2500);
             }
             
         } catch (error) {
@@ -73,6 +85,7 @@ export default function Login() {
                     <svg className=" fill-primaryColor" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" /></svg>
                 </Link>
             </div>
+            
 
             <div className=" w-full h-full flex  items-center justify-center">
                 <div className=" flex flex-col items-center justify-center w-80 mx-6 px-5 rounded-xl border-2
@@ -82,14 +95,7 @@ export default function Login() {
                         <h1 className=" font-extrabold text-4xl text-primaryColor mt-6">Entrar</h1>
                     </div>
 
-                    {submittedError.hasError &&
-                        <div>
-                            <div className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[25%] translate-x-[-50%] translate-y-[-50%]">
-                                <span className='text-white text-center'><span className='font-bold'>{submittedError.type}</span></span>
-                                <span onClick={onClickSubmitted} className='text-white text-center font-bold ml-0'>X</span>
-                            </div>
-                        </div>
-                    }
+                    
                     
                     <div className="flex flex-col  h-full w-full mx-3">
                         <Formik
@@ -110,12 +116,14 @@ export default function Login() {
                                             <ErrorMessage name="email" />
                                         </div>
                                     </div>
-                                    <div className="h9 "> 
-                                        <div className="relative">
+                                    <div className="h-9 mb-3"> 
+                                        <div className="flex flex-col">
                                             <label htmlFor="senha">Senha:</label>
-                                            <Field type={statusPass} name="senha" id="senha" className={" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
-                                            placeholder="Insira sua senha..."/>
-                                            <button className='absolute right-2 top-[35px]' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /></button>
+                                            <div className="relative ">
+                                                <Field type={statusPass} name="senha" id="senha" className={"absolute left-0 border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"}
+                                                placeholder="Insira sua senha..."/>
+                                                <button className=' absolute right-2 top-[10px] ' type="button" onClick={onClickButton} name='' ><img src={fileSvg} alt="Mostrar Senha" /> </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className=" text-red-600 text-sm h-10 pl-3">
@@ -141,6 +149,17 @@ export default function Login() {
 
                 
             </div>
+            {submittedError.hasError &&
+                <div>
+                    <div className="fixed flex justify-between px-2 pt-[6px]  w-[80%] h-[40px] bg-red-400 rounded-md border-red-800 border-2 opacity-[0.9] left-1/2 top-[25%] translate-x-[-50%] translate-y-[-50%]">
+                        <span className='text-white text-center'><span className='font-bold'>{submittedError.type}</span></span>
+                        <span onClick={onClickSubmitted} className='text-white text-center font-bold ml-0'>X</span>
+                    </div>
+                </div>
+            }
+            {
+                submittedLogged &&  <LoginSucess />
+            }
 
             <Menu_principal />
         </div>

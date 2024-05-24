@@ -65,7 +65,7 @@ routes.post("/api/user_login", async (req, res)=>{
         if (authUser.erro){
             res.status(203).json(authUser);
         } else if (authUser.token) {
-            res.status(200).json({
+             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
                 redirect: "/",
                 token: authUser.token,
