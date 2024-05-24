@@ -73,12 +73,10 @@ export default class UserServices{
 
     //autenticar token usuario ou loja
     async userAutheticatedUser (){
-        
         const token = cookies.get("t0k3N_user")
-        console.log(token)
         
         try{
-            const {data} = await this.axios.get("/api/validate_token", {token: token})
+            const {data} = await this.axios.post("/api/validate_token", {token: token})
             return true;
         } catch {
             return false;
@@ -89,20 +87,18 @@ export default class UserServices{
         const token = cookies.get("t0k3N_store")
 
         try {
-            const {data} = await this.axios.get("/api/validate_token", {token: token})
+            const {data} = await this.axios.post("/api/validate_token", {token: token})
         } catch {
             return false;
         }
     }
 
     async logoutUser(){
-        localStorage.removeItem("name_user");
-        localStorage.removeItem("email_user");
-        cookies.remove("t0k3n_user")
+        cookies.remove("t0k3N_user")
     }
 
     async logoutStore(){
-        
+        cookies.remove("t0k3N_store")
     }
 
 
