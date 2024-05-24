@@ -51,6 +51,10 @@ export default class UserServices{
             email: dados.email, senha:dados.senha 
         }, {withCredentials:true });
 
+        if (data.token ) {
+            cookies.set("t0k3N_store", data.token)
+        }
+
         return data;
     }
         

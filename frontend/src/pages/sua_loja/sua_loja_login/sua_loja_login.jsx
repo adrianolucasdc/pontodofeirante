@@ -7,6 +7,8 @@ import { useState } from "react";
 
 import Menu_principal from "../../../components/menu_principal/menu_principal"
 import UserServices from "../../../Services/UserService";
+import LoginSucess from "../../../components/formularios/loginsucess";
+
 
 
 const validationSchema = Yup.object().shape({
@@ -40,6 +42,7 @@ export default function Sua_loja_login() {
 
     //Mensagem Erro ao Fazer Login
     const [submittedError, setSubmittedError] =useState({hasError: false, type: ""});
+    const [submittedLogged, setSubmittedLogged] =useState(false);
 
     function onClickSubmitted (){
         setSubmittedError(false);
@@ -50,15 +53,25 @@ export default function Sua_loja_login() {
     const handleSubmit = async (values) => {
         try {
             const response = await userServices.signInStore(values)
+            
             if (response.erro) {
                 setSubmittedError({hasError: true, type: response.erro})
                 setTimeout(() => {
                     setSubmittedError({hasError: false, type: ""}) 
                 }, 10000);
-            } else if (response.redirect) {
-                navigate(response.redirect)
             }
-            
+            if (response.msg) {
+                setSubmittedLogged(true)
+                setTimeout(() => {
+                    setSubmittedLogged(false)
+                }, 2500);
+            }
+            if (response.redirect) {
+                setTimeout(() => {
+                    navigate(response.redirect)
+                }, 2500);
+            }
+        
         } catch (error) {
             console.log(error)
         }
@@ -133,7 +146,9 @@ export default function Sua_loja_login() {
                     </div>
                 </div>
 
-                
+                {
+                submittedLogged &&  <LoginSucess />
+                }
             </div>
 
             <Menu_principal />
