@@ -23,7 +23,22 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
 
 export default function Add_produto() {
 
-    let nomePrd = '';
+
+    const [nomePrd, setNomePrd] = useState('')
+    const [precoPrd, setPrecoPrd] = useState('')
+    const [qtdPrd, setQtdPrd] = useState('')
+    const [categoriaPrd, setCategoriaPrd] = useState('')
+    const [corPrd, setCorPrd] = useState('')
+    const [tamanhosPrd, setTamanhosPrd] = useState('')
+
+    const printValue = (values) => {
+        setNomePrd(values.nomeProduto)
+        setPrecoPrd(values.preco)
+        setQtdPrd(values.qtdProduto)
+        setCategoriaPrd(values.categoria)
+        setCorPrd(values.cores)
+        setTamanhosPrd(values.tamanho)
+    }
 
     return (
         <div className=" h-full flex flex-col">
@@ -39,7 +54,7 @@ export default function Add_produto() {
                 <Formik
                     initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: '' }}
                     onSubmit={values => {
-                        nomePrd = values.nomeProduto;
+                        printValue(values)
                         console.log(values)
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
@@ -122,7 +137,12 @@ export default function Add_produto() {
 
                             
                             <h1>{nomePrd}</h1>
-                            
+                            <h1>{precoPrd}</h1>
+                            <h1>{qtdPrd}</h1>
+                            <h1>{categoriaPrd}</h1>
+                            <h1>{corPrd}</h1>
+                            <h1>{tamanhosPrd}</h1>
+
                             <button
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
                                 type="button"
