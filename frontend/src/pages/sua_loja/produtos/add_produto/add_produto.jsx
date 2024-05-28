@@ -1,6 +1,5 @@
 import { React, useState } from 'react'
 import { Link } from "react-router-dom"
-import { Input } from 'reactstrap';
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { Form, Field, Formik } from "formik";
@@ -23,7 +22,8 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
 
 
 export default function Add_produto() {
-    
+
+    let nomePrd = '';
 
     return (
         <div className=" h-full flex flex-col">
@@ -39,6 +39,7 @@ export default function Add_produto() {
                 <Formik
                     initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: '' }}
                     onSubmit={values => {
+                        nomePrd = values.nomeProduto;
                         console.log(values)
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
@@ -119,10 +120,12 @@ export default function Add_produto() {
                                 Cadastrar Produto
                             </button>
 
+                            
+                            <h1>{nomePrd}</h1>
+                            
                             <button
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
                                 type="button"
-                                onClick={() => addNew()}
                             >
                                 <h1>Adicionar</h1>
                                 <span className="material-symbols-outlined">
