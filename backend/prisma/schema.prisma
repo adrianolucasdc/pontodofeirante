@@ -25,7 +25,7 @@ model Loja {
   banner      String?         // img
   logo        String?         // img
   termos      Boolean
-  produtos    CategoriasProdutos[]   
+  produtos    Produto[]   
   localizacao LocalizacaoLoja[]
 }
 
@@ -40,18 +40,12 @@ model LocalizacaoLoja {
   complemento  String
 }
 
-model CategoriasProdutos {
-  id String @id
-  loja         Loja        @relation(fields: [lojaId], references: [id])
-  lojaId       String
-  nomeCategoria String     @unique
-  produtos Produto[]
-}
 model Produto {
   id           String               @id 
-  categoria    CategoriasProdutos   @relation(fields: [categId], references: [id]) 
-  categId      String
+  loja         Loja                 @relation(fields: [lojaID], references: [id])
+  lojaID       String
   nomeProduto  String               @unique
+  categoria    String
   imagem       String   // img
   descricao    String
   descontoTodos Int?

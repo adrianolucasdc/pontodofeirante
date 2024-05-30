@@ -50,6 +50,7 @@ export default function Login() {
             if (response.redirect) {
                 setTimeout(() => {
                     navigate(response.redirect)
+                    window.location.reload()
                 }, 2500);
             }
             

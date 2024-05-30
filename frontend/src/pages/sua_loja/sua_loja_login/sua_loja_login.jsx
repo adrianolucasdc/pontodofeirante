@@ -69,6 +69,7 @@ export default function Sua_loja_login() {
             if (response.redirect) {
                 setTimeout(() => {
                     navigate(response.redirect)
+                    window.location.reload()
                 }, 2500);
             }
         

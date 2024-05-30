@@ -59,40 +59,31 @@ export default class UserServices{
     }
         
 
-    //     if (!data.erro) {
-    //         localStorage.setItem("nome", data.user.name);
-    //         localStorage.setItem("email", data.user.email);
-
-            
-    //         cookies.set("t0k3n_store", data.user.token, {
-    //             httpOnly: true,
-    //             sameSite:true,
-    //             secure: true,
-    //         });
-    //     }
-
-    //     return data;
-
-    // }
-
     //autenticar token usuario ou loja
-    async userAutheticatedUser (){
-        const token = cookies.get("t0k3N_user")
-        
-        try{
-            const {data} = await this.axios.post("/api/validate_token", {token: token})
-            return true;
-        } catch {
+    async userAutheticatedUser (token){
+  
+        if (token) {
+            try{
+                const {data} = await this.axios.post("/api/validate_token", {token: token})
+                return true;
+            } catch {
+                return false;
+            }
+        }else{
             return false;
         }
     }
 
-    async userAutheticatedStore (){
-        const token = cookies.get("t0k3N_store")
+    async userAutheticatedStore (token){
 
-        try {
-            const {data} = await this.axios.post("/api/validate_token", {token: token})
-        } catch {
+        if (token) {
+            try{
+                const {data} = await this.axios.post("/api/validate_token", {token: token})
+                return true;
+            } catch {
+                return false;
+            }
+        }else{
             return false;
         }
     }
