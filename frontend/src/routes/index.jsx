@@ -29,6 +29,7 @@ function RoutesApp() {
             {/* Público */}
             <Route path='/' element={ <Home/> }/>
             <Route path='/sacola' element={ <Sacola/> }/>
+            <Route path='/perfil' element={ <Perfil/> }/>
             {/* Privado */}
             <Route 
                 path='/favoritos' 
@@ -44,7 +45,6 @@ function RoutesApp() {
             <Route path='/sualoja' element={ <Sua_loja_iniciar/> }/>
             <Route path='/sua_loja_cadastro' element={ <Sua_loja_cadastro/> } />
             <Route path='/termosecondicoes' element= { <Sua_loja_termos/> } />
-            <Route path='/perfil' element={ <Perfil/> }/>
             <Route path='/login' element={ <Login/> } />
             <Route path='/cadastro_user' element={ <Cadastro_user/> } />
             <Route path='/termos_user' element={<TermosUser/>}/>

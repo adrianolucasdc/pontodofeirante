@@ -121,5 +121,10 @@ routes.post("/api/validate_token", verifyJWT, (req, res)=>{
     res.status(200).json({msg : "Autorizado!"})
 })
 
+//criar produto
+routes.post("/api/create_product", (req, res)=>{
+    
+})
+
 
 module.exports = routes;

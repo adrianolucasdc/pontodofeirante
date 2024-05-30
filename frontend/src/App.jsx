@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 import RoutesApp from "./routes";
-import UserProvider from './context/user';
+import UserProvider from './contexts/user';
 
 
 export default function App() {

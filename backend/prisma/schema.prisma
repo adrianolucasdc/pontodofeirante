@@ -42,8 +42,7 @@ model LocalizacaoLoja {
 
 model Produto {
   id           String               @id 
-  loja         Loja                 @relation(fields: [lojaID], references: [id])
-  lojaID       String
+  loja         Loja                 @relation(fields: [id], references: [id])
   nomeProduto  String               @unique
   categoria    String
   imagem       String   // img
@@ -54,24 +53,21 @@ model Produto {
 
 model CorProduto {
   id          String      @id
-  produto     Produto     @relation(fields: [produtoId], references: [id])
-  produtoId   String
+  produto     Produto     @relation(fields: [id], references: [id])
   nomeCor     String      @unique
   tamanhos    TamanhoProduto[]
 }
 
 model TamanhoProduto{
   id          String     @id
-  cor         CorProduto @relation(fields: [corId], references: [id])
-  corId       String
+  cor         CorProduto @relation(fields: [id], references: [id])
   nomeTamanho String     @unique
   detalhesProduto DetalhesProduto[]
 }
 
 model DetalhesProduto{
   id          String    @id
-  tamanho     TamanhoProduto   @relation(fields: [tamanhoId],references: [id])
-  tamanhoId   String    @unique
+  tamanho     TamanhoProduto   @relation(fields: [id],references: [id])
   preco       Float
   qtd         Int
 }
