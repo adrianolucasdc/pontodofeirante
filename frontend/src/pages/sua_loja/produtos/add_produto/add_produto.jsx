@@ -9,6 +9,8 @@ import { FaUpload } from "react-icons/fa";
 
 import Btn_cad_produtos_info from '../../../../components/btn_cad_produtos_info/btn_cad_produtos_info'
 import campoPreencher from '../../../../components/formularios/input';
+import ProdutosObj from './ProdutosObj';
+
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
     nomeProduto: Yup.string().required('Campo obrigatório!'),
@@ -24,20 +26,36 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
 export default function Add_produto() {
 
 
-    const [nomePrd, setNomePrd] = useState('')
-    const [precoPrd, setPrecoPrd] = useState('')
-    const [qtdPrd, setQtdPrd] = useState('')
-    const [categoriaPrd, setCategoriaPrd] = useState('')
-    const [corPrd, setCorPrd] = useState('')
-    const [tamanhosPrd, setTamanhosPrd] = useState('')
+    const [produtos, setProdutos] = useState([{
+        id: "ids",
+        nomePrd : "nomePrd",
+        precoPrd: "precoPrd",
+        qtdPrd : "qtdPrd",
+        categoriaPrd: "categoriaPrd",
+        corPrd : "corPrd",
+        tamanhosPrd : "tamanhosPrd",  
+    }])
+    const [ids, setIds] = useState(0);
 
     const printValue = (values) => {
-        setNomePrd(values.nomeProduto)
-        setPrecoPrd(values.preco)
-        setQtdPrd(values.qtdProduto)
-        setCategoriaPrd(values.categoria)
-        setCorPrd(values.cores)
-        setTamanhosPrd(values.tamanho)
+        setIds(ids + 1)
+
+        setProdutos([...produtos, {
+            id: ids,
+            nomePrd : values.nomeProduto,
+            precoPrd: values.preco,
+            qtdPrd : values.qtdProduto,
+            categoriaPrd: values.categoria,
+            corPrd : values.cores,
+            tamanhosPrd : values.tamanho,  
+         }])
+
+
+    }
+
+    const handleTaskDeletion = (prodId) => {
+        const newProduct = produtos.filter(prods => prods.id != prodId)
+        setProdutos(newProduct)
     }
 
     return (
@@ -55,7 +73,6 @@ export default function Add_produto() {
                     initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: '' }}
                     onSubmit={values => {
                         printValue(values)
-                        console.log(values)
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
                 >
@@ -135,13 +152,12 @@ export default function Add_produto() {
                                 Cadastrar Produto
                             </button>
 
+                            <div className='bg-whitev min-h-20 border-2 border-black rounded-lg my-3'>
+                                <ProdutosObj 
+                                prods={produtos} 
+                                handleTaskDeletion={handleTaskDeletion}/>
+                            </div>
                             
-                            <h1>{nomePrd}</h1>
-                            <h1>{precoPrd}</h1>
-                            <h1>{qtdPrd}</h1>
-                            <h1>{categoriaPrd}</h1>
-                            <h1>{corPrd}</h1>
-                            <h1>{tamanhosPrd}</h1>
 
                             <button
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
