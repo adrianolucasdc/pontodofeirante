@@ -1,17 +1,10 @@
-import React, { useState } from 'react'
-import UserServices from '../Services/UserService'
-import  { Navigate }  from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { UserContext } from '../context/user';
 
 
-const userService = new UserServices();
-
-export default function ProtectedRoutesStore({ children }) {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-    const isLogged = async() => {
-        const statusLogin = await userService.userAutheticatedStore();
-        setIsAuthenticated(statusLogin)
-    }
-    
-    return isAuthenticated ? children : <Navigate to="/login"/>
+export default function ProtectedRoutesUser({ children }) {
+    const { isAuthenticatedStore, updateToken} = useContext(UserContext)
+    updateToken();
+    return isAuthenticatedStore ? children : <Navigate to="/login" />;
 }
