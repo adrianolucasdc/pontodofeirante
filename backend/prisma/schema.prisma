@@ -42,7 +42,8 @@ model LocalizacaoLoja {
 
 model Produto {
   id           String               @id 
-  loja         Loja                 @relation(fields: [id], references: [id])
+  loja         Loja                 @relation(fields: [lojaId], references: [id])
+  lojaId       String
   nomeProduto  String               @unique
   categoria    String
   imagem       String   // img
@@ -53,15 +54,17 @@ model Produto {
 
 model CorProduto {
   id          String      @id
-  produto     Produto     @relation(fields: [id], references: [id])
-  nomeCor     String      @unique
+  produto     Produto     @relation(fields: [produtoId], references: [id])
+  produtoId    String
+  nomeCor     String      
   tamanhos    TamanhoProduto[]
 }
 
 model TamanhoProduto{
   id          String     @id
-  cor         CorProduto @relation(fields: [id], references: [id])
-  nomeTamanho String     @unique
+  cor         CorProduto @relation(fields: [corId], references: [id])
+  corId       String
+  nomeTamanho String     
   detalhesProduto DetalhesProduto[]
 }
 

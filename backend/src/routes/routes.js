@@ -4,6 +4,7 @@ const jwtd = require("jwt-decode")
 
 const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userDb");
 const { criarLoja, autenticarLoja } = require("../DataBaseControllers/storeDb");
+const { createProduct, searchProducts } = require("../DataBaseControllers/productDb")
 const routes = express.Router();
 
 const secret = process.env.secret
@@ -34,7 +35,7 @@ routes.post("/api/register_store", async (req, res)=>{
     const body = req.body;
     try{
         const createStore = await criarLoja(body.nome, body.razao, body.cnpj, body.senha, body.email,
-            body.telefone, body.zap, body.termos);
+            body.telefone, body.celular, body.termos);
 
         if (createStore) {
             res.status(202).json(createStore);
@@ -106,6 +107,38 @@ routes.post("/api/store_login", async (req, res)=>{
     }
 })
 
+
+
+//criar produto
+routes.post("/api/create_product", async (req, res)=>{
+    const body = req.body;
+
+    try{
+        const create_product = await createProduct(body);
+
+        if (create_product){
+            res.status(202).json(create_product);
+        } else {
+            res.status(200).json({
+                msg:"Produto Cadastrado com Sucesso!",
+                redirect: "/produtos"
+            });
+        }
+    }
+    catch(e){
+        console.log(e)
+        res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
+    }
+})
+
+//procurar produtos 
+routes.post("/api/search_product", async (req, res)=>{
+    searchProducts();
+
+    res.status(200)
+})
+
+
 //Verificação de Token
 function verifyJWT(req,res, next){
     const token = req.body.token;
@@ -120,11 +153,5 @@ function verifyJWT(req,res, next){
 routes.post("/api/validate_token", verifyJWT, (req, res)=>{
     res.status(200).json({msg : "Autorizado!"})
 })
-
-//criar produto
-routes.post("/api/create_product", (req, res)=>{
-    
-})
-
 
 module.exports = routes;

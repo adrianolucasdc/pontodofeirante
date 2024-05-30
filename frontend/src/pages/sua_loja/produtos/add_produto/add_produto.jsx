@@ -26,15 +26,7 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
 export default function Add_produto() {
 
 
-    const [produtos, setProdutos] = useState([{
-        id: "ids",
-        nomePrd : "nomePrd",
-        precoPrd: "precoPrd",
-        qtdPrd : "qtdPrd",
-        categoriaPrd: "categoriaPrd",
-        corPrd : "corPrd",
-        tamanhosPrd : "tamanhosPrd",  
-    }])
+    const [produtos, setProdutos] = useState([])
     const [ids, setIds] = useState(0);
 
     const printValue = (values) => {

@@ -13,6 +13,7 @@ async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
     const celularSemMascara = String(celular).replace(/\D/g,"");
     const cnpjSemMascara = String(cnpj).replace(/\D/g,"");
 
+
     const [existEqualCnpj, existEqualEmail, existEqualTelefone, existEqualCelular] =
     await Promise.all([
         prisma.loja.findUnique({where:{ cnpj:cnpjSemMascara }}),
