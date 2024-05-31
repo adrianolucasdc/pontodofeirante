@@ -3,12 +3,12 @@ const prisma = new PrismaClient();
 const cuid = require("cuid");
 
 async function createProduct(dados){
-    const lojaID = "clwtssdrb0000iwte2soddmqk"
+    const lojaID = dados.id;
     try {
         const findItem = await prisma.produto.findUnique({
             where:{
                 nomeProduto: dados.nomeProduto,
-                lojaId: lojaID, 
+                lojaId: dados.id, 
             }
         })
         if (findItem) {

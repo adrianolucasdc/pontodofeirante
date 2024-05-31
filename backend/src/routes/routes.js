@@ -1,6 +1,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const jwtd = require("jwt-decode")
+const multer = require("multer")
+const path = require("path")
+const cuid = require("cuid");
+
 
 const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userDb");
 const { criarLoja, autenticarLoja } = require("../DataBaseControllers/storeDb");
@@ -8,6 +11,15 @@ const { createProduct, searchProducts } = require("../DataBaseControllers/produc
 const routes = express.Router();
 
 const secret = process.env.secret
+
+
+
+const uploadFile = multer({
+    storage: multer.diskStorage({
+        destination: path.resolve(__dirname, "../uploads/products"),
+        filename: (req, file, callback)=>callback(null, cuid() + path.extname(file.originalname) )
+    })
+ });
 
 //Cadastro Usuário
 routes.post("/api/register_user", async (req, res)=>{
@@ -107,11 +119,19 @@ routes.post("/api/store_login", async (req, res)=>{
     }
 })
 
-
-
 //criar produto
-routes.post("/api/create_product", async (req, res)=>{
+routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
     const body = req.body;
+
+    jwt.verify(body.token, secret, (err, decoded) =>
+    {
+        if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
+        body.id = decoded.id;
+    });
+
+    body.imagem = req.file.filename;
+    body.preco = parseFloat(body.preco);
+    body.qtd = parseInt(body.qtd);
 
     try{
         const create_product = await createProduct(body);
