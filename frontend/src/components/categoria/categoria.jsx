@@ -7,8 +7,8 @@ import categoria_promocoes from "../../assets/categoria_promocoes_icon.svg"
 export default function Categoria() {
     return (
         <div>
-            <div className=' flex flex-row gap-4 w-full h-[92px] shadow-xl overflow-auto justify-around no-scrollbar'>
-                <div className='flex flex-col justify-center items-center min-w-20 '>
+            <div className=' flex flex-row gap-4 w-full h-[92px] shadow-xl overflow-auto justify-around no-scrollbar px-2'>
+                <div className=' flex flex-col justify-center items-center min-w-20 '>
                     <img src={categoria_feminina} className=" h-9 "/>
                     <h1>Feminino</h1>
                 </div>
@@ -21,24 +21,8 @@ export default function Categoria() {
                     <h1>Infantil</h1>
                 </div>
                 <div className='flex flex-col justify-center items-center min-w-20 '>
-                    <img src={categoria_big_size} className=" h-9 "/>
-                    <h1>Big Size</h1>
-                </div>
-                <div className='flex flex-col justify-center items-center min-w-20 '>
                     <img src={categoria_promocoes} className=" h-9 "/>
                     <h1>Promoções</h1>
-                </div>
-                <div className='flex flex-col justify-center items-center min-w-20 '>
-                    <img src={categoria_feminina} className=" h-9 "/>
-                    <h1>Feminino</h1>
-                </div>
-                <div className='flex flex-col justify-center items-center min-w-20 '>
-                    <img src={categoria_feminina} className=" h-9 "/>
-                    <h1>Feminino</h1>
-                </div>
-                <div className='flex flex-col justify-center items-center min-w-20 '>
-                    <img src={categoria_feminina} className=" h-9 "/>
-                    <h1>Feminino</h1>
                 </div>
             </div>
         </div>

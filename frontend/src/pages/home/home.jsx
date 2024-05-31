@@ -24,9 +24,8 @@ export default function App() {
           </button>
         </div>
       </header>
-
       <Categoria />
-
+ 
       <div className=" flex items-center justify-center mt-7">
         <Publicidade />
       </div>
