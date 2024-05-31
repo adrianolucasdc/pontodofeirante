@@ -2,7 +2,7 @@ import { React, useState } from 'react'
 import { Link } from "react-router-dom"
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { Form, Field, Formik } from "formik";
+import { Form, Field, Formik, useFormik  } from "formik";
 import * as Yup from 'yup'
 import { ErrorMessage } from "formik";
 import { FaUpload } from "react-icons/fa";
@@ -20,10 +20,26 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
     cores: Yup.string().required('Campo obrigatório!'),
     tamanho: Yup.string().required('Campo obrigatório!'),
     desconto: Yup.number(),
+    imgproduto: Yup.mixed().required('Imagem Obrigatória').test('fileFormat', 'Envie imagens somente do tipo JPEG, PNG ou SVG', value => {
+        if(value) {
+            const supportedFormats = ['png', 'jpeg', 'SVG']
+            return supportedFormats.includes(value.name.split('.').pop());
+        }
+        return true;
+    })
+    .test('fileSize', 'O arquivo precisa ser menor que 3MB', value => {
+        if (value) {
+            return value.size <= 9999999999;
+        }
+        return true;
+    })
 })
 
 
 export default function Add_produto() {
+
+    const [inputImg, setInputImg] = useState('Escolha a foto do seu produto')
+    const [imagem, setImagem] = useState(null)
 
 
     const [produtos, setProdutos] = useState([])
@@ -50,6 +66,25 @@ export default function Add_produto() {
         setProdutos(newProduct)
     }
 
+    
+
+    const formik = useFormik({
+        initialValues: {
+          imgproduto: ''
+        },
+        onSubmit: () => {
+          console.log('Submitted')
+        },
+      })
+    
+      const handleChange = (e) => {
+        formik.setFieldValue('imgproduto', e.target.files[0]);
+        console.log(e.target.files[0].name)
+        setInputImg(e.target.files[0].name)
+        setImagem(e.target.files[0])
+      };
+    
+
     return (
         <div className=" h-full flex flex-col">
             <div className=" mx-6 mt-7">
@@ -62,13 +97,16 @@ export default function Add_produto() {
                     <h1 className=" text-primaryColor text-xl font-bold">Adicione um produto a sua loja</h1>
                 </div>
                 <Formik
-                    initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: '' }}
+                    initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: {} }}
                     onSubmit={values => {
+                        values.imgproduto = imagem
+                        console.log(values)
                         printValue(values)
+                        
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
                 >
-                    {({ handleSubmit, setFieldValue }) => (
+                    {({ handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
                             {campoPreencher("Nome do Produto", "Insira o nome do produto...", "nomeProduto", "text")}
                             <div className=' flex flex-row justify-between'>
@@ -121,7 +159,7 @@ export default function Add_produto() {
 
                                 <label htmlFor="imgproduto" className=' mb-3 border-2 border-primaryColor rounded-md flex flex-row items-center pl-5 h-[42px]'>
                                     <FaUpload color="#11111" className=' mr-5' />
-                                    Escolha a foto do seu produto
+                                    {inputImg}
                                 </label>
                                 <input
                                     type="file"
@@ -129,10 +167,9 @@ export default function Add_produto() {
                                     name='imgproduto'
                                     id='imgproduto'
                                     accept='/image/*'
-                                    onChange={(event) => {
-                                        setFieldValue("file", event.target.files[0]);
-                                    }}
+                                    onChange={handleChange}
                                 />
+                                <h1></h1>
                                 <ErrorMessage name="imgproduto" component="div" className='error text-red-600 text-sm' />
                             </div>
 
