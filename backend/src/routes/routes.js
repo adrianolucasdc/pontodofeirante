@@ -167,11 +167,14 @@ function verifyJWT(req,res, next){
     {
         if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
         req.id = decoded.id;
+        req.name = decoded.name;
+        req.email = decoded.email;
+        
         next();
     });
 }
 routes.post("/api/validate_token", verifyJWT, (req, res)=>{
-    res.status(200).json({msg : "Autorizado!"})
+    res.status(200).json({auth : true, name: req.name, email: req.email });
 })
 
 module.exports = routes;

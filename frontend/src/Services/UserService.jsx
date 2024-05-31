@@ -61,11 +61,11 @@ export default class UserServices{
 
     //autenticar token usuario ou loja
     async userAutheticatedUser (token){
-  
+
         if (token) {
             try{
                 const {data} = await this.axios.post("/api/validate_token", {token: token})
-                return true;
+                return data;
             } catch {
                 return false;
             }
@@ -79,7 +79,7 @@ export default class UserServices{
         if (token) {
             try{
                 const {data} = await this.axios.post("/api/validate_token", {token: token})
-                return true;
+                return data;
             } catch {
                 return false;
             }

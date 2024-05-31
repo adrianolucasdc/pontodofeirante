@@ -13,6 +13,10 @@ export default function UserProvider({children}){
     const [isAuthenticatedStore, setIsAuthenticatedStore] = useState(false)
     const [tokenUser, setTokenUser] = useState(cookies.get("t0k3N_user"))
     const [tokenStore, setTokenStore] = useState(cookies.get("t0k3N_store"))
+    const [nameUser, setNameUser] = useState("")
+    const [emailUser, setEmailUser] = useState("")
+    const [nameStore, setNameStore] = useState("")
+    const [emailStore, setEmailStore] = useState("")
 
     function updateToken(){
         setTokenUser(cookies.get("t0k3N_user"))
@@ -21,10 +25,18 @@ export default function UserProvider({children}){
 
     useEffect(() => {
         async function checkAuthentication() {
-            const isLogged = await userService.userAutheticatedUser(tokenUser);
-            const isLoggedStore = await userService.userAutheticatedStore(tokenStore);
-            setIsAuthenticated(isLogged);
-            setIsAuthenticatedStore(isLoggedStore);
+            const [isLogged, isLoggedStore] = await Promise.all([
+                userService.userAutheticatedUser(tokenUser),
+                userService.userAutheticatedStore(tokenStore)
+            ]);
+
+            setIsAuthenticated(isLogged.auth);
+            setNameUser(isLogged.name);
+            setEmailUser(isLogged.email);
+            setIsAuthenticatedStore(isLoggedStore.auth);
+            setNameStore(isLoggedStore.name);
+            setEmailStore(isLoggedStore.email);
+            
           }
         checkAuthentication();
       }, [tokenUser, tokenStore]);
@@ -34,7 +46,11 @@ export default function UserProvider({children}){
         <UserContext.Provider value={ {
             isAuthenticated: isAuthenticated,
             isAuthenticatedStore: isAuthenticatedStore,
-            updateToken
+            updateToken,
+            nameUser: nameUser,
+            emailUser: emailUser,
+            nameStore: nameStore,
+            emailStore: emailStore  
             } }>
             {children}
         </UserContext.Provider>
