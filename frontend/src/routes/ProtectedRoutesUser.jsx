@@ -6,5 +6,5 @@ import { UserContext } from '../contexts/user';
 export default function ProtectedRoutesUser({ children }) {
     const { isAuthenticated, updateToken} = useContext(UserContext)
     updateToken();
-    return isAuthenticated ? children : <Navigate to="/login" />;
+    return isAuthenticated ? children : <Navigate to="/perfil" />;
 }

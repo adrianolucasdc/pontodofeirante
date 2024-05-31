@@ -30,12 +30,17 @@ export default function UserProvider({children}){
                 userService.userAutheticatedStore(tokenStore)
             ]);
 
-            setIsAuthenticated(isLogged.auth);
-            setNameUser(isLogged.name);
-            setEmailUser(isLogged.email);
-            setIsAuthenticatedStore(isLoggedStore.auth);
-            setNameStore(isLoggedStore.name);
-            setEmailStore(isLoggedStore.email);
+            if (isLogged) {
+                setIsAuthenticated(isLogged.auth);
+                setNameUser(isLogged.name);
+                setEmailUser(isLogged.email);
+            }
+            if (isLoggedStore) {
+                setIsAuthenticatedStore(isLoggedStore.auth);
+                setNameStore(isLoggedStore.name);
+                setEmailStore(isLoggedStore.email);
+            }
+            
             
           }
         checkAuthentication();
