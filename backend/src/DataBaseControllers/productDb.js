@@ -147,7 +147,7 @@ async function searchProducts(){
           },
     })
 
-    console.log(product)
+
     return product
 }
 

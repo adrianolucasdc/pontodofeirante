@@ -153,9 +153,9 @@ routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
 
 //procurar produtos 
 routes.post("/api/search_product", async (req, res)=>{
-    searchProducts();
-
-    res.status(200)
+    const produtos = await searchProducts();
+    console.log(produtos.map(produtos =>  produtos))
+    res.status(200).json({msg : "Teste concluido"})
 })
 
 
