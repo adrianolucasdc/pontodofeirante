@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const multer = require("multer")
-const path = require("path")
+const path = require("path");
 const cuid = require("cuid");
 
 
