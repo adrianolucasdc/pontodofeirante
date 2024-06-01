@@ -59,6 +59,7 @@ async function criarUsuario(nome, email, senha, telefone, cpf, cep, dataNasc, se
                 }
             }).catch((error) => {
                 console.error('Erro ao criar usuário:', error);
+                return {msg: "Ocorreu um erro!"}
             });
         }
     }       

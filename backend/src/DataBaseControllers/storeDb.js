@@ -45,6 +45,7 @@ async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
             }
         }).catch((error) => {
             console.log("Erro ao criar loja:", error);
+            return {msg: "Ocorreu um erro"}
         });
     }
 }
