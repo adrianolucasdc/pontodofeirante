@@ -70,7 +70,8 @@ model TamanhoProduto{
 
 model DetalhesProduto{
   id          String    @id
-  tamanho     TamanhoProduto   @relation(fields: [id],references: [id])
+  tamanho     TamanhoProduto   @relation(fields: [tamanhoId],references: [id])
+  tamanhoId   String
   preco       Float
   qtd         Int
 }

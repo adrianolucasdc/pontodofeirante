@@ -31,6 +31,7 @@ async function createProduct(dados){
                                     nomeTamanho : dados.nomeTamanho,
                                     detalhesProduto: {
                                         create:{
+                                            id: cuid(),
                                             preco: dados.preco,
                                             qtd : dados.qtd 
                                         }
@@ -57,6 +58,7 @@ async function createProduct(dados){
                             nomeTamanho : dados.nomeTamanho,
                             detalhesProduto: {
                                 create:{
+                                    id: cuid(),
                                     preco: dados.preco,
                                     qtd : dados.qtd 
                                 }
@@ -65,9 +67,28 @@ async function createProduct(dados){
                     })
                     return {msg: "adicionado novo tamanho"};
                 }
+                if (existTamanho) {
+                    const create_product_variant = await prisma.detalhesProduto.create({
+                        data:{
+                            tamanhoId: existTamanho.id,
+                            id:cuid(),
+                            preco: dados.preco,
+                            qtd: dados.qtd
+                        }
+                    })
+                    return {msg: "Alterado Detalhes do Produto!"}
+                }
             }
 
         } else if (!findItem) {
+            const nameProduct = await prisma.produto.findUnique({
+                where: {
+                    nomeProduto: dados.nomeProduto
+                }
+            })
+            if (nameProduct) {
+                return {msg : "Já existe um produto com esse nome!"}
+            }
             const create_product = await prisma.produto.create({
                 data: {
                         id:cuid(),
@@ -86,6 +107,7 @@ async function createProduct(dados){
                                         nomeTamanho : dados.nomeTamanho,
                                         detalhesProduto: {
                                             create:{
+                                                id: cuid(),
                                                 preco: dados.preco,
                                                 qtd : dados.qtd 
                                             }

@@ -13,6 +13,10 @@ async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
     const celularSemMascara = String(celular).replace(/\D/g,"");
     const cnpjSemMascara = String(cnpj).replace(/\D/g,"");
 
+    console.log(!nome)
+    if (!nome || !razao || !cnpj  || !senha  || !email || !telefone || !celular || !termos) {
+        return {msg : "Está faltando dados!"}
+    }
 
     const [existEqualCnpj, existEqualEmail, existEqualTelefone, existEqualCelular] =
     await Promise.all([
@@ -45,7 +49,6 @@ async function criarLoja(nome,razao,cnpj,senha,email,telefone,celular,termos){
             }
         }).catch((error) => {
             console.log("Erro ao criar loja:", error);
-            return {msg: "Ocorreu um erro"}
         });
     }
 }
