@@ -3,14 +3,22 @@ import Publicidade from "../../components/publicidade/publicidade";
 import Carrosel_Produtos from "../../components/carrosel_produtos/carrosel_produtos";
 import Menu_principal from "../../components/menu_principal/menu_principal";
 
+
 import '../../index.css'
 
 import { IoMdSearch } from "react-icons/io";
 import { IoFilterCircleOutline } from "react-icons/io5";
+import { UserContext } from "../../contexts/user";
+import React, { useContext, useEffect, useState } from "react";
+import Produtos from "../../components/produtos/produtos";
 
 
 
 export default function App() {
+  const {loadProdutos} = useContext(UserContext);
+  const produtos = loadProdutos
+  
+
   return (
     <div >
       <header className="sticky">
@@ -31,10 +39,9 @@ export default function App() {
         <Publicidade />
       </div>
 
-      <Carrosel_Produtos titulo={"Promoções"}/>
-      <Carrosel_Produtos titulo={"Recomendados"}/>
-      <Carrosel_Produtos titulo={"Novos"}/>
-
+      {produtos != null && <Carrosel_Produtos titulo={"Promoções"} props={produtos}/>}
+      {produtos != null && <Carrosel_Produtos titulo={"Recomendados"} props={produtos}/>}
+      {produtos != null && <Carrosel_Produtos titulo={"Novos"} props={produtos}/>}
       <Menu_principal/> 
     </div>
   )

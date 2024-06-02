@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer")
 const path = require("path");
 const cuid = require("cuid");
+const fs = require('fs');
 
 
 const { criarUsuario, autenticarUsuario} = require("../DataBaseControllers/userDb");
@@ -137,6 +138,8 @@ routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
         const create_product = await createProduct(body);
 
         if (create_product){
+            const image = "../uploads/products/" + req.file.filename; 
+            fs.unlink(image)
             res.status(202).json(create_product);
         } else {
             res.status(200).json({
@@ -154,8 +157,7 @@ routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
 //procurar produtos 
 routes.post("/api/search_product", async (req, res)=>{
     const produtos = await searchProducts();
-    console.log(produtos.map(produtos =>  produtos))
-    res.status(200).json({msg : "Teste concluido"})
+    res.status(200).json({produtos})
 })
 
 

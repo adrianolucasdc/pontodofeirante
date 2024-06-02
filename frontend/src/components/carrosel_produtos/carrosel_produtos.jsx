@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Produtos from "../../components/produtos/produtos";
 
-export default function Carrosel_Produtos({titulo}) {
+
+export default function Carrosel_Produtos({titulo, props}) {
+    const [produtos, setProdutos] = useState([]);
+    const [load, setLoad] = useState(true)
+    
+    function update(){
+        setTimeout(() => {
+            setProdutos(props.produtos);
+            setLoad(false)
+        }, 300);
+        
+    }
+    update();
 
     return(
-        <div className='mt-8 '>
+        <div className='mt-8 h-[290px]'>
             <div className='flex justify-between mx-5 items-center'>
                 <h1 className='text-xl font-extrabold text-primaryColor'>{titulo}</h1>
                 <div className='flex justify-center items-center '>
@@ -14,12 +26,16 @@ export default function Carrosel_Produtos({titulo}) {
                 
             </div>
             <div className=" flex items-start justify-around overflow-scroll gap-5 no-scrollbar px-5">
-            <Produtos/>
-            <Produtos/>
-            <Produtos/>
-            <Produtos/>
-            <Produtos/>
+                {
+                    load && 
+                    <div>
+                        <h1>Carregando...</h1> 
+                    </div>
+                }
+                {
+                    produtos.map(prop => <Produtos key={prop.id} props={prop}/>)
+                }
             </div>
         </div>
     )
-    }
+}

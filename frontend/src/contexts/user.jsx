@@ -17,6 +17,7 @@ export default function UserProvider({children}){
     const [emailUser, setEmailUser] = useState("")
     const [nameStore, setNameStore] = useState("")
     const [emailStore, setEmailStore] = useState("")
+    const [loadProdutos, setLoadProdutos] = useState(null)
 
     function updateToken(){
         setTokenUser(cookies.get("t0k3N_user"))
@@ -25,9 +26,10 @@ export default function UserProvider({children}){
 
     useEffect(() => {
         async function checkAuthentication() {
-            const [isLogged, isLoggedStore] = await Promise.all([
+            const [isLogged, isLoggedStore, loadProd] = await Promise.all([
                 userService.userAutheticatedUser(tokenUser),
-                userService.userAutheticatedStore(tokenStore)
+                userService.userAutheticatedStore(tokenStore),
+                userService.loadItems()
             ]);
 
             if (isLogged) {
@@ -40,7 +42,8 @@ export default function UserProvider({children}){
                 setNameStore(isLoggedStore.name);
                 setEmailStore(isLoggedStore.email);
             }
-            
+
+            setLoadProdutos(loadProd)
             
           }
         checkAuthentication();
@@ -55,7 +58,8 @@ export default function UserProvider({children}){
             nameUser: nameUser,
             emailUser: emailUser,
             nameStore: nameStore,
-            emailStore: emailStore  
+            emailStore: emailStore ,
+            loadProdutos: loadProdutos 
             } }>
             {children}
         </UserContext.Provider>

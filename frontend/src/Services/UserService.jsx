@@ -78,7 +78,7 @@ export default class UserServices{
 
         if (token) {
             try{
-                const {data} = await this.axios.post("/api/validate_token", {token: token})
+                const {data} = await this.axios.post("/api/validate_token", {token: token});
                 return data;
             } catch {
                 return false;
@@ -94,6 +94,15 @@ export default class UserServices{
 
     async logoutStore(){
         cookies.remove("t0k3N_store")
+    }
+
+    async loadItems(){
+        try {
+            const {data} = await this.axios.post("/api/search_product");
+            return data;
+        } catch  {
+            return false;
+        }
     }
 
 
