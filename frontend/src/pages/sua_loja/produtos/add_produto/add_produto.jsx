@@ -4,13 +4,11 @@ import { Link } from "react-router-dom"
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { Form, Field, Formik, useFormik, ErrorMessage } from "formik";
 import * as Yup from 'yup'
-import { FaUpload } from "react-icons/fa";
 
 import campoPreencher from '../../../../components/formularios/input';
 import pictureInput from '../../../../components/pictureInput/pictureInput';
 import ProdutosObj from './ProdutosObj';
 
-const PHOTO_SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
     nomeProduto: Yup.string().required('Campo obrigatório!'),
