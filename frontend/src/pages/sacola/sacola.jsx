@@ -5,7 +5,7 @@ import Produtos_Sacola from '../../components/produtos_sacola/produtos_sacola';
 export default function Sacola() {
     return(
         <div>
-            <div className='flex flex-col'>
+            <div className='flex flex-col pb-[350px]'>
                 <div className='mt-[54px] ml-[32px] text-4xl font-extrabold text-primaryColor'>
                     <h1>Sacola</h1>
                 </div>
@@ -14,6 +14,9 @@ export default function Sacola() {
                         <h1 className=' '>Produtos </h1>
                     </div>
                     <div className="">
+                        <Produtos_Sacola/>
+                        <Produtos_Sacola/>
+                        <Produtos_Sacola/>
                         <Produtos_Sacola/>
                     </div>
                 </div>
