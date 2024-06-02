@@ -16,7 +16,7 @@ export default function Carrosel_Produtos({titulo, props}) {
     update();
 
     return(
-        <div className='mt-8 h-[290px]'>
+        <div className='mt-2 '>
             <div className='flex justify-between mx-5 items-center'>
                 <h1 className='text-xl font-extrabold text-primaryColor'>{titulo}</h1>
                 <div className='flex justify-center items-center '>

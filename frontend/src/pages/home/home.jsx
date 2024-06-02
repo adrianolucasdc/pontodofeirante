@@ -38,10 +38,12 @@ export default function App() {
       <div className=" flex items-center justify-center mt-7">
         <Publicidade />
       </div>
-
-      {produtos != null && <Carrosel_Produtos titulo={"Promoções"} props={produtos}/>}
-      {produtos != null && <Carrosel_Produtos titulo={"Recomendados"} props={produtos}/>}
-      {produtos != null && <Carrosel_Produtos titulo={"Novos"} props={produtos}/>}
+      <div className="mt-8">
+        {produtos != null && <Carrosel_Produtos titulo={"Promoções"} props={produtos}/>}
+        {produtos != null && <Carrosel_Produtos titulo={"Recomendados"} props={produtos}/>}
+        {produtos != null && <Carrosel_Produtos titulo={"Novos"} props={produtos}/>}
+      </div>
+      
       <Menu_principal/> 
     </div>
   )
