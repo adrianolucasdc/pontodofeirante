@@ -2,15 +2,15 @@ import { React, useState } from 'react'
 import { Link } from "react-router-dom"
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { Form, Field, Formik, useFormik  } from "formik";
+import { Form, Field, Formik, useFormik, ErrorMessage } from "formik";
 import * as Yup from 'yup'
-import { ErrorMessage } from "formik";
 import { FaUpload } from "react-icons/fa";
 
-import Btn_cad_produtos_info from '../../../../components/btn_cad_produtos_info/btn_cad_produtos_info'
 import campoPreencher from '../../../../components/formularios/input';
+import pictureInput from '../../../../components/pictureInput/pictureInput';
 import ProdutosObj from './ProdutosObj';
 
+const PHOTO_SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
     nomeProduto: Yup.string().required('Campo obrigatório!'),
@@ -20,19 +20,13 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
     cores: Yup.string().required('Campo obrigatório!'),
     tamanho: Yup.string().required('Campo obrigatório!'),
     desconto: Yup.number(),
-    imgproduto: Yup.mixed().required('Imagem Obrigatória').test('fileFormat', 'Envie imagens somente do tipo JPEG, PNG ou SVG', value => {
-        if(value) {
-            const supportedFormats = ['png', 'jpeg', 'SVG']
-            return supportedFormats.includes(value.name.split('.').pop());
-        }
-        return true;
-    })
-    .test('fileSize', 'O arquivo precisa ser menor que 3MB', value => {
-        if (value) {
-            return value.size <= 9999999999;
-        }
-        return true;
-    })
+    imgproduto: Yup.mixed().required('Imagem Obrigatória')
+        
+        .test("fileSize", "Your image is too big :(", value => {
+            console.log(value.size);
+      
+            return value && value.size <= 262144000;
+          })
 })
 
 
@@ -50,13 +44,13 @@ export default function Add_produto() {
 
         setProdutos([...produtos, {
             id: ids,
-            nomePrd : values.nomeProduto,
+            nomePrd: values.nomeProduto,
             precoPrd: values.preco,
-            qtdPrd : values.qtdProduto,
+            qtdPrd: values.qtdProduto,
             categoriaPrd: values.categoria,
-            corPrd : values.cores,
-            tamanhosPrd : values.tamanho,  
-         }])
+            corPrd: values.cores,
+            tamanhosPrd: values.tamanho,
+        }])
 
 
     }
@@ -66,24 +60,24 @@ export default function Add_produto() {
         setProdutos(newProduct)
     }
 
-    
+
 
     const formik = useFormik({
         initialValues: {
-          imgproduto: ''
+            imgproduto: ''
         },
         onSubmit: () => {
-          console.log('Submitted')
+            console.log('Submitted')
         },
-      })
-    
-      const handleChange = (e) => {
+    })
+
+    const handleChange = (e) => {
         formik.setFieldValue('imgproduto', e.target.files[0]);
         console.log(e.target.files[0].name)
         setInputImg(e.target.files[0].name)
         setImagem(e.target.files[0])
-      };
-    
+    };
+
 
     return (
         <div className=" h-full flex flex-col">
@@ -97,12 +91,12 @@ export default function Add_produto() {
                     <h1 className=" text-primaryColor text-xl font-bold">Adicione um produto a sua loja</h1>
                 </div>
                 <Formik
-                    initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: {} }}
+                    initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: null }}
                     onSubmit={values => {
                         values.imgproduto = imagem
                         console.log(values)
                         printValue(values)
-                        
+
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
                 >
@@ -155,20 +149,21 @@ export default function Add_produto() {
 
 
                             <div className=''>
-                                <h1 className='font-bold text-primaryColor'>Foto Produto: </h1>
+                                <h1 className=' mt-3 font-bold text-primaryColor'>Foto Produto: </h1>
 
-                                <label htmlFor="imgproduto" className=' mb-3 border-2 border-primaryColor rounded-md flex flex-row items-center pl-5 h-[42px]'>
+                                {/* <label htmlFor="imgproduto" className=' mb-3 border-2 border-primaryColor rounded-md flex flex-row items-center pl-5 h-[42px]'>
                                     <FaUpload color="#11111" className=' mr-5' />
                                     {inputImg}
-                                </label>
-                                <input
+                                </label> */}
+                                <Field  name="imgproduto" component={pictureInput} />
+                                {/* <input
                                     type="file"
                                     className=' hidden'
                                     name='imgproduto'
                                     id='imgproduto'
                                     accept='/image/*'
                                     onChange={handleChange}
-                                />
+                                /> */}
                                 <h1></h1>
                                 <ErrorMessage name="imgproduto" component="div" className='error text-red-600 text-sm' />
                             </div>
@@ -182,11 +177,11 @@ export default function Add_produto() {
                             </button>
 
                             <div className='bg-whitev min-h-20 border-2 border-black rounded-lg my-3'>
-                                <ProdutosObj 
-                                prods={produtos} 
-                                handleTaskDeletion={handleTaskDeletion}/>
+                                <ProdutosObj
+                                    prods={produtos}
+                                    handleTaskDeletion={handleTaskDeletion} />
                             </div>
-                            
+
 
                             <button
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
