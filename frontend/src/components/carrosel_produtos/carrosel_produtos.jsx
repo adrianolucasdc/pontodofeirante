@@ -8,15 +8,17 @@ export default function Carrosel_Produtos({titulo, props}) {
     
     function update(){
         setTimeout(() => {
-            setProdutos(props.produtos);
-            setLoad(false)
+            if (props.produtos) {
+                setProdutos(props.produtos);
+                setLoad(false)
+            }
         }, 300);
         
     }
     update();
 
     return(
-        <div className='mt-2 '>
+        <div className='mt-2 h-[280px]'>
             <div className='flex justify-between mx-5 items-center'>
                 <h1 className='text-xl font-extrabold text-primaryColor'>{titulo}</h1>
                 <div className='flex justify-center items-center '>
@@ -28,7 +30,7 @@ export default function Carrosel_Produtos({titulo, props}) {
             <div className=" flex items-start justify-around overflow-scroll gap-5 no-scrollbar px-5">
                 {
                     load && 
-                    <div>
+                    <div className='h-[164px] w-full my-4 flex justify-center items-center bg-white rounded-lg'>
                         <h1>Carregando...</h1> 
                     </div>
                 }
