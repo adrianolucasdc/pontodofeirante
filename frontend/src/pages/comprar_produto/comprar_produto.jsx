@@ -19,7 +19,7 @@ export default function Comprar_Produto() {
                     <h1 className='font-extrabold text-primaryColor text-2xl'>Nome do Produto</h1>
                     <h1 className='text-primaryColor text-sm'>Nome da Loja</h1>
                 </div>
-                <div className='ml-4 mt-4'>
+                <div className='ml-4 mt-4 flex justif'>
                     <h1 className='text-primaryColor font-extrabold text-2xl'>R$ 70,00</h1>
                 </div>
                 <div className='mt-5 w-screen items-center flex flex-col'>
@@ -35,13 +35,23 @@ export default function Comprar_Produto() {
                     </div>
                 </div>
 
+                <div className='flex flex-col ml-4 mt-4'>
+                    <span>Calcular Frete:</span>
+                    <form action="">
+                        <div className='flex justify-start'>
+                            <input className="border-2 w-44 h-9 px-2 border-primaryColor rounded-lg" type="text" />
+                            <button type="button" className='bg-secundaryColor ml-1  font-bold w-20 h-9 border-2 border-primaryColor rounded-lg'>Buscar</button>
+                        </div>
+                    </form>
+                </div>
+
                 <div className='ml-4 mt-10'>
                     <h1 className='text-lg font-bold text-primaryColor '>Descrição</h1>
                     <h1 className='indent-7 mt-4'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe distinctio fugiat nobis! Quaerat similique culpa voluptas obcaecati distinctio. Magni dolor, et facilis magnam cum fugit mollitia nesciunt numquam labore nihil?</h1>
                 </div>
 
             </div>
-            <div className='mt-10'>
+            <div className='mt-10 pb-20'>
                 <Carrosel_Produtos titulo={"Relacionados"} props={prods}/>
             </div>
             <Menu_principal/>
