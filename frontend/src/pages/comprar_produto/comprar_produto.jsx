@@ -6,13 +6,13 @@ import Carrosel_Produtos from '../../components/carrosel_produtos/carrosel_produ
 import campoPreencher from '../../components/formularios/input'
 
 
-import { Form, Field, Formik, useFormik, ErrorMessage } from "formik";
+import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
-    cor: Yup.string().required('Campo obrigatório!'),
-    tamanho: Yup.string().required('Campo obrigatório!'),
-    quantidade: Yup.string().required('Campo obrigatório!'),
+    corCompra: Yup.string().required('Campo obrigatório!'),
+    tamanhoCompra: Yup.string().required('Campo obrigatório!'),
+    quantidadeCompra: Yup.string().required('Campo obrigatório!'),
 })
 
 
@@ -35,41 +35,68 @@ export default function Comprar_Produto() {
                     <h1 className='text-primaryColor font-extrabold text-2xl'>R$ 70,00</h1>
                 </div>
                 <Formik
-                    initialValues={{ cor: '', tamanho: '', quantidade: '' }}
+                    initialValues={{ corCompra: '', tamanhoCompra: '', quantidadeCompra: '' }}
                     onSubmit={values => {
                         console.log(values)
                     }}
                     validationSchema={validationSchema} // esquema de validação yup
                 >
                     {({ handleSubmit }) => (
-                        <Form onSubmit={handleSubmit}>
-                            <div className='mt-4 mx-4  items-center flex flex-col'>
-                                <div className='  w-full flex flex-col'>
+                        <Form className='mx-4' onSubmit={handleSubmit}>
+
+                            <div className='mt-4 h-28 w-full  flex flex-row justify-between'>
+                                <div className=' max-w-24'>
+                                    <h1 className='font-bold text-primaryColor'>Cor: </h1>
+                                    <Field as="select" name="corCompra" className=" h-9 border-primaryColor border-2 rounded-md mb-3">
+                                        <option value="">Selecione</option>
+                                        <option value="Azul">Azul</option>
+                                        <option value="Preto">Preto</option>
+                                        <option value="Branco">Branco</option>
+                                        <option value="Verde">Verde</option>
+                                    </Field>
+                                    <ErrorMessage name="corCompra" component="div" className='error text-red-600 text-sm' />
+                                </div>
+                                <div className=' max-w-24'>
+                                    <h1 className='font-bold text-primaryColor'>Tamanho: </h1>
+                                    <Field as="select" name="tamanhoCompra" className=" h-9 border-primaryColor border-2 rounded-md mb-3">
+                                        <option value="">Selecione</option>
+                                        <option value="pp">pp</option>
+                                        <option value="p">p</option>
+                                        <option value="m">m</option>
+                                        <option value="g">g</option>
+                                        <option value="gg">gg</option>
+                                        <option value="l">l</option>
+                                        <option value="xl">xl</option>
+                                    </Field>
+                                    <ErrorMessage name="tamanhoCompra" component="div" className='error text-red-600 text-sm' />
+                                </div>
+                                <div className=' w-full max-w-40 flex flex-col mb-0'>
                                     <div className=' flex flex-row'>
-                                        <h1 className=' text-primaryColor font-bold'>Estoque disponível:</h1>
+                                        <h1 className=' text-primaryColor font-bold'>Em estoque:</h1>
                                         <h1 className=' ml-2 text-primaryColor font-bold'>5</h1>
                                     </div>
-                                    {campoPreencher("Quantidade desejada", "Insira a quantidade desejada...", "quantidade", "text")}
-                                    
+                                    {campoPreencher("", "Insira a quantidade...", "quantidadeCompra", "text", " h-9 border-primaryColor border-2 rounded-md pl-1")}
                                 </div>
                             </div>
+
+                            <div className='mt-4 w-full items-center flex flex-col'>
+                                <div className=' w-full'>
+                                    <button type="submit" id='submit' className='w-full h-[35px] bg-red-500 rounded-lg font-bold text-primaryColor active:bg-black active:text-red-500'>
+                                        Comprar
+                                    </button>
+                                </div>
+                                <div className=' mt-2 w-full' >
+                                    <button type='button' className='w-full h-[35px] bg-secundaryColor rounded-lg font-bold text-primaryColor active:bg-black active:text-secundaryColor'>
+                                        Adicionar na Sacola
+                                    </button>
+                                </div>
+                            </div>
+
                         </Form>
                     )}
                 </Formik>
 
-                <div className='mt-4 px-4 w-full items-center flex flex-col'>
-                    <div className=' w-full'>
-                        <button className='w-full h-[35px] bg-red-500 rounded-lg font-bold text-primaryColor active:bg-black active:text-red-500'>
-                            Comprar
-                        </button>
-                    </div>
-                    <div className=' mt-2 w-full' >
-                        <button className='w-full h-[35px] bg-secundaryColor rounded-lg font-bold text-primaryColor active:bg-black active:text-secundaryColor'>
-                            Adicionar na Sacola
-                        </button>
-                    </div>
 
-                </div>
 
                 <div className='flex flex-col ml-4 mt-4'>
                     <span>Calcular Frete:</span>
