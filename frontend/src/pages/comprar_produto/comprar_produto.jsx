@@ -5,7 +5,7 @@ import Carrosel_Produtos from '../../components/carrosel_produtos/carrosel_produ
 
 import campoPreencher from '../../components/formularios/input'
 
-
+import { IMaskInput } from "react-imask";
 import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from 'yup'
 
@@ -102,7 +102,13 @@ export default function Comprar_Produto() {
                     <span>Calcular Frete:</span>
                     <form action="">
                         <div className='flex justify-start'>
-                            <input className="border-2 w-44 h-9 px-2 border-primaryColor rounded-lg" type="text" />
+                            <IMaskInput
+                                name="cep"
+                                mask="00000-000"
+                                placeholder='Insira seu CEP...'
+                                className=" border-primaryColor border-2 rounded-lg w-44 h-9 pl-2 "
+                            >
+                            </IMaskInput>
                             <button type="button" className='bg-secundaryColor ml-1  font-bold w-20 h-9 border-2 border-primaryColor rounded-lg'>Buscar</button>
                         </div>
                     </form>
