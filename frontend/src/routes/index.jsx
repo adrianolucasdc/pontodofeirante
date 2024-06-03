@@ -20,6 +20,7 @@ import Minha_loja from '../pages/sua_loja/minha_loja/minha_loja';
 import Historico_pedidos from '../pages/sua_loja/historico_pedidos/historico_pedidos';
 import Add_produto from '../pages/sua_loja/produtos/add_produto/add_produto';
 import Menu_Usuario from '../pages/menu_usuario/menu_usuario';
+import Comprar_Produto from "../pages/comprar_produto/comprar_produto"
 
 
 
@@ -31,6 +32,7 @@ function RoutesApp() {
             <Route path='/' element={ <Home/> }/>
             <Route path='/sacola' element={ <Sacola/> }/>
             <Route path='/perfil' element={ <Perfil/> }/>
+            <Route path="/comprar_produto" element={ <Comprar_Produto />}/>
             {/* Privado */}
             <Route path='/favoritos' element={ 
                 <ProtectedRoutesUser>
