@@ -22,6 +22,16 @@ export default function Minha_loja() {
                 </div>
                 
                 <h1 className='text-5xl font-bold text-center'>Minha loja</h1>
+
+                <div className='flex text-start mx-4 mt-10 flex-col'>
+                    <h1 className='text-primaryColor text-[16px] font-bold'>Estoque</h1>
+                    <div className='flex justify-center w-full mt-3 '>
+                        <div className='w-[90%] min-h-20 bg-white rounded-lg border-2'>
+
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
             <Menu_principal />
         </div>
