@@ -11,7 +11,8 @@ import ProdutosObj from './ProdutosObj';
 
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
-    nomeProduto: Yup.string().required('Campo obrigatório!'),
+    nomeProduto: Yup.string().required('Campo obrigatório!')
+    .matches(/^[a-z.@A-Z]*$/, "* Insira um nome válido!"),
     preco: Yup.number().required('Campo obrigatório!'),
     qtdProduto: Yup.number().required('Campo obrigatório!'),
     categoria: Yup.string().required('Campo obrigatório!'),
@@ -85,7 +86,7 @@ export default function Add_produto() {
                         <MdKeyboardArrowLeft size={30} className=" text-primaryColor" />
                     </Link>
                 </div>
-                <div className=" mt-5">
+                <div className=" mt-5 mb-4">
                     <h1 className=" text-primaryColor text-xl font-bold">Adicione um produto a sua loja</h1>
                 </div>
                 <Formik

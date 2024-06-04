@@ -20,7 +20,7 @@ import UserServices from '../../Services/UserService';
 const validationSchema = Yup.object().shape({
     nome: Yup.string().required("* Campo obrigatório!"),
     email: Yup.string().email("* Insira um email válido!").required("* Campo obrigatório!")
-    .matches(/^[a-z.@]*$/, "* Insira um e-mail válido!"),
+    .matches(/^[a-z.@0-9]*$/, "* Insira um e-mail válido!"),
     termos: Yup.boolean().isTrue("* É necessário aceitar os termos de condições!"),
     senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres")
     .matches(/[a-z]/,"* A senha deve conter pelo menos uma letra minúscula")
