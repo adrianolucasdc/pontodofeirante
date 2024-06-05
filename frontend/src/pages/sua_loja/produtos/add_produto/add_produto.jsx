@@ -99,7 +99,7 @@ export default function Add_produto() {
                     validationSchema={validationSchema} // esquema de validação yup
                 >
                     {({ handleSubmit }) => (
-                        <Form onSubmit={handleSubmit}>
+                        <Form className=' mb-4' onSubmit={handleSubmit}>
                             {campoPreencher("Nome do Produto", "Insira o nome do produto...", "nomeProduto", "text")}
                             <div className=' flex flex-row justify-between'>
                                 {campoPreencher("Preço", "Insira o preço...", "preco", "number", " border-primaryColor border-2 rounded-md w-40 h-[42px] pl-2")}
@@ -173,7 +173,7 @@ export default function Add_produto() {
                                 Cadastrar Produto
                             </button>
 
-                            <div className='bg-whitev min-h-20 border-2 border-black rounded-lg my-3'>
+                            <div className='bg-whitev min-h-20 border-2 border-primaryColor rounded-lg my-3'>
                                 <ProdutosObj
                                     prods={produtos}
                                     handleTaskDeletion={handleTaskDeletion} />
@@ -184,7 +184,7 @@ export default function Add_produto() {
                                 className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
                                 type="button"
                             >
-                                <h1>Adicionar</h1>
+                                <h1>Adicionar a loja</h1>
                                 <span className="material-symbols-outlined">
                                     add
                                 </span>
