@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
     imgproduto: Yup.mixed().required('Imagem Obrigatória')
         
         .test("fileSize", "Your image is too big :(", value => {
-            console.log(value.size);
+
       
             return value && value.size <= 262144000;
           })
@@ -49,6 +49,7 @@ export default function Add_produto() {
             categoriaPrd: values.categoria,
             corPrd: values.cores,
             tamanhosPrd: values.tamanho,
+            imgproduto: values.imgproduto
         }])
 
 
@@ -92,8 +93,6 @@ export default function Add_produto() {
                 <Formik
                     initialValues={{ nomeProduto: '', preco: '', qtdProduto: '', categoria: '', cores: '', tamanho: '', imgproduto: null }}
                     onSubmit={values => {
-                        values.imgproduto = imagem
-                        console.log(values)
                         printValue(values)
 
                     }}
@@ -114,8 +113,7 @@ export default function Add_produto() {
                                         <option value="">Selecione</option>
                                         <option value="Masculino">Masculino</option>
                                         <option value="Feminino">Feminino</option>
-                                        <option value="Moda_praia">Moda praia</option>
-                                        <option value="Descontos">Descontos</option>
+                                        <option value="Infantil">Infantil</option>
                                     </Field>
                                     <ErrorMessage name="categoria" component="div" className='error text-red-600 text-sm ' />
                                 </div>
@@ -134,13 +132,13 @@ export default function Add_produto() {
                                     <h1 className='font-bold text-primaryColor'>Tamanhos: </h1>
                                     <Field as="select" name="tamanho" className=" h-9 border-primaryColor border-2 rounded-md">
                                         <option value="">Selecione</option>
-                                        <option value="pp">pp</option>
-                                        <option value="p">p</option>
-                                        <option value="m">m</option>
-                                        <option value="g">g</option>
-                                        <option value="gg">gg</option>
-                                        <option value="l">l</option>
-                                        <option value="xl">xl</option>
+                                        <option value="PP">PP</option>
+                                        <option value="P">P</option>
+                                        <option value="M">M</option>
+                                        <option value="G">G</option>
+                                        <option value="GG">GG</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
                                     </Field>
                                     <ErrorMessage name="tamanho" component="div" className='error text-red-600 text-sm' />
                                 </div>

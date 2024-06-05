@@ -3,9 +3,10 @@ import React from "react";
 export default ({ form, field }) => (
   <input
     className="mb-3"
-    name={field.name}
+    name="imgproduto"
+    id="imgproduto"
     type="file"
     accept="image/*"
-    onChange={e => form.setFieldValue(field.name, e.target.files[0])}
+    onChange={e => form.setFieldValue("imgproduto", e.target.files[0])}
   />
 );

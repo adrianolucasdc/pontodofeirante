@@ -1,10 +1,20 @@
-import React from 'react'
-import { FaArrowCircleRight } from 'react-icons/fa';
+import React, {useState} from 'react'
+
 
 const Produto = ({prod, handleTaskDeletion}) => {
+    const reader = new FileReader();
+    const [src, setSrc] = useState("");
+
+    reader.onload = function(){
+        setSrc(reader.result);
+    }
+
+    reader.readAsDataURL(prod.imgproduto);
+
     return ( 
         <div className='w-full h-full flex justify-center'>
             <div className='border-2 border-gray w-[90%] gap-3 mb-2'>
+                <img src={src} alt="" />
                 <span>
                     {prod.nomePrd}
                 </span>
