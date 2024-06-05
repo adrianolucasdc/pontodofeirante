@@ -12,7 +12,7 @@ import ProdutosObj from './ProdutosObj';
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
     nomeProduto: Yup.string().required('Campo obrigatório!')
-    .matches(/^[a-z.@A-Z]*$/, "* Insira um nome válido!"),
+    .matches(/^[a-zA-Z- ]*$/, "* É permitido somente letras e hífen!"),
     preco: Yup.number().required('Campo obrigatório!'),
     qtdProduto: Yup.number().required('Campo obrigatório!'),
     categoria: Yup.string().required('Campo obrigatório!'),
@@ -168,7 +168,7 @@ export default function Add_produto() {
                             </div>
 
                             <button
-                                className=" h-9 px-4 bg-secundaryColor rounded-full active:bg-primaryColor active:text-secundaryColor"
+                                className=" h-9 px-4 bg-secundaryColor rounded-full mt-4 active:bg-primaryColor active:text-secundaryColor"
                                 type="submit"
                                 id='submit'
                             >

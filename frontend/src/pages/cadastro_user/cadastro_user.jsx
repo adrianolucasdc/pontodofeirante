@@ -18,7 +18,8 @@ import UserServices from '../../Services/UserService';
 
 
 const validationSchema = Yup.object().shape({
-    nome: Yup.string().required("* Campo obrigatório!"),
+    nome: Yup.string().required("* Campo obrigatório!")
+    .matches(/^[a-zA-Z- ]*$/, "* É permitido somente letras e hífen!"),
     email: Yup.string().email("* Insira um email válido!").required("* Campo obrigatório!")
     .matches(/^[a-z.@0-9]*$/, "* Insira um e-mail válido!"),
     termos: Yup.boolean().isTrue("* É necessário aceitar os termos de condições!"),
@@ -33,9 +34,12 @@ const validationSchema = Yup.object().shape({
     dataNasc: Yup.date()
     .required("* Campo obrigatório!"),
     sexo: Yup.string().required("* Campo obrigatório!"),
-    uf: Yup.string().required("* Campo obrigatório!"),
-    cidade: Yup.string().required("* Campo obrigatório!"),
-    bairro: Yup.string().required("* Campo obrigatório!"),
+    uf: Yup.string().required("* Campo obrigatório!")
+    .matches(/^[a-zA-Z- ]*$/, "* É permitido somente letras e hífen!"),
+    cidade: Yup.string().required("* Campo obrigatório!")
+    .matches(/^[a-zA-Z- ]*$/, "* É permitido somente letras e hífen!"),
+    bairro: Yup.string().required("* Campo obrigatório!")
+    .matches(/^[a-zA-Z- ]*$/, "* É permitido somente letras e hífen!"),
     rua:Yup.string().required("* Campo obrigatório!"),
     cep: Yup.string().required("* Campo obrigatório!").min(9, "* Insira um cep válido!"),
     numero: Yup.string().required("* Campo obrigatório!"), 
