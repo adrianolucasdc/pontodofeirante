@@ -17,6 +17,7 @@ export default function UserProvider({children}){
     const [emailUser, setEmailUser] = useState("")
     const [nameStore, setNameStore] = useState("")
     const [emailStore, setEmailStore] = useState("")
+    const [idStore, setIdStore] = useState("")
     const [loadProdutos, setLoadProdutos] = useState(null)
 
     function updateToken(){
@@ -41,6 +42,7 @@ export default function UserProvider({children}){
                 setIsAuthenticatedStore(isLoggedStore.auth);
                 setNameStore(isLoggedStore.name);
                 setEmailStore(isLoggedStore.email);
+                setIdStore(isLoggedStore.idStore)
             }
 
             setLoadProdutos(loadProd)
@@ -59,7 +61,8 @@ export default function UserProvider({children}){
             emailUser: emailUser,
             nameStore: nameStore,
             emailStore: emailStore ,
-            loadProdutos: loadProdutos 
+            loadProdutos: loadProdutos,
+            idStore : idStore 
             } }>
             {children}
         </UserContext.Provider>

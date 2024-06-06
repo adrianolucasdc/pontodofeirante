@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 const cuid = require("cuid");
 
 async function createProduct(dados){
-    const lojaID = dados.id;
+    const lojaID = dados.idStore;
     try {
         const findItem = await prisma.produto.findUnique({
             where:{
@@ -15,7 +15,7 @@ async function createProduct(dados){
             const existCor = await prisma.corProduto.findFirst({
                     where:{
                         produtoId : findItem.id, 
-                        nomeCor: dados.nomeCor
+                        nomeCor: dados.corPrd
                     }
             })
 
@@ -24,16 +24,16 @@ async function createProduct(dados){
                     data : {
                         id: cuid(),
                         produtoId: findItem.id, 
-                        nomeCor: dados.nomeCor,
+                        nomeCor: dados.corPrd,
                             tamanhos: {
                                 create:{
                                     id: cuid(),
-                                    nomeTamanho : dados.nomeTamanho,
+                                    nomeTamanho : dados.tamanhosPrd,
                                     detalhesProduto: {
                                         create:{
                                             id: cuid(),
-                                            preco: dados.preco,
-                                            qtd : dados.qtd 
+                                            preco: dados.precoPrd,
+                                            qtd : dados.qtdPrd 
                                         }
                                     }
                                 }
@@ -46,7 +46,7 @@ async function createProduct(dados){
                 const existTamanho = await prisma.tamanhoProduto.findFirst({
                     where:{
                         corId : existCor.id, 
-                        nomeTamanho: dados.nomeTamanho
+                        nomeTamanho: dados.tamanhosPrd
                     }
                 })
 
@@ -55,12 +55,12 @@ async function createProduct(dados){
                         data:{
                             corId: existCor.id,
                             id: cuid(),
-                            nomeTamanho : dados.nomeTamanho,
+                            nomeTamanho : dados.tamanhosPrd,
                             detalhesProduto: {
                                 create:{
                                     id: cuid(),
-                                    preco: dados.preco,
-                                    qtd : dados.qtd 
+                                    preco: dados.precoPrd,
+                                    qtd : dados.qtdPrd 
                                 }
                             }
                         } 
@@ -72,8 +72,8 @@ async function createProduct(dados){
                         data:{
                             tamanhoId: existTamanho.id,
                             id:cuid(),
-                            preco: dados.preco,
-                            qtd: dados.qtd
+                            preco: dados.precoPrd,
+                            qtd: dados.qtdPrd
                         }
                     })
                     return {msg: "Alterado Detalhes do Produto!"}
@@ -100,16 +100,16 @@ async function createProduct(dados){
                         cores: {
                             create: {
                                 id:cuid(),
-                                nomeCor: dados.nomeCor,
+                                nomeCor: dados.corPrd,
                                 tamanhos: {
                                     create:{
                                         id:cuid(),
-                                        nomeTamanho : dados.nomeTamanho,
+                                        nomeTamanho : dados.tamanhosPrd,
                                         detalhesProduto: {
                                             create:{
                                                 id: cuid(),
-                                                preco: dados.preco,
-                                                qtd : dados.qtd 
+                                                preco: dados.precoPrd,
+                                                qtd : dados.qtdPrd 
                                             }
                                         }
                                     }

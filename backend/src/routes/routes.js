@@ -122,42 +122,52 @@ routes.post("/api/store_login", async (req, res)=>{
 
 //criar produto
 routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
-    const body = req.body;
+    try {
+        const body = req.body;
+        
+        jwt.verify(body.token, secret, (err, decoded) =>
+        {
+            if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
+            body.id = decoded.id;
+        }); 
+            
+        body.imagem = req.file.filename;
+        body.preco = parseFloat(body.preco);
+        body.qtd = parseInt(body.qtd);
+    
+        try{
+            const create_product = await createProduct(body);
 
-    jwt.verify(body.token, secret, (err, decoded) =>
-    {
-        if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
-        body.id = decoded.id;
-    });
-
-    body.imagem = req.file.filename;
-    body.preco = parseFloat(body.preco);
-    body.qtd = parseInt(body.qtd);
-
-    try{
-        const create_product = await createProduct(body);
-
-        if (create_product){
-            const image = "../uploads/products/" + req.file.filename; 
-            fs.unlink(image)
-            res.status(202).json(create_product);
-        } else {
-            res.status(200).json({
-                msg:"Produto Cadastrado com Sucesso!",
-                redirect: "/produtos"
-            });
+            if (create_product){
+                const image = "../uploads/products/" + req.file.filename; 
+                fs.unlink(image)
+                res.status(202).json(create_product);
+            } else {
+                res.status(200).json({
+                    msg:"Produto(s) Cadastrado(s) com Sucesso!",
+                    redirect: "/produtos"
+                });
+            }
         }
+        catch(e){
+            console.log(e)
+            res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
+        }
+    } catch (error) {
+        console.log(error)
     }
-    catch(e){
-        console.log(e)
-        res.status(500).json({msg: "Aconteceu um erro tente novamente mais tarde!"})
-    }
+    
 })
 
 //procurar produtos 
 routes.post("/api/search_product", async (req, res)=>{
-    const produtos = await searchProducts();
-    res.status(200).json({produtos})
+    try {
+        const produtos = await searchProducts();
+        res.status(200).json({produtos})
+    } catch (error) {
+        console.log(error)
+    }
+    
 })
 
 
@@ -168,15 +178,14 @@ function verifyJWT(req,res, next){
     jwt.verify(token, secret, (err, decoded) =>
     {
         if(err) return res.status(401).json({msg: "Acesso não autorizado!"})
-        req.id = decoded.id;
+        req.idStore = decoded.idStore;
         req.name = decoded.name;
         req.email = decoded.email;
-        
         next();
     });
 }
 routes.post("/api/validate_token", verifyJWT, (req, res)=>{
-    res.status(200).json({auth : true, name: req.name, email: req.email });
+    res.status(200).json({auth : true, name: req.name, email: req.email, idStore :req.idStore });
 })
 
 module.exports = routes;

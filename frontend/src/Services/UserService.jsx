@@ -2,7 +2,6 @@ import axios from 'axios'
 import Cookies from "universal-cookie"
 
 
-
 const cookies = new Cookies();
 
 export default class UserServices{
@@ -105,5 +104,13 @@ export default class UserServices{
         }
     }
 
-
+    async addProduto(props){
+        
+        try {
+            const {data} = await this.axios.post("/api/create_product", props);
+            return data;
+        } catch  {
+            return false;
+        }
+    }
 }

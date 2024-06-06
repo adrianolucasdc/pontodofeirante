@@ -1,13 +1,15 @@
-import { React, useState } from 'react'
+import { React, useContext, useState } from 'react'
 import { Link } from "react-router-dom"
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { Form, Field, Formik, useFormik, ErrorMessage } from "formik";
+import { Form, Field, Formik, ErrorMessage } from "formik";
 import * as Yup from 'yup'
 
 import campoPreencher from '../../../../components/formularios/input';
 import pictureInput from '../../../../components/pictureInput/pictureInput';
 import ProdutosObj from './ProdutosObj';
+import { UserContext } from "../../../../contexts/user"
+import UserServices from '../../../../Services/UserService';
 
 
 const validationSchema = Yup.object().shape({ // criando esquema de validação
@@ -28,12 +30,12 @@ const validationSchema = Yup.object().shape({ // criando esquema de validação
           })
 })
 
+const userService = new UserServices();
+const formData = new FormData();
 
 export default function Add_produto() {
-
-    const [inputImg, setInputImg] = useState('Escolha a foto do seu produto')
-    const [imagem, setImagem] = useState(null)
-
+    const { idStore } = useContext(UserContext)
+    const [src, setSrc] = useState("");
 
     const [produtos, setProdutos] = useState([])
     const [ids, setIds] = useState(0);
@@ -49,34 +51,28 @@ export default function Add_produto() {
             categoriaPrd: values.categoria,
             corPrd: values.cores,
             tamanhosPrd: values.tamanho,
-            imgproduto: values.imgproduto
+            imgproduto: values.imgproduto,
+            descricao: "default", 
+            idStore: idStore
         }])
-
-
     }
+
+    // async function addProdutos(){
+    //     const reader = new FileReader();
+        
+
+    //     const addProdutos = produtos.map(async prod =>{ 
+    //         reader.onload = function () {
+    //             setSrc(reader.result);
+    //         }
+            
+    //         const add = await userService.addProduto(prod, src)})
+    // }
 
     const handleTaskDeletion = (prodId) => {
         const newProduct = produtos.filter(prods => prods.id != prodId)
         setProdutos(newProduct)
     }
-
-
-
-    const formik = useFormik({
-        initialValues: {
-            imgproduto: ''
-        },
-        onSubmit: () => {
-            console.log('Submitted')
-        },
-    })
-
-    const handleChange = (e) => {
-        formik.setFieldValue('imgproduto', e.target.files[0]);
-        console.log(e.target.files[0].name)
-        setInputImg(e.target.files[0].name)
-        setImagem(e.target.files[0])
-    };
 
 
     return (
@@ -181,8 +177,10 @@ export default function Add_produto() {
 
 
                             <button
-                                className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor xl active:bg-primaryColor active:text-secundaryColor"
+                                className=" h-9 px-4 flex items-center justify-center rounded-full bg-thirdColor active:bg-primaryColor active:text-secundaryColor"
                                 type="button"
+                                id="button"
+                                // onClick={addProdutos}
                             >
                                 <h1>Adicionar a loja</h1>
                                 <span className="material-symbols-outlined">

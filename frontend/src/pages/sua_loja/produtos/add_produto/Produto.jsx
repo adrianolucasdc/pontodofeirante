@@ -10,6 +10,7 @@ const Produto = ({ prod, handleTaskDeletion }) => {
     }
 
     reader.readAsDataURL(prod.imgproduto);
+  
 
     return (
         <div className='w-full h-full flex justify-center'>

@@ -68,7 +68,7 @@ async function autenticarLoja(email, senha){
             const secret = process.env.SECRET
 
             const token = jwt.sign({
-                id: store.id,
+                idStore: store.id,
                 name: store.nome,
                 email: store.email
             }, secret, {expiresIn: 604800})
