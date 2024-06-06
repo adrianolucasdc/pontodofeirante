@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().required("* Campo Obrigatório!").email("* Insira um e-mail válido!")
     .matches(/^[a-z.@]*$/, "* Insira um e-mail válido!"),
     telefone: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
-    zap: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
+    celular: Yup.string().required("* Campo obrigatório!").min(15, "* Insira um telefone válido!"),
     cnpj: Yup.string().required("* Campo Obrigatório!").min(18, "* Insira um CNPJ válido! "),
     senha: Yup.string().required("* Campo obrigatório!").min(8, "* A senha deve conter no mínimo 8 caracteres")
     .matches(/[A-Z]/,"* A senha deve conter pelo menos uma letra maiúscula")
@@ -123,7 +123,7 @@ export default function Sua_loja_cadastro() {
                     <div className="mt-6">
                         <Formik
                         initialValues={{nome : "", razao: "", email:"", telefone: "", cnpj: "", senha:"",
-                        confirmSenha: "", zap: "", termos:false}}
+                        confirmSenha: "", celular: "", termos:false}}
                         onSubmit={values => {handleSubmit(values);}}
                         validationSchema={validationSchema}
                         >
@@ -175,18 +175,18 @@ export default function Sua_loja_cadastro() {
                                     </div>
                                     <div className="mb-3">
                                         <h1 className=" text-primaryColor font-bold">Número de celular (Whatsapp): </h1>
-                                        <Field name="zap" type="text">
+                                        <Field name="celular" type="text">
                                         {
                                             ({field}) => (
                                             <IMaskInput {...field}
-                                            name="zap"
+                                            name="celular"
                                             mask="(00) 00000-0000"
                                             placeholder='Insira o celular...'
                                             className=" border-primaryColor border-2 rounded-md w-full h-[42px] pl-2"
                                             />
                                         )}
                                         </Field>
-                                        <ErrorMessage name='zap' component="div" className='error text-red-600 text-sm ml-3'/>
+                                        <ErrorMessage name='celular' component="div" className='error text-red-600 text-sm ml-3'/>
                                     </div>
                                     
                                     
