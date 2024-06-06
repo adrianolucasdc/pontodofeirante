@@ -109,7 +109,7 @@ routes.post("/api/store_login", async (req, res)=>{
         } else if (authUser.token) {
             res.status(200).json({
                 msg: "Usuário Logado com Sucesso!",
-                redirect: "/",
+                redirect: "/minhaloja",
                 token: authUser.token
             });
         }

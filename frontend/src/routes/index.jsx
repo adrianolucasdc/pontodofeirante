@@ -54,12 +54,12 @@ function RoutesApp() {
             <Route path='/termos_user' element={<TermosUser/>}/>
             <Route path='/sua_loja_login' element={ <Sua_loja_login/> }/>
             {/* Privado */}
-            <Route path='/produtos' element={ <Produtos/> } />
-            <Route path='/dashboard' element={ <Dashboard/> } />
-            <Route path='/controle' element={ <Controle/> } />
-            <Route path='/minhaloja' element={ <Minha_loja/> } />
-            <Route path='/addproduto' element={ <Add_produto/> } />
-            <Route path='/historicodepedidos' element={ <Historico_pedidos/> } />
+            <Route path='/produtos' element={ <ProtectedRoutesStore> <Produtos/> </ProtectedRoutesStore>} />
+            <Route path='/dashboard' element={ <ProtectedRoutesStore> <Dashboard/> </ProtectedRoutesStore>} />
+            <Route path='/controle' element={ <ProtectedRoutesStore> <Controle/> </ProtectedRoutesStore>} />
+            <Route path='/minhaloja' element={ <ProtectedRoutesStore> <Minha_loja/> </ProtectedRoutesStore>} />
+            <Route path='/addproduto' element={ <ProtectedRoutesStore> <Add_produto/> </ProtectedRoutesStore>} />
+            <Route path='/historicodepedidos' element={ <ProtectedRoutesStore> <Historico_pedidos/> </ProtectedRoutesStore>} />
         </Routes>
     )
 }
