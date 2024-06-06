@@ -132,15 +132,13 @@ routes.post("/api/create_product", uploadFile.single("img"), async (req, res)=>{
         }); 
             
         body.imagem = req.file.filename;
-        body.preco = parseFloat(body.preco);
-        body.qtd = parseInt(body.qtd);
+        body.precoPrd = parseFloat(body.precoPrd);
+        body.qtdPrd = parseInt(body.qtdPrd);
     
         try{
             const create_product = await createProduct(body);
 
             if (create_product){
-                const image = "../uploads/products/" + req.file.filename; 
-                fs.unlink(image)
                 res.status(202).json(create_product);
             } else {
                 res.status(200).json({
