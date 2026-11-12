@@ -1,4 +1,4 @@
-# Ponto do Feirante (Ainda Não Concluido)
+# Ponto do Feirante - In Progress
 
 Este projeto foi desenvolvido durante a disciplina de Fábrica de Software na faculdade, com o objetivo de oferecer aos pequenos feirantes uma nova oportunidade de ampliar suas vendas sem precisar sair de casa. Para isso, criamos um e-commerce acessível e eficiente, conectando produtores e consumidores de forma prática e digital.
 
